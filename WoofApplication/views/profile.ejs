@@ -1,0 +1,31 @@
+<%- include("topBar") -%>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+
+                      <div class="form-group">
+
+                        <div class="form-group">
+                          <label>Username : <%= user.username %></label><br />
+                          <label>Name : <%= user.name %></label>
+                        </div>
+                        <label>Email address : <%= user.email %></label>
+                      </div>
+                      <div class="form-group">
+                        <label>Address : <%= user.address %></label> <br />
+                        <label>Type : <%= user.type %></label>
+                      </div>
+                      <div class="form-group">
+                        <label>Dog Name : <%= user.dog[0].name %></label><br />
+                        <label>Dog Name : <%= user.dog[0].breed %></label><br />
+                        <label>Dog Name : <%= user.dog[0].size %></label><br />
+                        <label>Dog Name : <%= user.dog[0].weight %></label><br />
+                        <label>Dog Name : <%= user.dog[0].age %></label>
+                      </div>
+
+                      <a class="btn btn-primary" href="/" role="button">OK</a>
+                    </div>
+                <!-- /.container-fluid -->
+<%- include("bottomBar") -%>

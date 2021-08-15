@@ -1,0 +1,36 @@
+<%- include('header') %>
+
+<div class="container mt-5">
+  <h1>Login</h1>
+
+
+
+  <div class="card">
+    <div class="card-body" style="text-align:center;">
+      <p style="color:red;font-family: 'Ubuntu', sans-serif;">
+        Woof
+      </p>
+      <img style="width: 200px; height: 200px; margin-bottom: 20px;" src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/smartest-dog-breeds-1553287693.jpg?crop=0.673xw:1.00xh;0.167xw,0&resize=640:*" alt="dogImage">
+
+      <!-- Makes POST request to /login route -->
+      <form action="/login" method="POST">
+        <div class="form-group">
+
+          <input type="text" class="form-control" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+
+          <input type="password" class="form-control" name="password" placeholder="Password">
+        </div>
+
+        <p><%= errorMessage %></p>
+
+
+        <button type="submit" class="btn btn-primary btn-lg">Login</button> <br>
+      </form>
+      <a style="margin-top: 20px;" class="btn btn-outline-primary" href="/register" role="button">Create Account</a>
+    </div>
+  </div>
+</div>
+
+<%- include('footer') %>

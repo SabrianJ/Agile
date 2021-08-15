@@ -1,0 +1,34 @@
+<%- include("topBar") -%>
+
+<!-- Content Column -->
+<div class="col-lg-12 mb-4">
+
+  <!-- Project Card Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary"><%= foundUser[0].username %></h6>
+    </div>
+    <div class="card-body">
+
+      <h4 class="small font-weight-bold">Hello, my name is <%= foundUser[0].name %></h4>
+      <h4 class="small font-weight-bold">You can contact me via <%= foundUser[0].email %></h4>
+      <h4 class="small font-weight-bold">My address is <%= foundUser[0].address %></h4>
+
+      <br/>
+      <br/>
+
+      <h4 class="small font-weight-bold">My dog name is  <%= foundUser[0].dog[0].name %></h4>
+      <h4 class="small font-weight-bold">It is a <%= foundUser[0].dog[0].breed %></h4>
+      <h4 class="small font-weight-bold">Its size is <%= foundUser[0].dog[0].size %></h4>
+      <h4 class="small font-weight-bold">Its weight is <%= foundUser[0].dog[0].weight %> kg</h4>
+      <h4 class="small font-weight-bold">Its age is <%= foundUser[0].dog[0].weight %> years old</h4>
+
+    </div>
+  </div>
+
+
+
+</div>
+
+
+<%- include("bottomBar") -%>
