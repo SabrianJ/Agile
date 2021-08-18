@@ -46,6 +46,7 @@ const usersSchema = new mongoose.Schema({
   name: String,
   email: String,
   address: String,
+  suburb: String,
   dog: [dogsSchema],
   type: String,
   password: String
@@ -84,6 +85,7 @@ app.post("/register", function(req, res) {
     name: req.body.name,
     email: req.body.email,
     address: req.body.address,
+    suburb : req.body.suburb,
     dog: {
       name: req.body.dogsName,
       breed: req.body.dogsBreed,
@@ -225,7 +227,7 @@ app.post("/updateProfile", function(req, res) {
       dog: {
         name: req.body.dogsName,
         breed: req.body.dogsBreed,
-        size: req.body.dogsSize,
+        size: req.body.dogsSize[req.body.dogsSize.length-1],
         weight: req.body.dogsWeight,
         age: req.body.dogsAge,
       }
