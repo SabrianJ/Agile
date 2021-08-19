@@ -10,16 +10,20 @@
     </div>
     <div class="card-body">
 
-      <% for(var i=0; i < results.length ; i++){ %>
-        <h4 class="small font-weight-bold">
-          Username : <%= results[i].username %> <br />
-          Name : <%= results[i].name %> <br />
-          My dog is a <%= results[i].dog[0].size %> <%= results[i].dog[0].breed %> with weight of 
-          <%= results[i].dog[0].weight %> kg and <%= results[i].dog[0].age %> years old.
-          <span class="float-right">
-            <a href="/dogOwners/<%= results[i]._id %>">Find Out more...</a>
-          </span></h4>
-        <hr class="card-divider">
+      <% for(var i=0; i < foundUser.length ; i++){ %>
+      <%  for(var j=0; j <dogs.length ; j++){ %>
+      <%    if((foundUser[i]._id == dogs[j].owner) && (foundUser[i]._id != user._id)){ %>
+            <h4 class="small font-weight-bold">
+              Username : <%= foundUser[i].username %> <br />
+              Name : <%= foundUser[i].name %> <br />
+              My dog is a <%= dogs[j].size %> <%= dogs[j].breed %> with weight of
+              <%= dogs[j].weight %> kg and <%= dogs[j].age %> years old.
+              <span class="float-right">
+                <a href="/dogOwners/<%= foundUser[i]._id %>">Find Out more...</a>
+              </span></h4>
+            <hr class="card-divider">
+        <%  } %>
+      <%  }  %>
       <% } %>
 
 

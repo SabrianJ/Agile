@@ -11,14 +11,14 @@
 
 
       <!-- Makes POST request to register route -->
-      <form name="registerForm" action="/register" method="POST" autocomplete="off">
+      <form name="registerForm" action="/register" method="POST" autocomplete="off" onsubmit="return validateForm()" required>
         <div class="form-group">
           <p style="font-family: 'Ubuntu', sans-serif;">
             Are you a dog owner or a trainer ?
           </p>
           <div class="radioButton">
-            <label><input style="margin-left:10px;" type="radio" name="userType" value="Dog Owner">Dog Owner</label>
-            <label><input style="margin-left:10px;" type="radio" name="userType" value="Trainer">Trainer</label>
+            <label><input style="margin-left:10px;" id="userTypeOption" type="radio" name="userType" value="Dog Owner" onclick="addDogField()">Dog Owner</label>
+            <label><input style="margin-left:10px;" id="userTypeOption" type="radio" name="userType" value="Trainer" onclick="removeDogField()">Trainer</label>
           </div>
           <div class="form-group">
             <label for="userNameInput">Username</label>
@@ -41,7 +41,7 @@
           <label for="suburbInput">Suburb</label>
           <input type="text" class="form-control" id="suburbInput" placeholder="Enter Suburb" name="suburb">
         </div>
-        <div class="form-group">
+        <div class="form-group dogRegistration" id="dogRegistration">
           <label for="dogName">Dog</label>
           <input type="text" class="form-control" id="dogName" placeholder="Name" name="dogsName">
           <input type="text" class="form-control" id="dogBreed" placeholder="Breed" name="dogsBreed">
@@ -66,8 +66,8 @@
 
     </div>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="index.js" charset="utf-8"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <script src="/index.js" charset="utf-8"></script>
 
 
   <%- include('footer') %>

@@ -38,7 +38,8 @@ const dogsSchema = new mongoose.Schema({
   breed: String,
   size: String,
   weight: String,
-  age: Number
+  age: Number,
+  owner: String
 });
 
 const usersSchema = new mongoose.Schema({
@@ -47,7 +48,6 @@ const usersSchema = new mongoose.Schema({
   email: String,
   address: String,
   suburb: String,
-  dog: [dogsSchema],
   type: String,
   password: String
 });
@@ -55,6 +55,7 @@ const usersSchema = new mongoose.Schema({
 usersSchema.plugin(passportLocalMongoose);
 
 const User = new mongoose.model("User", usersSchema);
+const Dog = new mongoose.model("Dog", dogsSchema);
 
 passport.use(User.createStrategy());
 
@@ -86,13 +87,6 @@ app.post("/register", function(req, res) {
     email: req.body.email,
     address: req.body.address,
     suburb : req.body.suburb,
-    dog: {
-      name: req.body.dogsName,
-      breed: req.body.dogsBreed,
-      size: req.body.dogsSize,
-      weight: req.body.dogsWeight,
-      age: req.body.dogsAge,
-    },
     type: req.body.userType
   }), req.body.password, function(err, user) {
     if (err) {
@@ -100,7 +94,21 @@ app.post("/register", function(req, res) {
       res.redirect("/register");
     } else {
       passport.authenticate("local")(req, res, function() {
-        res.redirect("/");
+        var dog = new Dog({
+          name: req.body.dogsName,
+          breed: req.body.dogsBreed,
+          size: req.body.dogsSize,
+          weight: req.body.dogsWeight,
+          age: req.body.dogsAge,
+          owner: req.user._id
+        });
+        dog.save(function(err,result){
+          if(err){
+            console.log(err);
+          }else{
+            res.redirect("/");
+          }
+        });
       })
     }
   });
@@ -119,11 +127,19 @@ app.get("/updateProfile", function(req, res) {
 
 app.get("/dogOwners", function(req, res) {
   if (req.isAuthenticated()) {
-    User.find({type : "Dog Owner"}, function(err,results){
+    User.find({type : "Dog Owner"}, function(err,foundUser){
       if(err){
         console.log(err);
       }else{
-        res.render("dogOwners", {user: req.user, results : results});
+        foundUser.forEach((user) => {
+          Dog.find({}, function(error,dogs){
+            if(error){
+              console.log(error);
+            }else{
+                res.render("dogOwners", {user: req.user, foundUser : foundUser, dogs:dogs});
+            }
+          });
+        });
       }
     });
   } else {
@@ -137,7 +153,7 @@ app.get("/trainers", function(req, res) {
       if(err){
         console.log(err);
       }else{
-        res.render("trainers", {user: req.user, results : results});
+
       }
     });
   } else {
