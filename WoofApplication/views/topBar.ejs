@@ -74,7 +74,14 @@
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="/img/undraw_dog_man.svg" alt="...">
-                <p class="text-center mb-2"><strong>Woof</strong> is the new way to connect your dog !</p>
+                <% if(user.type === "Dog Owner"){ %>
+                  <p class="text-center mb-2"><strong>Woof</strong> is the new way to connect your dog !</p>
+              <%  }else if(user.type === "Trainer"){ %>
+                  <p class="text-center mb-2"><strong>Woof</strong> is the new way to connect your client !</p>
+              <%   } %>
+
+
+
             </div>
 
         </ul>

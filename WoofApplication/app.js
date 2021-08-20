@@ -81,44 +81,64 @@ app.post("/register", function(req, res) {
 
   console.log(req.body.username);
 
-  User.register(new User({
-    username: req.body.username,
-    name: req.body.name,
-    email: req.body.email,
-    address: req.body.address,
-    suburb : req.body.suburb,
-    type: req.body.userType
-  }), req.body.password, function(err, user) {
-    if (err) {
-      console.log(err);
-      res.redirect("/register");
-    } else {
-      passport.authenticate("local")(req, res, function() {
-        var dog = new Dog({
-          name: req.body.dogsName,
-          breed: req.body.dogsBreed,
-          size: req.body.dogsSize,
-          weight: req.body.dogsWeight,
-          age: req.body.dogsAge,
-          owner: req.user._id
-        });
-        dog.save(function(err,result){
-          if(err){
-            console.log(err);
-          }else{
-            res.redirect("/");
-          }
-        });
-      })
-    }
-  });
-});
+  if(req.body.userType === "Dog Owner"){
+    User.register(new User({
+      username: req.body.username,
+      name: req.body.name,
+      email: req.body.email,
+      address: req.body.address,
+      suburb : req.body.suburb,
+      type: req.body.userType
+    }), req.body.password, function(err, user) {
+      if (err) {
+        console.log(err);
+        res.redirect("/register");
+      } else {
+        passport.authenticate("local")(req, res, function() {
+          var dog = new Dog({
+            name: req.body.dogsName,
+            breed: req.body.dogsBreed,
+            size: req.body.dogsSize,
+            weight: req.body.dogsWeight,
+            age: req.body.dogsAge,
+            owner: req.user._id
+          });
+          dog.save(function(err,result){
+            if(err){
+              console.log(err);
+            }else{
+              res.redirect("/");
+            }
+          });
+        })
+      }
+    });
+  }else if(req.body.userType === "Trainer"){
+    User.register(new User({
+      username: req.body.username,
+      name: req.body.name,
+      email: req.body.email,
+      address: req.body.address,
+      suburb : req.body.suburb,
+      type: req.body.userType
+    }), req.body.password, function(err, user) {
+      if (err) {
+        console.log(err);
+        res.redirect("/register");
+      } else {
+        passport.authenticate("local")(req, res, function() {
+              res.redirect("/");
+        })
+      }
+    });
+      }
+    });
+
 
 app.get("/updateProfile", function(req, res) {
   if (req.isAuthenticated()) {
-    res.render("updateProfile", {
-      user: req.user,
-      success: null
+    Dog.find({owner : req.user._id}, function(err,dogs){
+      res.render("updateProfile",{user : req.user, dogs : dogs, success : null});
     });
   } else {
     res.redirect("login");
@@ -126,26 +146,49 @@ app.get("/updateProfile", function(req, res) {
 });
 
 app.get("/dogOwners", function(req, res) {
+
   if (req.isAuthenticated()) {
     User.find({type : "Dog Owner"}, function(err,foundUser){
       if(err){
         console.log(err);
       }else{
-        foundUser.forEach((user) => {
-          Dog.find({}, function(error,dogs){
-            if(error){
-              console.log(error);
-            }else{
-                res.render("dogOwners", {user: req.user, foundUser : foundUser, dogs:dogs});
-            }
-          });
-        });
+        var dogAndOwner = [];
+            dogAndOwner = allocateDogsOwner(dogAndOwner,foundUser);
+            dogAndOwner.then(results =>{
+              res.render("dogOwners",{user : req.user, results : results});
+            }).catch(err =>{console.log(err)})
+        }
       }
+    );
+  } else {
+    res.redirect("login");
+  }
+});
+
+app.get("/profile", function(req, res) {
+  if (req.isAuthenticated()) {
+    Dog.find({owner : req.user._id}, function(err,dogs){
+      res.render("profile",{user : req.user, dogs : dogs});
     });
   } else {
     res.redirect("login");
   }
 });
+
+
+async function allocateDogsOwner(dogAndOwner, foundUser){
+  for(var i=0; i<foundUser.length ;i++){
+    await Dog.find({owner : foundUser[i]._id}).exec().then(value=>{
+      var dogOwner = {
+        user : foundUser[i],
+        dog : value
+      };
+      dogAndOwner.push(dogOwner);
+    }).catch(err=>{console.log(err)});
+  }
+  return dogAndOwner;
+
+}
 
 app.get("/trainers", function(req, res) {
   if (req.isAuthenticated()) {
@@ -153,7 +196,7 @@ app.get("/trainers", function(req, res) {
       if(err){
         console.log(err);
       }else{
-
+        res.render("trainers", {user: req.user, results : results});
       }
     });
   } else {
@@ -185,7 +228,13 @@ app.get("/dogOwners/:dogOwnerID", function(req, res) {
       if(err){
         console.log(err);
       }else{
-        res.render("dogOwner", {user: req.user, foundUser : foundUser});
+         Dog.find({owner : foundUser[0]._id},function(error,dog){
+           if(error){
+             console.log(error);
+           }else{
+             res.render("dogOwner", {user: req.user, foundUser : foundUser, dog : dog});
+           }
+         });
       }
     });
   } else {
@@ -239,30 +288,29 @@ app.post("/updateProfile", function(req, res) {
       }
     });
 
-    User.findByIdAndUpdate(req.user._id, {
-      dog: {
-        name: req.body.dogsName,
-        breed: req.body.dogsBreed,
-        size: req.body.dogsSize[req.body.dogsSize.length-1],
-        weight: req.body.dogsWeight,
-        age: req.body.dogsAge,
-      }
-    }, function(err, docs) {
-      if (err) {
-        res.render("updateProfile", {
-          user: req.user,
-          success: null
-        });
-        console.log(err);
-        updated = false;
-      }
+    if(req.user.type === "Dog Owner"){
+      Dog.findOneAndUpdate({owner : req.user._id}, {
+          name: req.body.dogsName,
+          breed: req.body.dogsBreed,
+          size: req.body.dogsSize[req.body.dogsSize.length-1],
+          weight: req.body.dogsWeight,
+          age: req.body.dogsAge,
+      }, function(err, docs) {
+        if (err) {
+          res.render("updateProfile", {
+            user: req.user,
+            success: null
+          });
+          console.log(err);
+          updated = false;
+        }
+      });
+    }
+
+    Dog.find({owner : req.user._id}, function(err,dogs){
+      res.render("updateProfile",{user : req.user, dogs : dogs, success : updated});
     });
 
-
-    res.render("updateProfile", {
-      user: req.user,
-      success: updated
-    });
   }
 });
 
@@ -303,15 +351,6 @@ app.post("/changePassword", function(req, res) {
   }
 });
 
-app.get("/profile", function(req, res) {
-  if (req.isAuthenticated()) {
-    res.render("profile", {
-      user: req.user
-    });
-  } else {
-    res.redirect("login");
-  }
-});
 
 
 

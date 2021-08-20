@@ -9,21 +9,20 @@
       <h6 class="m-0 font-weight-bold text-primary">Dog Owners</h6>
     </div>
     <div class="card-body">
-
-      <% for(var i=0; i < foundUser.length ; i++){ %>
-      <%  for(var j=0; j <dogs.length ; j++){ %>
-      <%    if((foundUser[i]._id == dogs[j].owner) && (foundUser[i]._id != user._id)){ %>
+      <% for(var i=0; i < results.length ; i++){ %>
+      <% if(results[i].user.username === user.username){ %>
+            <%    continue; %>
+      <% }else{ %>
             <h4 class="small font-weight-bold">
-              Username : <%= foundUser[i].username %> <br />
-              Name : <%= foundUser[i].name %> <br />
-              My dog is a <%= dogs[j].size %> <%= dogs[j].breed %> with weight of
-              <%= dogs[j].weight %> kg and <%= dogs[j].age %> years old.
+              Username : <%= results[i].user.username %> <br />
+              Name : <%= results[i].user.name %> <br />
+              My dog is a <%= results[i].dog[0].size %> <%=  results[i].dog[0].breed %> with weight of
+              <%=  results[i].dog[0].weight %> kg and <%=  results[i].dog[0].age %> years old.
               <span class="float-right">
-                <a href="/dogOwners/<%= foundUser[i]._id %>">Find Out more...</a>
+                <a href="/dogOwners/<%= results[i].user._id %>">Find Out more...</a>
               </span></h4>
             <hr class="card-divider">
         <%  } %>
-      <%  }  %>
       <% } %>
 
 

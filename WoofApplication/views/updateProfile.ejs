@@ -26,41 +26,45 @@
                         <label for="suburbInput">Suburb</label>
                         <input type="text" class="form-control" id="suburbInput" placeholder="<%- user.suburb %>" name="suburb" value="<%- user.suburb %>">
                       </div>
-                      <div class="form-group">
-                        <label for="dogName">Dog's Name</label>
-                        <input type="text" class="form-control" id="dogName" placeholder="<%- user.dog[0].name %>" name="dogsName" value="<%- user.dog[0].name %>">
-                        <label for="dogBreed">Dog's Breed</label>
-                        <input type="text" class="form-control" id="dogBreed" placeholder="<%- user.dog[0].breed %>" name="dogsBreed" value="<%- user.dog[0].breed %>">
-                        <input type="text" class="form-control" id="dogSize" placeholder="Size = <%- user.dog[0].size %>" name="dogsSize" value="<%- user.dog[0].size %>">
 
-                        <% if(user.dog[0].size === "small"){ %>
-                          <div class="radioButton" style="margin-top:10px; margin-bottom:10px;">
-                            <label>Dog's Size : </label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="small" checked="checked">Small</label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="medium">Medium</label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="big">Big</label>
-                          </div>
-                      <%  }else if(user.dog[0].size === "medium"){ %>
-                          <div class="radioButton" style="margin-top:10px; margin-bottom:10px;">
-                            <label>Dog's Size : </label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="small">Small</label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="medium" checked="checked">Medium</label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="big">Big</label>
-                          </div>
-                        <% }else{ %>
-                          <div class="radioButton" style="margin-top:10px; margin-bottom:10px;">
-                            <label>Dog's Size : </label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="small">Small</label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="medium">Medium</label>
-                            <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="big" checked="checked">Big</label>
-                          </div>
-                        <%}%>
+                    <%   if(user.type === "Dog Owner"){ %>
+                        <div class="form-group">
+                          <label for="dogName">Dog's Name</label>
+                          <input type="text" class="form-control" id="dogName" placeholder="<%- dogs[0].name %>" name="dogsName" value="<%- dogs[0].name %>">
+                          <label for="dogBreed">Dog's Breed</label>
+                          <input type="text" class="form-control" id="dogBreed" placeholder="<%- dogs[0].breed %>" name="dogsBreed" value="<%- dogs[0].breed %>">
+                          <input type="text" class="form-control" id="dogSize" placeholder="Size = <%- dogs[0].size %>" name="dogsSize" value="<%- dogs[0].size %>">
 
-                        <label for="dogWeight">Dog's Weight</label>
-                        <input type="text" class="form-control" id="dogWeight" placeholder="Weight = <%- user.dog[0].weight %>" name="dogsWeight" value="<%- user.dog[0].weight %>">
-                        <label for="dogAge">Dog's Age</label>
-                        <input type="text" class="form-control" id="dogAge" placeholder="Age = <%- user.dog[0].age %>" name="dogsAge" value="<%- user.dog[0].age %>">
-                      </div>
+                          <% if(dogs[0].size === "small"){ %>
+                            <div class="radioButton" style="margin-top:10px; margin-bottom:10px;">
+                              <label>Dog's Size : </label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="small" checked="checked">Small</label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="medium">Medium</label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="big">Big</label>
+                            </div>
+                        <%  }else if(dogs[0].size === "medium"){ %>
+                            <div class="radioButton" style="margin-top:10px; margin-bottom:10px;">
+                              <label>Dog's Size : </label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="small">Small</label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="medium" checked="checked">Medium</label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="big">Big</label>
+                            </div>
+                          <% }else{ %>
+                            <div class="radioButton" style="margin-top:10px; margin-bottom:10px;">
+                              <label>Dog's Size : </label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="small">Small</label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="medium">Medium</label>
+                              <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="big" checked="checked">Big</label>
+                            </div>
+                          <%}%>
+
+                          <label for="dogWeight">Dog's Weight</label>
+                          <input type="text" class="form-control" id="dogWeight" placeholder="Weight = <%- dogs[0].weight %>" name="dogsWeight" value="<%- dogs[0].weight %>">
+                          <label for="dogAge">Dog's Age</label>
+                          <input type="text" class="form-control" id="dogAge" placeholder="Age = <%- dogs[0].age %>" name="dogsAge" value="<%- dogs[0].age %>">
+                        </div>
+                    <%   } %>
+
 
                       <% if(success != null){ %>
                         <% if(!success){ %>
