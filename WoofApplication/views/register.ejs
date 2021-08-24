@@ -22,42 +22,62 @@
           </div>
           <div class="form-group">
             <label for="userNameInput">Username</label>
-            <input type="text" class="form-control" id="userNameInput" placeholder="Enter username" name="username">
+            <input type="text" class="form-control" id="userNameInput" placeholder="Enter username" name="username" style="width:25%">
             <label for="NameInput">Name</label>
-            <input type="text" pattern="[a-zA-Z\s]*" title="Name should only contain letters." class="form-control" id="NameInput" placeholder="Enter name" name="name">
+            <input type="text" pattern="[a-zA-Z\s]*" style="width:80%" title="Name should only contain letters." class="form-control" id="NameInput" placeholder="Enter name" name="name">
 
           </div>
 
           <label for="exampleInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+          <input type="email" class="form-control" style="width:80%" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
 
         <div class="form-group">
           <label for="addressInput">Address</label>
-          <input type="text" class="form-control" id="addressInput" placeholder="Enter Address" name="address">
+          <input type="text" class="form-control" id="addressInput" style="width:80%" placeholder="Enter Address" name="address">
+        </div>
+        <div class="form-group">
+          <label for="cityInput">City</label>
+          <select id="cityInput" name="city" onchange="suburbSelection(this.options[this.selectedIndex].value)" class="form-control" style="width:25%">
+            <option disabled selected value="null"> -- select City -- </option>
+        <option  value="Auckland">Auckland</option>
+        <option  value="Wellington">Wellington</option>
+        <option value="Christchurch">Christchurch</option>
+      </select>
         </div>
         <div class="form-group">
           <label for="suburbInput">Suburb</label>
-          <input type="text" class="form-control" id="suburbInput" placeholder="Enter Suburb" name="suburb">
+          <select id="suburbInput" name="suburb" class="form-control" style="width:25%">
+
+          </select>
         </div>
         <div class="form-group dogRegistration" id="dogRegistration">
           <label for="dogName">Dog</label>
-          <input type="text" class="form-control" id="dogName" placeholder="Name" name="dogsName">
-          <input type="text" class="form-control" id="dogBreed" placeholder="Breed" name="dogsBreed">
+          <input type="text" class="form-control" id="dogsName" placeholder="Name" name="dogsName" style="width:80%">
+          <label for="dogsBreed">Breed</label>
+          <select id="dogBreed" name="dogsBreed" class="form-control" placeholder="Breed" style="width:25%">
+            <option value="German Shepherd" selected>German Shepherd</option>
+            <option value="Akita">Akita</option>
+            <option value="Shih Tzu">Shih Tzu</option>
+          </select>
+
           <div class="radioButton" style="margin-top:10px; margin-bottom:10px;">
             <label>Size : </label>
             <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="small">Small</label>
             <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="medium">Medium</label>
             <label><input style="margin-left:10px;" type="radio" name="dogsSize" value="big">Big</label>
           </div>
-          <input type="number" class="form-control" id="dogWeight" placeholder="Weight (in kg)" name="dogsWeight">
-          <input type="number" class="form-control" id="dogAge" placeholder="Age (in years old)" name="dogsAge">
+          <input type="number" class="form-control" id="dogsWeight" placeholder="Weight (in kg)" name="dogsWeight" style="width:25%">
+          <label for="dogsDateOfBirth" class="form-label">Please choose the date of birth of your dog</label>
+          <input type="date" class="form-control" id="dogsDateOfBirth" name="dogsDateOfBirth" style="width:25%">
+
+
         </div>
 
         <div class="form-group">
           <label for="exampleInputPassword1">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" style="width:80%">
         </div>
 
         <button type="submit" class="btn btn-primary">Register</button>

@@ -16,7 +16,8 @@
     <%    }else{ %>
         <h4 class="small font-weight-bold">
           Username : <%= results[i].username %> <br />
-          Name : <%= results[i].name %> <br />
+          Name : <%= results[i].name %> <br /><br / />
+          My city is <%= results[i].city %> and the suburb is <%- results[i].suburb %> .
           <span class="float-right">
             <a href="/trainers/<%= results[i]._id %>">Find Out more...</a>
           </span></h4>
