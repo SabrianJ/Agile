@@ -187,22 +187,6 @@ app.get("/dogOwners", function(req, res) {
   }
 });
 
-app.get("/profile", function(req, res) {
-  if (req.isAuthenticated()) {
-      if(req.user.type == "Dog Owner"){
-        Dog.find({owner : req.user._id}, function(err,dogs){
-          res.render("profile",{user : req.user, dogs : dogs,  dogsDOB : formatDate(dogs[0].dob)});
-        });
-      }else{
-        res.render("profile",{user : req.user});
-      }
-
-  } else {
-    res.redirect("login");
-  }
-});
-
-
 async function allocateDogsOwner(dogAndOwner, foundUser){
   for(var i=0; i<foundUser.length ;i++){
     await Dog.find({owner : foundUser[i]._id}).exec().then(value=>{
