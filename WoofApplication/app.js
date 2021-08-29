@@ -151,6 +151,42 @@ app.post("/register", function(req, res) {
     return [year, month, day].join('-');
 }
 
+app.get("/deleteUser", function(req,res){
+  if(req.isAuthenticated()){
+    if(req.user.type == "Dog Owner"){
+      Dog.find({owner : req.user._id}, function(err, dogs){
+        for(var i=0;i< dogs.length; i++){
+          Dog.findByIdAndRemove(dogs[i]._id, function(err){
+            if(err){
+              console.log(err);
+            }
+          })
+        }
+
+        User.findByIdAndRemove(req.user._id,function(error){
+          if(error){
+            console.log(error);
+          }else{
+            req.logout();
+            res.redirect("/login");
+          }
+        });
+      });
+    }else{
+      User.findByIdAndRemove(req.user._id,function(error){
+        if(error){
+          console.log(error);
+        }else{
+          req.logout();
+          res.redirect("/login");
+        }
+      });
+    }
+  }else{
+    res.redirect("login")
+  }
+});
+
 
 app.get("/updateProfile", function(req, res) {
   if (req.isAuthenticated()) {

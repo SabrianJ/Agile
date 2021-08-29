@@ -73,6 +73,8 @@ function validateForm(){
      }else if(dogsWeight == ""){
        alert("Dog's weight must be filled before submitting form");
        return false;
+     }else if(dogsWeight > 100){
+       alert("Dog's weight maximum is 100kg");
      }else if(!Date.parse(dogsDateOfBirth)){
        alert("Dog's date of birth must be filled before submitting form");
        return false;
