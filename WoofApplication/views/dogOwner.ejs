@@ -17,11 +17,23 @@
       <br/>
       <br/>
 
-      <h4 class="small font-weight-bold">My dog name is  <%= dog[0].name %></h4>
-      <h4 class="small font-weight-bold">It is a <%= dog[0].size %> <%= dog[0].breed %> that has a
-        weight of <%= dog[0].weight %> kg</h4>
-      <h4 class="small font-weight-bold">Its age is <%= age %> years old</h4>
+      <%  for(var j=1 ; j <= dog.length ; j++){ %>
+      <%    var special = ['zeroth','first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelvth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth']; %>
+      <%    var deca = ['twent', 'thirt', 'fourt', 'fift', 'sixt', 'sevent', 'eight', 'ninet']; %>
 
+      <%    function stringifyNumber(n) { %>
+      <%      if (n < 20) return special[n]; %>
+      <%      if (n%10 === 0) return deca[Math.floor(n/10)-2] + 'ieth'; %>
+      <%      return deca[Math.floor(n/10)-2] + 'y-' + special[n%10];%>
+      <%      }%>
+
+      <h4 class="small font-weight-bold">My <%= stringifyNumber(j) %> dog name is  <%= dog[j-1].name %></h4>
+      <h4 class="small font-weight-bold">It is a <%= dog[j-1].size %> <%= dog[j-1].breed %> that has a
+        weight of <%= dog[j-1].weight %> kg</h4>
+      <h4 class="small font-weight-bold">Its age is <%= dogAges[j-1] %> years old</h4>
+      <br /><br />
+
+   <%  } %>
     </div>
   </div>
 

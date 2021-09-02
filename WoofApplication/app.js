@@ -80,7 +80,8 @@ app.get("/register", function(req, res) {
 
 app.post("/register", function(req, res) {
 
-  console.log(req.body.username);
+  // console.log(req.body.dogsName1);
+  // console.log(req.body.dogsName2);
 
   if(req.body.userType === "Dog Owner"){
     User.register(new User({
@@ -93,26 +94,43 @@ app.post("/register", function(req, res) {
       type: req.body.userType
     }), req.body.password, function(err, user) {
       if (err) {
+
+        res.redirect("/login");
         console.log(err);
-        res.redirect("/register");
+
       } else {
         passport.authenticate("local")(req, res, function() {
-          var dog = new Dog({
-            name: req.body.dogsName,
-            breed: req.body.dogsBreed,
-            size: req.body.dogsSize,
-            weight: req.body.dogsWeight,
-            dob: req.body.dogsDateOfBirth,
-            owner: req.user._id
-          });
-          dog.save(function(err,result){
-            if(err){
-              console.log(err);
-            }else{
-              res.redirect("/");
-            }
-          });
-        })
+
+          var numberOfDogs = req.body.numberOfDogs;
+          console.log(numberOfDogs);
+
+          for(var i=1; i <= numberOfDogs ; i++){
+
+
+
+            var currentName = 'req.body.dogsName' + i;
+            var currentBreed = 'req.body.dogsBreed' + i;
+            var currentSize = 'req.body.dogsSize' + i;
+            var currentWeight = 'req.body.dogsWeight' + i;
+            var currentDob = 'req.body.dogsDateOfBirth' + i;
+
+            var dog = new Dog({
+              name: eval(currentName),
+              breed: eval(currentBreed),
+              size: eval(currentSize),
+              weight: eval(currentWeight),
+              dob: eval(currentDob),
+              owner: req.user._id
+            });
+            dog.save(function(err,result){
+              if(err){
+                console.log(err);
+              }
+            });
+
+          }
+          res.redirect("/");
+        });
       }
     });
   }else if(req.body.userType === "Trainer"){
@@ -126,8 +144,10 @@ app.post("/register", function(req, res) {
       type: req.body.userType
     }), req.body.password, function(err, user) {
       if (err) {
+
+        res.redirect("/login");
         console.log(err);
-        res.redirect("/register");
+
       } else {
         passport.authenticate("local")(req, res, function() {
               res.redirect("/");
@@ -193,7 +213,13 @@ app.get("/updateProfile", function(req, res) {
     if(req.user.type == "Dog Owner"){
       Dog.find({owner : req.user._id}, function(err,dogs){
         console.log(formatDate(dogs[0].dob));
-        res.render("updateProfile",{user : req.user, dogs : dogs, success : null, dogsDOB : formatDate(dogs[0].dob)});
+        var dogsDOB = [];
+
+        for(var i=0; i<dogs.length ; i++){
+          dogsDOB.push(formatDate(dogs[i].dob));
+        }
+
+        res.render("updateProfile",{user : req.user, dogs : dogs, success : null, dogsDOB : dogsDOB});
       });
     }else{
       res.render("updateProfile",{user : req.user, success : null});
@@ -285,7 +311,12 @@ app.get("/dogOwners/:dogOwnerID", function(req, res) {
            if(error){
              console.log(error);
            }else{
-             res.render("dogOwner", {user: req.user, foundUser : foundUser, dog : dog, age: calculate_age(dog[0].dob) });
+             var dogAges = [];
+             for(var i=0 ; i < dog.length ; i++){
+               dogAges.push(calculate_age(dog[i].dob));
+             }
+
+             res.render("dogOwner", {user: req.user, foundUser : foundUser, dog : dog, dogAges: dogAges });
            }
          });
       }
@@ -351,21 +382,51 @@ if(req.body.city != null){
 
 
     if(req.user.type === "Dog Owner"){
-      Dog.findOneAndUpdate({owner : req.user._id}, {
-          name: req.body.dogsName,
-          breed: req.body.dogsBreed,
-          size: req.body.dogsSize,
-          weight: req.body.dogsWeight,
-          dob: req.body.dogsDateOfBirth
-      }, function(err, docs) {
+      Dog.find({owner : req.user._id}, function(err, dogs) {
         if (err) {
           console.log(err);
           res.render("updateProfile",{user : req.user, dogs : dogs, success : false});
         }else{
-          console.log(req.body.dogsDateOfBirth);
-          Dog.find({owner : req.user._id}, function(err,dogs){
-            res.render("updateProfile",{user : req.user, dogs : dogs, success : true, dogsDOB : formatDate(dogs[0].dob)});
-          });
+
+          var dogsDOB = [];
+
+          for(var i=0; i<dogs.length ; i++){
+            dogsDOB.push(formatDate(dogs[i].dob));
+          }
+
+
+
+
+          for(var i = 0; i < dogs.length ; i++){
+            var j = i+1;
+
+            const name = "req.body.dogsName" + j;
+            const breed = "req.body.dogsBreed" + j;
+            const size = "req.body.dogsSize" + j;
+            const weight = "req.body.dogsWeight" + j;
+            const dob = "req.body.dogsDateOfBirth" + j;
+            Dog.findByIdAndUpdate(dogs[i]._id,{
+              name : eval(name),
+              size : eval(size),
+              weight : eval(weight),
+              dob : eval(dob)
+            }, function(err,docs){
+              if(err){
+                  console.log(err);
+              }
+            });
+
+            if(eval(breed) != null){
+              Dog.findByIdAndUpdate(dogs[i]._id,{
+                breed : eval(breed)
+              }, function(err,docs){
+                if(err){
+                    console.log(err);
+                }
+              });
+            }
+          }
+            res.redirect('/updateProfile');
         }
       });
     }else{
@@ -447,7 +508,7 @@ app.get("/", function(req, res) {
   if (req.isAuthenticated()) {
     res.render("main", {user : req.user});
   } else {
-    res.redirect("login");
+    res.redirect("/login");
   }
 });
 

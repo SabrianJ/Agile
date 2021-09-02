@@ -15,14 +15,29 @@
       <% }else{ %>
             <h4 class="small font-weight-bold">
               Username : <%= results[i].user.username %> <br />
-              Name : <%= results[i].user.name %> <br />
-              My dog is a <%= results[i].dog[0].size %> <%=  results[i].dog[0].breed %> with weight of
-              <%=  results[i].dog[0].weight %> kg.
-              <span class="float-right">
-                <a href="/dogOwners/<%= results[i].user._id %>">Find Out more...</a>
-              </span></h4>
-            <hr class="card-divider">
+              Name : <%= results[i].user.name %> <br /><br />
+              </h4>
+            <%  for(var j=1 ; j <= results[i].dog.length ; j++){ %>
+            <%    var special = ['zeroth','first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth', 'eleventh', 'twelvth', 'thirteenth', 'fourteenth', 'fifteenth', 'sixteenth', 'seventeenth', 'eighteenth', 'nineteenth']; %>
+            <%    var deca = ['twent', 'thirt', 'fourt', 'fift', 'sixt', 'sevent', 'eight', 'ninet']; %>
+
+            <%    function stringifyNumber(n) { %>
+            <%      if (n < 20) return special[n]; %>
+            <%      if (n%10 === 0) return deca[Math.floor(n/10)-2] + 'ieth'; %>
+            <%      return deca[Math.floor(n/10)-2] + 'y-' + special[n%10];%>
+            <%      }%>
+
+            <h4 class="small font-weight-bold">
+                  My <%= stringifyNumber(j) %> dog is a <%= results[i].dog[j-1].size %> <%=  results[i].dog[j-1].breed %> with weight of
+                  <%=  results[i].dog[j-1].weight %> kg.
+
+
+            <%  } %>
         <%  } %>
+        <span class="float-right">
+          <a href="/dogOwners/<%= results[i].user._id %>">Find Out more...</a>
+        </span></h4>
+          <hr class="card-divider">
       <% } %>
 
 
