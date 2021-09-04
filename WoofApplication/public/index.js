@@ -1,4 +1,5 @@
 var numberOfDogs = 1;
+var checkList = document.getElementById('preferenceInput');
 
 
 
@@ -17,6 +18,33 @@ $("input:checkbox").on('click', function() {
     $box.prop("checked", false);
   }
 });
+
+
+function dropdownChecklist() {
+  if (checkList.classList.contains('visible'))
+    checkList.classList.remove('visible');
+  else
+    checkList.classList.add('visible');
+}
+
+function dropdownChecklistUpdateProfile(preferenceArray) {
+  if (checkList.classList.contains('visible')){
+    checkList.classList.remove('visible');
+  }else{
+    checkList.classList.add('visible');
+  }
+
+    for(var i=0 ; i < preferenceArray.length ; i++){
+      var chk_arr =  document.getElementsByName("preferences[]");
+      var chklength = chk_arr.length;
+
+            for(var k=0;k< chklength;k++){
+                if(chk_arr[k].value == preferenceArray[i]){
+                chk_arr[k].checked = true;
+                }
+            }
+    }
+}
 
 
 
@@ -89,6 +117,7 @@ dogRegistration.innerHTML =
     '<option value="Welsh Sheepdog">Welsh Sheepdog</option>'+
     '<option value="Whippet">Whippet</option>'+
     '<option value="Yakultian Laika">Yakultian Laika</option>'+
+    '<option value="Other">Other</option>'+
   '</select>'+
 
   '<div class="radioButton" style="margin-top:10px; margin-bottom:10px;">'+
@@ -169,10 +198,13 @@ function assignNumberOfDogs(){
 
 function removeDogField(){
   document.getElementById('dogForm').style.display = "none";
+  document.getElementById('preferenceForm').style.display = "block";
 }
 
 function addDogField(){
   document.getElementById('dogForm').style.display = "block";
+  document.getElementById('preferenceForm').style.display = "none";
+
 }
 
 function validateForm(){

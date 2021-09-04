@@ -52,6 +52,75 @@
 
           </select>
         </div>
+        <div class="form-group" id="preferenceForm" style="display:none;">
+          <label for="preferenceInput">Preference</label><br/>
+          <div id="preferenceInput" class="dropdown-check-list" tabindex="100">
+            <span class="anchor" onclick="dropdownChecklist()">Select Preferences</span>
+            <ul class="items">
+              <li><input type="checkbox" name="preferences[]" value="Affenpinscher"/>Affenpinscher </li>
+              <li><input type="checkbox" name="preferences[]" value="Afghan Hound"/>Afghan Hound</li>
+              <li><input type="checkbox" name="preferences[]" value="Africanis"/>Africanis </li>
+              <li><input type="checkbox" name="preferences[]" value="Akita"/>Akita </li>
+              <li><input type="checkbox" name="preferences[]" value="American Bulldog"/>American Bulldog </li>
+              <li><input type="checkbox" name="preferences[]" value="Basque Shepherd Dog"/>Basque Shepherd Dog </li>
+              <li><input type="checkbox" name="preferences[]" value="Basset Hound"/>Basset Hound</li>
+              <li><input type="checkbox" name="preferences[]" value="Bichon Frise"/>Bichon Frise</li>
+              <li><input type="checkbox" name="preferences[]" value="Bohemian Shepherd"/>Bohemian Shepherd </li>
+              <li><input type="checkbox" name="preferences[]" value="Bulldog"/>Bulldog</li>
+              <li><input type="checkbox" name="preferences[]" value="Carolina Dog"/>Carolina Dog </li>
+              <li><input type="checkbox" name="preferences[]" value="Chihuahua"/>Chihuahua </li>
+              <li><input type="checkbox" name="preferences[]" value="Dalmatian"/>Dalmatian </li>
+              <li><input type="checkbox" name="preferences[]" value="Dingo"/>Dingo </li>
+              <li><input type="checkbox" name="preferences[]" value="Dobermann"/>Dobermann</li>
+              <li><input type="checkbox" name="preferences[]" value="Drever"/>Drever </li>
+              <li><input type="checkbox" name="preferences[]" value="Dunker"/>Dunker</li>
+              <li><input type="checkbox" name="preferences[]" value="English Mastiff"/>English Mastiff </li>
+              <li><input type="checkbox" name="preferences[]" value="English Shepherd"/>English Shepherd </li>
+              <li><input type="checkbox" name="preferences[]" value="Estonian Hound"/>Estonian Hound </li>
+              <li><input type="checkbox" name="preferences[]" value="Finnish Hound"/>Finnish Hound </li>
+              <li><input type="checkbox" name="preferences[]" value="French Bulldog"/>French Bulldog</li>
+              <li><input type="checkbox" name="preferences[]" value="German Hound"/>German Hound </li>
+              <li><input type="checkbox" name="preferences[]" value="German Shepherd"/>German Shepherd</li>
+              <li><input type="checkbox" name="preferences[]" value="Himalayan Sheepdog"/>Himalayan Sheepdog </li>
+              <li><input type="checkbox" name="preferences[]" value="Hierran Wolfdog"/>Hierran Wolfdog </li>
+              <li><input type="checkbox" name="preferences[]" value="Indian Spitz"/>Indian Spitz </li>
+              <li><input type="checkbox" name="preferences[]" value="Italian Greyhound"/>Italian Greyhound </li>
+              <li><input type="checkbox" name="preferences[]" value="Japanese Spitz"/>Japanese Spitz</li>
+              <li><input type="checkbox" name="preferences[]" value="Kai Ken"/>Kai Ken </li>
+              <li><input type="checkbox" name="preferences[]" value="Kaikadi"/>Kaikadi</li>
+              <li><input type="checkbox" name="preferences[]" value="Labrador Retriever"/>Labrador Retriever </li>
+              <li><input type="checkbox" name="preferences[]" value="Lithuanian Hound"/>Lithuanian Hound </li>
+              <li><input type="checkbox" name="preferences[]" value="Maltese"/>Maltese </li>
+              <li><input type="checkbox" name="preferences[]" value="Mountain Cur"/>Mountain Cur </li>
+              <li><input type="checkbox" name="preferences[]" value="New Zealand Heading"/>New Zealand Heading</li>
+              <li><input type="checkbox" name="preferences[]" value="Otterhound"/>Otterhound </li>
+              <li><input type="checkbox" name="preferences[]" value="Papillon"/>Papillon </li>
+              <li><input type="checkbox" name="preferences[]" value="Patagonian Sheepdog"/>Patagonian Sheepdog </li>
+              <li><input type="checkbox" name="preferences[]" value="Pekingese"/>Pekingese </li>
+              <li><input type="checkbox" name="preferences[]" value="Pointer"/>Pointer</li>
+              <li><input type="checkbox" name="preferences[]" value="Poitevin"/>Poitevin </li>
+              <li><input type="checkbox" name="preferences[]" value="Poodle"/>Poodle</li>
+              <li><input type="checkbox" name="preferences[]" value="Pudelpointer"/>Pudelpointer </li>
+              <li><input type="checkbox" name="preferences[]" value="Pug"/>Pug </li>
+              <li><input type="checkbox" name="preferences[]" value="Pungsan"/>Pungsan </li>
+              <li><input type="checkbox" name="preferences[]" value="Rottweiler"/>Rottweiler </li>
+              <li><input type="checkbox" name="preferences[]" value="Russian Spaniel"/>Russian Spaniel</li>
+              <li><input type="checkbox" name="preferences[]" value="Ryukyu Inu"/>Ryukyu Inu</li>
+              <li><input type="checkbox" name="preferences[]" value="Shiba Inu"/>Shiba Inu </li>
+              <li><input type="checkbox" name="preferences[]" value="Shih Tzu"/>Shih Tzu</li>
+              <li><input type="checkbox" name="preferences[]" value="Siberian Husky"/>Siberian Husky </li>
+              <li><input type="checkbox" name="preferences[]" value="Taigan"/>Taigan </li>
+              <li><input type="checkbox" name="preferences[]" value="Tamaskan Dog"/>Tamaskan Dog </li>
+              <li><input type="checkbox" name="preferences[]" value="Weimaraner"/>Weimaraner </li>
+              <li><input type="checkbox" name="preferences[]" value="Welsh Sheepdog"/>Welsh Sheepdog</li>
+              <li><input type="checkbox" name="preferences[]" value="Whippet"/>Whippet </li>
+              <li><input type="checkbox" name="preferences[]" value="Yakultian Laika"/>Yakultian Laika </li>
+              <li><input type="checkbox" name="preferences[]" value="Other"/>Other</li>
+            </ul>
+          </div>
+        </div>
+
+
 
         <div class="form-group dogForm" id="dogForm">
           <div class="form-group dogInner" id="dogInner">
@@ -118,6 +187,7 @@
                 <option value="Welsh Sheepdog">Welsh Sheepdog</option>
                 <option value="Whippet">Whippet</option>
                 <option value="Yakultian Laika">Yakultian Laika</option>
+                <option value="Other">Other</option>
               </select>
 
               <div class="radioButton" style="margin-top:10px; margin-bottom:10px;">

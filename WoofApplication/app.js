@@ -62,6 +62,7 @@ const usersSchema = new mongoose.Schema({
   city: String,
   suburb: String,
   type: String,
+  preference: Array,
   password: String
 });
 
@@ -155,6 +156,7 @@ app.post("/register", function(req, res) {
       address: req.body.address,
       city: req.body.city,
       suburb : req.body.suburb,
+      preference: req.body.preferences,
       type: req.body.userType
     }), req.body.password, function(err, user) {
       if (err) {
@@ -461,11 +463,15 @@ if(req.body.city != null){
         }
       });
     }else{
-        res.render("updateProfile",{user : req.user, success : true});
+      User.findByIdAndUpdate(req.user._id, {
+        preference: req.body.preferences
+      }, function(err, docs) {
+        if (err) {
+          console.log(err);
+        }
+      });
+        res.redirect('/updateProfile');
     }
-
-
-
   }
 });
 
