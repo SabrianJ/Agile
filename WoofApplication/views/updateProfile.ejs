@@ -140,10 +140,28 @@
         </div>
         <%}%>
 
-                            <label for="dogWeight">Dog's Weight</label>
-                            <input type="text" class="form-control" id="dogWeight" placeholder="Weight = <%- dogs[i-1].weight %>" style="width:25%" name="dogsWeight<%- i %>" value="<%- dogs[i-1].weight %>">
+        <label for="dogWeight">Dog's Weight</label>
+        <input type="text" class="form-control" id="dogWeight" placeholder="Weight = <%- dogs[i-1].weight %>" style="width:25%" name="dogsWeight<%- i %>" value="<%- dogs[i-1].weight %>">
+
+        <%  function maxDate() { %>
+        <%  var d = new Date(); %>
+        <%  var month = '' + (d.getMonth() + 1); %>
+        <%  var day = '' + d.getDate(); %>
+        <%  var year = d.getFullYear();%>
+
+      <%    if (month.length < 2)%>
+      <%        month = '0' + month;%>
+      <%    if (day.length < 2)%>
+      <%        day = '0' + day;%>
+
+      <%    return [year, month, day].join('-');%>
+      <%    }%>
+
+    <%   var max = maxDate(); %>
+
+
         <label for="dogAge">Dog's date of birth</label>
-        <input type="date" class="form-control" id="dogsDateOfBirth" placeholder="<%- dogsDOB[i-1] %>" style="width:25%" name="dogsDateOfBirth<%- i %>" value="<%- dogsDOB[i-1] %>">
+        <input type="date" class="form-control" id="dogsDateOfBirth" max="<%- max %>" placeholder="<%- dogsDOB[i-1] %>" style="width:25%" name="dogsDateOfBirth<%- i %>" value="<%- dogsDOB[i-1] %>">
 
         <input type="text" style="display:none;" class="form-control" id="imageURI<%- i %>"  name="imageURI<%- i %>" value="">
         <label for="dogsImage" class="form-label">Please upload your new dog image if you want to change current image</label>

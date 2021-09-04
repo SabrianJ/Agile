@@ -1,5 +1,6 @@
 var numberOfDogs = 1;
 var checkList = document.getElementById('preferenceInput');
+var max = setMaxDate();
 
 
 
@@ -18,6 +19,20 @@ $("input:checkbox").on('click', function() {
     $box.prop("checked", false);
   }
 });
+
+function setMaxDate() {
+var d = new Date();
+var month = '' + (d.getMonth() + 1);
+var day = '' + d.getDate();
+var year = d.getFullYear();
+
+if (month.length < 2)
+    month = '0' + month;
+if (day.length < 2)
+    day = '0' + day;
+
+return [year, month, day].join('-');
+}
 
 
 function dropdownChecklist() {
@@ -128,7 +143,7 @@ dogRegistration.innerHTML =
   '</div>'+
   '<input type="number" class="form-control" id="dogsWeight" placeholder="Weight (in kg)" name="dogsWeight'+ window.numberOfDogs +'" style="width:25%">'+
   '<label for="dogsDateOfBirth" class="form-label">Please choose the date of birth of your dog</label>'+
-  '<input type="date" class="form-control" id="dogsDateOfBirth" name="dogsDateOfBirth' + window.numberOfDogs +'" style="width:25%">'+
+  '<input type="date" class="form-control" id="dogsDateOfBirth" name="dogsDateOfBirth' + window.numberOfDogs +'" style="width:25%" max="'+ window.max +'" >'+
   '<div class="form-group">' +
   '<input type="text" style="display:none;" class="form-control" id="imageURI'+ window.numberOfDogs+'"  name="imageURI' + window.numberOfDogs + '" value="">' +
   '<label for="dogsImage" class="form-label">Please upload your dog image</label>' +

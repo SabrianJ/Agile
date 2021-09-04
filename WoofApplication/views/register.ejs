@@ -196,9 +196,27 @@
                 <label><input style="margin-left:10px;" type="radio" name="dogsSize1" value="medium">Medium</label>
                 <label><input style="margin-left:10px;" type="radio" name="dogsSize1" value="big">Big</label>
               </div>
+
+            <%  function maxDate() { %>
+            <%  var d = new Date(); %>
+            <%  var month = '' + (d.getMonth() + 1); %>
+            <%  var day = '' + d.getDate(); %>
+            <%  var year = d.getFullYear();%>
+
+          <%    if (month.length < 2)%>
+          <%        month = '0' + month;%>
+          <%    if (day.length < 2)%>
+          <%        day = '0' + day;%>
+
+          <%    return [year, month, day].join('-');%>
+          <%    }%>
+
+        <%   var max = maxDate(); %>
+
+
               <input type="number" class="form-control" id="dogsWeight" placeholder="Weight (in kg)" name="dogsWeight1" style="width:25%">
               <label for="dogsDateOfBirth" class="form-label">Please choose the date of birth of your dog</label>
-              <input type="date" class="form-control" id="dogsDateOfBirth" name="dogsDateOfBirth1" style="width:25%">
+              <input type="date" class="form-control" id="dogsDateOfBirth" name="dogsDateOfBirth1" style="width:25%" max="<%- max %>" >
 
               <div class="form-group">
               <input type="text" style="display:none;" class="form-control" id="imageURI1"  name="imageURI1" value="">
