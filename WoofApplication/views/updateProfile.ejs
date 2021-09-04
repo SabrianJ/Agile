@@ -139,6 +139,13 @@
                             <input type="text" class="form-control" id="dogWeight" placeholder="Weight = <%- dogs[i-1].weight %>" style="width:25%" name="dogsWeight<%- i %>" value="<%- dogs[i-1].weight %>">
         <label for="dogAge">Dog's date of birth</label>
         <input type="date" class="form-control" id="dogsDateOfBirth" placeholder="<%- dogsDOB[i-1] %>" style="width:25%" name="dogsDateOfBirth<%- i %>" value="<%- dogsDOB[i-1] %>">
+
+        <input type="text" style="display:none;" class="form-control" id="imageURI<%- i %>"  name="imageURI<%- i %>" value="">
+        <label for="dogsImage" class="form-label">Please upload your new dog image if you want to change current image</label>
+        <br>
+        <input type="file" class="form-input" id="dogsImage" name="dogsImage<%- i %>" onchange="loadFile(event, <%- i %>)" />
+        <br>
+        <img id="output<%- i %>" class="dogImage" src="https://res.cloudinary.com/woof2021/image/upload/dogsImage/<%- dogs[i-1]._id %>" alt="No image Provided"/>
       </div>
       <hr>
 

@@ -99,7 +99,13 @@ dogRegistration.innerHTML =
   '</div>'+
   '<input type="number" class="form-control" id="dogsWeight" placeholder="Weight (in kg)" name="dogsWeight'+ window.numberOfDogs +'" style="width:25%">'+
   '<label for="dogsDateOfBirth" class="form-label">Please choose the date of birth of your dog</label>'+
-  '<input type="date" class="form-control" id="dogsDateOfBirth" name="dogsDateOfBirth' + window.numberOfDogs +'" style="width:25%">';
+  '<input type="date" class="form-control" id="dogsDateOfBirth" name="dogsDateOfBirth' + window.numberOfDogs +'" style="width:25%">'+
+  '<div class="form-group">' +
+  '<input type="text" style="display:none;" class="form-control" id="imageURI'+ window.numberOfDogs+'"  name="imageURI' + window.numberOfDogs + '" value="">' +
+  '<label for="dogsImage" class="form-label">Please upload your dog image</label>' +
+  '<br><input type="file" class="form-input" id="dogsImage" name="dogsImage'+ window.numberOfDogs +'" onchange="loadFile(event,' + window.numberOfDogs +')" value="" />'+
+  '<br><img id="output'+ window.numberOfDogs +'" class="dogImage"  />'+
+  '</div>';
 
   const dogInner = document.getElementById("dogInner");
   dogInner.appendChild(dogRegistration);
@@ -116,6 +122,44 @@ function removeDog(){
     dogInner.removeChild(dogRegistration);
     numberOfDogs -= 1;
   }
+}
+
+function getDataUri(url, callback) {
+    var image = new Image();
+
+    image.onload = function () {
+        var canvas = document.createElement('canvas');
+        canvas.width = this.naturalWidth; // or 'width' if you want a special/scaled size
+        canvas.height = this.naturalHeight; // or 'height' if you want a special/scaled size
+
+        canvas.getContext('2d').drawImage(this, 0, 0);
+
+        // Get raw image data
+        callback(canvas.toDataURL('image/png').replace(/^data:image\/(png|jpg);base64,/, ''));
+
+        // ... or get as Data URI
+        callback(canvas.toDataURL('image/png'));
+    };
+
+    image.src = url;
+}
+
+
+function loadFile(event, numberOfDogs){
+  var outputName = "output" + numberOfDogs;
+  var output = document.getElementById(outputName);
+  output.src = URL.createObjectURL(event.target.files[0]);
+
+  getDataUri(URL.createObjectURL(event.target.files[0]), function(dataUri) {
+    var uriHolderName = "imageURI" + numberOfDogs;
+    var dataURIHolder = document.getElementById(uriHolderName);
+    dataURIHolder.value = dataUri;
+});
+
+  output.onload = function(){
+    URL.revokeObjectURL(output.src)
+  }
+
 }
 
 function assignNumberOfDogs(){

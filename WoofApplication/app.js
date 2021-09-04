@@ -7,6 +7,8 @@ const findOrCreate = require("mongoose-findorcreate");
 const _ = require("lodash");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
+const cloudinary = require("cloudinary").v2;
+const nocache = require('nocache');
 
 const app = express();
 
@@ -15,7 +17,8 @@ app.use(express.static("public"));
 app.set('view engine', 'ejs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
+  limit: '50mb'
 }));
 
 app.use(session({
@@ -26,12 +29,21 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(nocache());
+
 
 mongoose.connect("mongodb+srv://admin-Sabrian:Sabrianjs1302@cluster0.p9zmt.mongodb.net/woof", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 mongoose.set("useCreateIndex", true);
+
+cloudinary.config({
+  cloud_name: 'woof2021',
+  api_key: '994115692726124',
+  api_secret: '-pNnbwpwncgA3FVxlDn_pfGYi2E',
+  secure: true
+});
 
 const dogsSchema = new mongoose.Schema({
   name: String,
@@ -69,6 +81,7 @@ if (port == null || port == "") {
 }
 
 app.get("/login", function(req, res) {
+
   res.render("login", {
     errorMessage: ""
   });
@@ -79,9 +92,6 @@ app.get("/register", function(req, res) {
 });
 
 app.post("/register", function(req, res) {
-
-  // console.log(req.body.dogsName1);
-  // console.log(req.body.dogsName2);
 
   if(req.body.userType === "Dog Owner"){
     User.register(new User({
@@ -105,9 +115,6 @@ app.post("/register", function(req, res) {
           console.log(numberOfDogs);
 
           for(var i=1; i <= numberOfDogs ; i++){
-
-
-
             var currentName = 'req.body.dogsName' + i;
             var currentBreed = 'req.body.dogsBreed' + i;
             var currentSize = 'req.body.dogsSize' + i;
@@ -126,6 +133,13 @@ app.post("/register", function(req, res) {
               if(err){
                 console.log(err);
               }
+            });
+
+            var imageURIName = "req.body.imageURI" + i;
+
+            var uploadedResponse = cloudinary.uploader.upload(eval(imageURIName),{
+              upload_preset: 'dogsImage',
+              public_id : dog._id
             });
 
           }
@@ -176,6 +190,11 @@ app.get("/deleteUser", function(req,res){
     if(req.user.type == "Dog Owner"){
       Dog.find({owner : req.user._id}, function(err, dogs){
         for(var i=0;i< dogs.length; i++){
+
+          cloudinary.uploader.destroy('dogsImage/' + dogs[i]._id, function(error,result) {
+  console.log(result, error) });
+
+
           Dog.findByIdAndRemove(dogs[i]._id, function(err){
             if(err){
               console.log(err);
@@ -425,6 +444,18 @@ if(req.body.city != null){
                 }
               });
             }
+
+            var imageURIName = "req.body.imageURI" + j;
+
+            if(eval(imageURIName) != null){
+              var uploadedResponse = cloudinary.uploader.upload(eval(imageURIName),{
+                upload_preset: 'dogsImage',
+                public_id : dogs[i]._id
+              });
+            }
+
+
+
           }
             res.redirect('/updateProfile');
         }

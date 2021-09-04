@@ -319,6 +319,14 @@ legend {
   white-space: normal;
 }
 
+.dogImage{
+  border-radius: 50%;
+  width:100px;
+  height:100px;
+  background-size:contain;
+  background-position:center;
+}
+
 progress {
   vertical-align: baseline;
 }

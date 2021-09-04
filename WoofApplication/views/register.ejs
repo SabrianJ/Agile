@@ -129,6 +129,15 @@
               <input type="number" class="form-control" id="dogsWeight" placeholder="Weight (in kg)" name="dogsWeight1" style="width:25%">
               <label for="dogsDateOfBirth" class="form-label">Please choose the date of birth of your dog</label>
               <input type="date" class="form-control" id="dogsDateOfBirth" name="dogsDateOfBirth1" style="width:25%">
+
+              <div class="form-group">
+              <input type="text" style="display:none;" class="form-control" id="imageURI1"  name="imageURI1" value="">
+              <label for="dogsImage" class="form-label">Please upload your dog image</label>
+              <br>
+              <input type="file" class="form-input" id="dogsImage" name="dogsImage1" onchange="loadFile(event, 1)" />
+              <br>
+              <img id="output1" class="dogImage" />
+              </div>
             </div>
           </div>
           <a style="padding-left: 475px;" onclick="addDog()"><i class="fas fa-plus-circle fa-3x" title="Click to add more dog"></i></a>
