@@ -20,6 +20,28 @@ $("input:checkbox").on('click', function() {
   }
 });
 
+function rangeValue(){
+  var range = document.getElementById('rangeInput');
+  var distance = document.getElementById('distance');
+  var distanceRange = document.getElementById('distanceRange');
+  if(range.value == 1){
+    distance.value = 500;
+    distanceRange.innerHTML = "500 meters";
+  }else if(range.value == 2){
+    distance.value = 1000;
+    distanceRange.innerHTML = "1000 meters";
+  }else if(range.value == 3){
+    distance.value = 1500;
+    distanceRange.innerHTML = "1500 meters";
+  }else if(range.value == 4){
+    distance.value = 2000;
+    distanceRange.innerHTML = "2000 meters";
+  }else if(range.value == 5){
+    distance.value = 2500;
+    distanceRange.innerHTML = "> 2000 meters";
+  }
+}
+
 function setMaxDate() {
 var d = new Date();
 var month = '' + (d.getMonth() + 1);

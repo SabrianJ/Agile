@@ -52,6 +52,17 @@
 
           </select>
         </div>
+
+        <div class="form-group">
+          <label for="rangeInput" class="form-label">Please specify the distance you are willing to travel</label>
+            <input type="range" class="form-range " min="1" max="5" id="rangeInput" style="width:80%" onchange="rangeValue()" value="3">
+            <label class="form-label" id="distanceRange">1500 meters</label>
+          <input type="text" class="form-control" id="distance" value="1500" name="distance" style="display:none; border: none;">
+        </div>
+
+
+
+
         <div class="form-group" id="preferenceForm" style="display:none;">
           <label for="preferenceInput">Preference</label><br/>
           <div id="preferenceInput" class="dropdown-check-list" tabindex="100">

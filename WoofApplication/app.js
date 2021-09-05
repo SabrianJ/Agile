@@ -63,6 +63,7 @@ const usersSchema = new mongoose.Schema({
   suburb: String,
   type: String,
   preference: Array,
+  distance: String,
   password: String
 });
 
@@ -93,7 +94,6 @@ app.get("/register", function(req, res) {
 });
 
 app.post("/register", function(req, res) {
-
   if(req.body.userType === "Dog Owner"){
     User.register(new User({
       username: req.body.username,
@@ -102,6 +102,7 @@ app.post("/register", function(req, res) {
       address: req.body.address,
       city: req.body.city,
       suburb : req.body.suburb,
+      distance : req.body.distance,
       type: req.body.userType
     }), req.body.password, function(err, user) {
       if (err) {
@@ -156,6 +157,7 @@ app.post("/register", function(req, res) {
       address: req.body.address,
       city: req.body.city,
       suburb : req.body.suburb,
+      distance : req.body.distance,
       preference: req.body.preferences,
       type: req.body.userType
     }), req.body.password, function(err, user) {
@@ -370,6 +372,14 @@ app.post("/updateProfile", function(req, res) {
 
     User.findByIdAndUpdate(req.user._id, {
       address: req.body.address
+    }, function(err, docs) {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    User.findByIdAndUpdate(req.user._id, {
+      distance: req.body.distance
     }, function(err, docs) {
       if (err) {
         console.log(err);
