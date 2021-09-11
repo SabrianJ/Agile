@@ -90,7 +90,9 @@ app.get("/login", function(req, res) {
 });
 
 app.get("/register", function(req, res) {
-  res.render("register");
+  res.render("register",{
+    errorMessage: ""
+  });
 });
 
 app.post("/register", function(req, res) {
@@ -106,9 +108,11 @@ app.post("/register", function(req, res) {
       type: req.body.userType
     }), req.body.password, function(err, user) {
       if (err) {
-
-        res.redirect("/login");
         console.log(err);
+
+        res.render("register",{
+          errorMessage: err
+        });
 
       } else {
         passport.authenticate("local")(req, res, function() {
@@ -163,8 +167,11 @@ app.post("/register", function(req, res) {
     }), req.body.password, function(err, user) {
       if (err) {
 
-        res.redirect("/login");
         console.log(err);
+
+        res.render("register",{
+          errorMessage: err
+        });
 
       } else {
         passport.authenticate("local")(req, res, function() {
