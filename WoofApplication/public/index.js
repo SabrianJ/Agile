@@ -2,7 +2,12 @@ var numberOfDogs = 1;
 var checkList = document.getElementById('preferenceInput');
 var max = setMaxDate();
 
+function initialize() {
+  var input = document.getElementById('addressInput');
+  new google.maps.places.Autocomplete(input);
+}
 
+google.maps.event.addDomListener(window, 'load', initialize)
 
 $("input:checkbox").on('click', function() {
   // in the handler, 'this' refers to the box clicked on
@@ -19,6 +24,8 @@ $("input:checkbox").on('click', function() {
     $box.prop("checked", false);
   }
 });
+
+
 
 function rangeValue(){
   var range = document.getElementById('rangeInput');
