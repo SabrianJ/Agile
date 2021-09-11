@@ -40,7 +40,7 @@
         </div>
         <div class="form-group">
           <label for="cityInput">City</label>
-          <select id="cityInput" name="city" onchange="suburbSelection(this.options[this.selectedIndex].value)" class="form-control" style="width:25%">
+          <select id="cityInput" name="city" class="form-control" style="width:25%">
             <option disabled selected value="null"> -- select City -- </option>
             <option value="Auckland">Auckland</option>
             <option value="Wellington">Wellington</option>
@@ -49,7 +49,8 @@
         </div>
         <div class="form-group">
           <label for="suburbInput">Suburb</label>
-          <select id="suburbInput" name="suburb" class="form-control" style="width:25%">
+          <select id="suburbInput" name="suburb" onclick="suburbSelection()" class="form-control" style="width:25%">
+            <option disabled selected value="null"> -- select Suburb -- </option>
 
           </select>
         </div>

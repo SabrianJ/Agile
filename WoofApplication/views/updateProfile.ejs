@@ -30,7 +30,7 @@
 
     <div class="form-group">
       <label for="cityInput">City</label>
-      <select id="cityInput" name="city" onchange="suburbSelection(this.options[this.selectedIndex].value)" style="width:25%" class="form-control" placeholder="<%- user.city %>" value="<%- user.city %>">
+      <select id="cityInput" name="city" style="width:25%" class="form-control" placeholder="<%- user.city %>" value="<%- user.city %>">
         <option disabled selected value="<%- user.city %>"> <%= user.city %> </option>
         <option value="Auckland">Auckland</option>
         <option value="Wellington">Wellington</option>
@@ -39,7 +39,7 @@
     </div>
     <div class="form-group">
       <label for="suburbInput">Suburb</label>
-      <select id="suburbInput" name="suburb" class="form-control" style="width:25%" value="<%- user.suburb %>" placeholder="<%- user.suburb %>">
+      <select id="suburbInput" name="suburb" onclick="suburbSelection()" class="form-control" style="width:25%" value="<%- user.suburb %>" placeholder="<%- user.suburb %>">
         <option disabled selected value="<%- user.suburb %>"> <%= user.suburb %> </option>
       </select>
     </div>
