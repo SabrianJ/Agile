@@ -23,6 +23,7 @@
           <div class="form-group">
             <label for="userNameInput">Username</label>
             <input type="text" class="form-control" id="userNameInput" placeholder="Enter username" name="username" style="width:25%">
+            <p style="color : red"><%= errorMessage %></p>
             <label for="NameInput">Name</label>
             <input type="text" pattern="[a-zA-Z\s]*" style="width:80%" title="Name should only contain letters." class="form-control" id="NameInput" placeholder="Enter name" name="name">
 
@@ -254,7 +255,7 @@
         <a class="btn btn-outline-primary" href="/login" role="button">Cancel</a>
       </form>
 
-      <p style="color : red"><%= errorMessage %></p>
+
 
     </div>
   </div>
