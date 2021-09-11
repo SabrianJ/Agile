@@ -95,7 +95,7 @@ app.get("/register", function(req, res) {
   });
 });
 
-app.get("/googleaa6c330e01886bd6", function(req, res) {
+app.get("/googleaa6c330e01886bd6.html", function(req, res) {
   res.render("googleaa6c330e01886bd6");
 });
 
