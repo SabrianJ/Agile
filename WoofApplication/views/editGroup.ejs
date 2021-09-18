@@ -1,0 +1,146 @@
+<%- include("topBar") -%>
+
+<!-- Content Column -->
+<div class="col-lg-12 mb-4">
+
+  <!-- Project Card Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Edit Group</h6>
+    </div>
+      <form name="groupForm" action="/groups/edit/<%-foundGroup[0]._id%>" method="POST" autocomplete="off" required>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="nameInput">Name</label>
+            <input type="text" class="form-control" id="nameInput" style="width:80%" value="<%-foundGroup[0].name%>" name="name">
+          </div>
+
+
+      <table style="width:80%;" class="form-group">
+        <tr>
+          <td>
+            <label for="inviteSomeone" class="form-label">Invite Someone</label>
+            <label class="switch">
+              <input type="checkbox" id="inviteSomeone">
+              <span class="slider round" onclick="inviteSomeone()"></span>
+            </label>
+
+            <div class="form-group" id="dogOwners" style="display:none;">
+              <div id="dogOwnersInput" class="dropdown-check-list" tabindex="100">
+                <span class="anchor" onclick="dropdownChecklistOwner()">Select Other Dog Owner</span>
+                <ul class="items">
+
+                  <%  for(var i = 0 ; i < dogOwners.length ; i++){ %>
+                  <%      if(foundGroup[0].member.length === 0){ %>
+                          <li><input type="checkbox" name="newOwners[]" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
+                  <%      }else{ %>
+                          <%for(var j=0 ; j < foundGroup[0].member.length ; j++){ %>
+                            <%if(dogOwners[i]._id != foundGroup[0].member[j]){%>
+                                <li><input type="checkbox" name="newOwners[]" value="<%- dogOwners[i]._id %>"/><%= dogOwners[i].username %></li>
+                              <%} %>
+
+
+                          <%}%>
+                  <%      } %>
+                  <%  } %>
+                </ul>
+              </div>
+            </div>
+          </td>
+
+          <td>
+            <label for="excludeSomeone" class="form-label">Exclude Someone</label>
+            <label class="switch">
+              <input type="checkbox" id="excludeSomeone">
+              <span class="slider round" onclick="excludeSomeone()"></span>
+            </label>
+
+            <div class="form-group" id="currentOwners" style="display:none;">
+              <div id="currentOwnersInput" class="dropdown-check-list" tabindex="100">
+                <span class="anchor" onclick="dropdownChecklistCurrentOwner()">Select Dog Owner to Exclude</span>
+                <ul class="items">
+                <%  for(var i=0 ; i < foundGroup[0].member.length ; i++){ %>
+                <%      for(var j=0 ; j < dogOwners.length ; j++){ %>
+                <%        if(dogOwners[j]._id == foundGroup[0].member[i]){ %>
+                          <li><input type="checkbox" name="currentOwnersExclude[]" value="<%- foundGroup[0].member[i] %>"/> <%= dogOwners[j].username %>   </li>
+                <%        } %>
+                <%      } %>
+                <%  } %>
+
+                </ul>
+              </div>
+            </div>
+
+          </td>
+
+
+        </tr>
+      </table>
+
+      <div class="form-group">
+      <label for="activityDescription" class="form-label">Description</label>
+      <textarea id="activityDescription" class="form-control" name="description"><%= foundGroup[0].description %></textarea>
+      </div>
+
+      <div class="form-group">
+      <label for="message" class="form-label">Write a message to your friends</label>
+      <textarea id="message" class="form-control" name="message"></textarea>
+      </div>
+
+
+
+
+
+      <button type="submit" class="btn btn-primary">Edit</button>
+      <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+      </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+</div>
+
+<script src="/index.js" charset="utf-8"></script>
+<%- include("bottomBar") -%>

@@ -1,5 +1,8 @@
 var numberOfDogs = 1;
 var checkList = document.getElementById('preferenceInput');
+var checkListOwner = document.getElementById('dogOwnersInput');
+var checkListGroup = document.getElementById('groupsInput');
+var checkListCurrentOwner = document.getElementById('currentOwnersInput');
 var max = setMaxDate();
 
 function initialize() {
@@ -29,25 +32,69 @@ function initialize() {
 
 google.maps.event.addDomListener(window, 'load', initialize)
 
+function joinInvitation(event, invitationID,type){
+  window.open("/join/" + type + "/" + invitationID,"_self");
+}
+
+function deleteInvitation(event, invitationID){
+  window.open("/delete/invitation/" + invitationID,"_self");
+}
+
+function dropdownChecklistOwner() {
+  if (checkListOwner.classList.contains('visible'))
+    checkListOwner.classList.remove('visible');
+  else
+    checkListOwner.classList.add('visible');
+}
+
+function dropdownChecklistGroup() {
+  if (checkListGroup.classList.contains('visible'))
+    checkListGroup.classList.remove('visible');
+  else
+    checkListGroup.classList.add('visible');
+}
+
+function dropdownChecklistCurrentOwner(){
+  if(checkListCurrentOwner.classList.contains('visible'))
+    checkListCurrentOwner.classList.remove('visible');
+  else
+    checkListCurrentOwner.classList.add('visible');
+}
+
+function inviteGroup(){
+  var checkbox = document.getElementById('inviteGroup');
+  var groupsDropDown = document.getElementById('groups');
+
+  if(checkbox.checked == true){
+        groupsDropDown.style.display = "none";
+    }else{
+        groupsDropDown.style.display = "block";
+   }
+
+}
 
 
-$("input:checkbox").on('click', function() {
-  // in the handler, 'this' refers to the box clicked on
-  var $box = $(this);
-  if ($box.is(":checked")) {
-    // the name of the box is retrieved using the .attr() method
-    // as it is assumed and expected to be immutable
-    var group = "input:checkbox[name='" + $box.attr("name") + "']";
-    // the checked state of the group/box on the other hand will change
-    // and the current value is retrieved using .prop() method
-    $(group).prop("checked", false);
-    $box.prop("checked", true);
-  } else {
-    $box.prop("checked", false);
+function inviteSomeone(){
+  var checkbox = document.getElementById('inviteSomeone');
+  var dogOwnersDropDown = document.getElementById('dogOwners');
+
+  if(checkbox.checked == true){
+        dogOwnersDropDown.style.display = "none";
+    }else{
+        dogOwnersDropDown.style.display = "block";
+   }
+}
+
+function excludeSomeone(){
+  var checkbox = document.getElementById('excludeSomeone');
+  var currentOwnersDropDown = document.getElementById('currentOwners');
+
+  if(checkbox.checked == true){
+    currentOwnersDropDown.style.display = "none";
+  }else{
+    currentOwnersDropDown.style.display = "block";
   }
-});
-
-
+}
 
 function rangeValue(){
   var range = document.getElementById('rangeInput');

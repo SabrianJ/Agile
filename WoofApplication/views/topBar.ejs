@@ -63,6 +63,41 @@
                 </div>
             </li>
 
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGroup"
+                    aria-expanded="true" aria-controls="collapseAccount">
+                    <i class="fas fa-fw fa-user-graduate"></i>
+                    <span>Group</span>
+                </a>
+                <div id="collapseGroup" class="collapse" aria-labelledby="headingAccount"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Group :</h6>
+                        <a class="collapse-item" href="/createGroup">Create Group</a>
+                    </div>
+                </div>
+            </li>
+
+
+            <hr class="sidebar-divider">
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccount"
+                    aria-expanded="true" aria-controls="collapseAccount">
+                    <i class="fas fa-fw fa-user-graduate"></i>
+                    <span>Activity</span>
+                </a>
+                <div id="collapseAccount" class="collapse" aria-labelledby="headingAccount"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Activity :</h6>
+                        <a class="collapse-item" href="/createActivity">Create Activity</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
@@ -109,7 +144,48 @@
 
                     </form>
 
+                    <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter"><%= foundInvitation.length %></span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown" style="overflow-y: auto;">
+                                <h6 class="dropdown-header">
+                                    Invitation Center
+                                </h6>
 
+                            <%    for(var i=0 ; i < foundInvitation.length ; i++){ %>
+
+                                  <a class="dropdown-item d-flex align-items-center" href="#">
+                                      <div class="font-weight-bold">
+                                          <div >
+                                            <%= foundInvitation[i].message %>
+                                        </div>
+                                        <div style="padding-left: 180px;">
+                                        <i class="far fa-check-circle fa-3x" onclick="joinInvitation(event,'<%= foundInvitation[i].id %>','<%= foundInvitation[i].type%>')" ></i>
+                                          <i class="far fa-times-circle fa-3x" onclick="deleteInvitation(event,'<%= foundInvitation[i].id %>')"></i>
+                                        </div>
+
+                                          <div class="small text-gray-500"><%= foundInvitation[i].name %> - <%= foundInvitation[i].type %></div>
+                                      </div>
+                                  </a>
+
+
+
+
+                            <%    } %>
+
+
+
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
