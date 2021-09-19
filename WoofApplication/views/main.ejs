@@ -10,9 +10,19 @@
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
-                    <div class="row">
-                        <%- include("groupCard") -%>
-                    </div>
+                    <% if(user.type === "Dog Owner"){ %>
+                      <div class="row">
+                          <%- include("groupCard") -%>
+                          <%- include("activityCard") -%>
+                      </div>
+
+                      <div class="row">
+
+                      </div>
+                  <%  }else{ %>
+
+                <%    } %>
+
 
 
                 </div>

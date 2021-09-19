@@ -2,6 +2,7 @@ var numberOfDogs = 1;
 var checkList = document.getElementById('preferenceInput');
 var checkListOwner = document.getElementById('dogOwnersInput');
 var checkListGroup = document.getElementById('groupsInput');
+var checkListGroup1 = document.getElementById('groupsInput1');
 var checkListCurrentOwner = document.getElementById('currentOwnersInput');
 var max = setMaxDate();
 
@@ -54,6 +55,13 @@ function dropdownChecklistGroup() {
     checkListGroup.classList.add('visible');
 }
 
+function dropdownChecklistGroup1() {
+  if (checkListGroup1.classList.contains('visible'))
+    checkListGroup1.classList.remove('visible');
+  else
+    checkListGroup1.classList.add('visible');
+}
+
 function dropdownChecklistCurrentOwner(){
   if(checkListCurrentOwner.classList.contains('visible'))
     checkListCurrentOwner.classList.remove('visible');
@@ -70,7 +78,17 @@ function inviteGroup(){
     }else{
         groupsDropDown.style.display = "block";
    }
+}
 
+function excludeGroup(){
+  var checkbox = document.getElementById('excludeGroup');
+  var groupsDropDown = document.getElementById('groups1');
+
+  if(checkbox.checked == true){
+        groupsDropDown.style.display = "none";
+    }else{
+        groupsDropDown.style.display = "block";
+   }
 }
 
 

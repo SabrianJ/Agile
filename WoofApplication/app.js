@@ -72,7 +72,7 @@ const activitySchema = new mongoose.Schema({
   dateTime : Date,
   name: String,
   description: String,
-  member: Array,
+  member: [String],
   creator: String
 });
 
@@ -88,7 +88,7 @@ const eventSchema = new mongoose.Schema({
   dateTime: Date,
   name : String,
   description : String,
-  member : Array,
+  member : [String],
   creator : String
 });
 
@@ -97,7 +97,7 @@ const trainingSchema = new mongoose.Schema({
   dateTime : Date,
   name : String,
   description : String,
-  member: Array,
+  member: [String],
   creator : String
 });
 
@@ -167,7 +167,13 @@ app.get("/createActivity", function(req, res) {
             if(err){
               console.log(err);
             }else{
-              res.render("createActivity", {user: req.user, foundInvitation : foundInvitation, dogOwners : dogOwners});
+              Group.find({ $or : [{admin: (req.user.id)} , {member : (req.user._id)}]},function(error, foundGroup){
+                if(error){
+                  console.log(error);
+                }else{
+                  res.render("createActivity", {user: req.user, foundInvitation : foundInvitation, foundGroup : foundGroup, dogOwners : dogOwners});
+                }
+              });
             }
           });
         }
@@ -176,6 +182,93 @@ app.get("/createActivity", function(req, res) {
   } else {
     res.redirect("login");
   }
+});
+
+app.post("/createActivity", function(req,res){
+  var activity = new Activity({
+    location : req.body.address,
+    dateTime : req.body.dateTime,
+    name : req.body.name,
+    description : req.body.description,
+    member : [],
+    creator : req.user._id
+  });
+
+  activity.save(function(err,result){
+    if(err){
+      console.log(err);
+    }
+  });
+
+  var owners = req.body.owners;
+
+if(owners != null){
+  for(var i=0; i < owners.length ; i++){
+    var invitation = new Invitation({
+      name : req.body.name,
+      type : "activity",
+      targetID : activity._id,
+      owner : owners[i],
+      message : req.body.name + " at " + req.body.address
+    });
+
+    invitation.save(function(err,result){
+      if(err){
+        console.log(err);
+      }
+    });
+  }
+}
+  var groups = req.body.groups;
+
+if(groups != null){
+  for(var i=0 ; i < groups.length ; i++){
+    Group.find({_id : groups[i]}, function(err, foundGroup){
+      if(err){
+        console.log(err);
+      }else{
+        for(var j=0 ; j < foundGroup[0].member.length ; j++){
+          var query = {
+            name : req.body.name,
+            type : "activity",
+            targetID : activity._id,
+            owner : foundGroup[0].member[j],
+            message : req.body.name + " at " + req.body.address
+          };
+
+          var update = { expire: new Date() };
+          var options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+          Invitation.findOneAndUpdate(query, update, options, function(error,result){
+              if(error){
+                console.log(error);
+              }
+            });
+        }
+
+        if(foundGroup[0].admin != req.user._id){
+          var query = {
+            name : req.body.name,
+            type : "activity",
+            targetID : activity._id,
+            owner : foundGroup[0].admin,
+            message : req.body.name + " at " + req.body.address
+          };
+
+          var update = { expire: new Date() };
+          var options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+          Invitation.findOneAndUpdate(query, update, options, function(error,result){
+              if(error){
+                console.log(error);
+              }
+            });
+        }
+      }
+    });
+  }
+}
+  res.redirect("/");
 });
 
 app.get("/leave/group/:groupID",function(req,res){
@@ -192,21 +285,21 @@ app.get("/leave/group/:groupID",function(req,res){
   }
 });
 
-app.get("/editActivity", function(req, res) {
-  if (req.isAuthenticated()) {
-
-    Invitation.find({owner : req.user._id}, function(err,foundInvitation){
+app.get("/leave/activity/:activityID", function(req,res){
+  if(req.isAuthenticated()){
+    Activity.updateOne({_id : req.params.activityID}, {$pull : {member : req.user._id}}, function(err,result){
       if(err){
         console.log(err);
       }else{
-        res.render("editActivity", {user: req.user, foundInvitation : foundInvitation});
+        res.redirect("/");
       }
     });
-
-  } else {
+  }else{
     res.redirect("login");
   }
 });
+
+
 
 app.get("/createGroup", function(req, res) {
   if (req.isAuthenticated()) {
@@ -262,7 +355,7 @@ app.post("/createGroup", function(req,res){
 for(var i=0 ; i < owners.length ; i++){
   var invitation = new Invitation({
     name: req.body.name,
-    type: "Group",
+    type: "group",
     targetID: group._id,
     owner: owners[i],
     message: req.body.message
@@ -314,6 +407,50 @@ app.get("/groups/edit/:groupID", function(req,res){
   }
 });
 
+app.get("/activities/edit/:activityID", function(req, res) {
+  const activityID = req.params.activityID;
+  if (req.isAuthenticated()) {
+    User.find({type : "Dog Owner"}, function(err,foundUser){
+      if(err){
+        console.log(err);
+      }else{
+          var dogOwners = [];
+          for(var i=0; i < foundUser.length ; i++){
+            if(req.user.username === foundUser[i].username){
+              continue;
+            }else{
+              dogOwners.push(foundUser[i]);
+            }
+          }
+
+          Invitation.find({owner : req.user._id}, function(err,foundInvitation){
+            if(err){
+              console.log(err);
+            }else{
+              Group.find({ $or : [{admin: (req.user.id)} , {member : (req.user._id)}]},function(error, foundGroup){
+                if(error){
+                  console.log(error);
+                }else{
+                  Activity.find({_id : activityID}, function(err, foundActivity){
+                    if(err){
+                      console.log(err);
+                    }else{
+                      res.render("editActivity",{user : req.user, dogOwners : dogOwners, foundInvitation : foundInvitation , foundGroup : foundGroup, foundActivity : foundActivity});
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      });
+
+
+  } else {
+    res.redirect("login");
+  }
+});
+
 app.post("/groups/edit/:groupID",function(req,res){
   const groupID = req.params.groupID;
   const currentOwnersExclude = req.body.currentOwnersExclude;
@@ -326,7 +463,6 @@ app.post("/groups/edit/:groupID",function(req,res){
       });
     }
   }
-
 
   Group.findByIdAndUpdate(groupID, {
     name : req.body.name,
@@ -356,15 +492,111 @@ app.post("/groups/edit/:groupID",function(req,res){
       });
     }
   }
+  res.redirect("/");
+});
 
+app.post("/activities/edit/:activityID", function(req,res){
+  const activityID = req.params.activityID;
+  const currentOwnersExclude = req.body.currentOwnersExclude;
 
+  if(currentOwnersExclude != null){
+    for(var i=0 ; i < currentOwnersExclude.length ; i++){
+      Activity.findByIdAndUpdate(activityID, {$pull : {member : currentOwnersExclude[i]}}, function(error,result){
+        if(error){
+          console.log(error);
+        }
+      });
+    }
+  }
+
+  Activity.findByIdAndUpdate(activityID,{
+    location : req.body.address,
+    dateTime : req.body.dateTime,
+    name : req.body.name,
+    description : req.body.description
+  }, function(error,result){
+    if(error){
+      console.log(error);
+    }
+  });
+
+  var excludedGroup = req.body.excludedGroup;
+
+  if(excludedGroup != null){
+    for(var i=0 ; i < excludedGroup.length ; i++){
+      Group.find({_id : excludedGroup[i]}, function(err,foundGroup){
+        if(err){
+          console.log(err);
+        }else{
+          var currentGroup = foundGroup[0];
+          for(var j=0 ; j<currentGroup.member.length ; j++){
+            Activity.findByIdAndUpdate(activityID, {$pull : {member : currentGroup.member[j]}}, function(error,result){
+              if(error){
+                console.log(error);
+              }
+            });
+          }
+        }
+      });
+    }
+}
+
+  var newOwners = req.body.newOwners;
+
+  if(newOwners != null){
+    for(var i=0 ; i < newOwners.length ; i++){
+      var invitation = new Invitation({
+        name : req.body.name,
+        type : "activity",
+        targetID : activityID,
+        owner : newOwners[i],
+        message : req.body.name + " at " + req.body.address
+      });
+
+      invitation.save(function(err,result){
+        if(err){
+          console.log(err);
+        }
+      });
+    }
+  }
+
+  var invitedGroup = req.body.invitedGroup;
+
+  if(invitedGroup != null){
+    for(var i=0; i < invitedGroup.length ; i++){
+      Group.find({_id : invitedGroup[i]}, function(err, foundGroup){
+        if(err){
+          console.log(err);
+        }else{
+          var currentGroup = foundGroup[0];
+          for(var j=0 ; j < currentGroup.member.length ; j++){
+            var query = {
+              name : req.body.name,
+              type : "activity",
+              targetID : activityID,
+              owner : currentGroup.member[j],
+              message : req.body.name + " at " + req.body.address
+            };
+            var update = { expire: new Date() };
+            var options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+            Invitation.findOneAndUpdate(query, update, options, function(error,result){
+              if(error){
+                console.log(error);
+              }
+            });
+          }
+        }
+      });
+    }
+  }
 
   res.redirect("/");
-
 });
 
 
-app.get("/join/Group/:invitationID", function(req,res){
+app.get("/join/group/:invitationID", function(req,res){
   const invitationID = req.params.invitationID;
   if(req.isAuthenticated()){
     Invitation.find({_id : invitationID},function(err,foundInvitation){
@@ -396,6 +628,66 @@ app.get("/join/Group/:invitationID", function(req,res){
   }
 });
 
+app.get("/join/training/:invitationID", function(req,res){
+  const invitationID = req.params.invitationID;
+  if(req.isAuthenticated()){
+    Invitation.find({_id : invitationID}, function(err, foundInvitation){
+      if(err){
+        console.log(err);
+      }else{
+        const invitation = foundInvitation[0];
+
+        Training.findByIdAndUpdate(invitation.targetID, {$push : {"member" : invitation.owner}},
+        {safe: true, upsert: true, new : true}, function(error,result){
+          if(error){
+            console.log(error);
+          }else{
+            Invitation.findByIdAndRemove(invitation._id,function(er,success){
+              if(er){
+                console.log(er);
+              }else{
+                res.redirect("/");
+              }
+            });
+          }
+        });
+
+      }
+    });
+  }else{
+    res.redirect("/login");
+  }
+});
+
+app.get("/join/activity/:invitationID", function(req,res){
+  const invitationID = req.params.invitationID;
+  if(req.isAuthenticated()){
+    Invitation.find({_id : invitationID}, function(err, foundInvitation){
+      if(err){
+        console.log(err);
+      }else{
+        const invitation = foundInvitation[0];
+
+        Activity.findByIdAndUpdate(invitation.targetID,{$addToSet : {"member":invitation.owner}}, function(error,result){
+          if(error){
+            console.log(error);
+          }else{
+            Invitation.findByIdAndRemove(invitation._id, function(er,success){
+              if(er){
+                console.log(er);
+              }else{
+                res.redirect("/");
+              }
+            });
+          }
+        });
+      }
+    });
+  }else{
+    res.redirect("login");
+  }
+});
+
 app.get("/delete/invitation/:invitationID",function(req,res){
   const invitationID = req.params.invitationID;
   if(req.isAuthenticated()){
@@ -419,6 +711,23 @@ app.get("/delete/group/:groupID",function(req,res){
         res.redirect("/");
       }
     });
+  }else{
+    res.redirect("login");
+  }
+});
+
+app.get("/delete/activity/:activityID", function(req,res){
+  const activityID = req.params.activityID;
+  if(req.isAuthenticated()){
+    Activity.findByIdAndRemove(activityID, function(err,result){
+      if(err){
+        console.log(err);
+      }else{
+        res.redirect("/");
+      }
+    });
+  }else{
+    res.redirect("login");
   }
 });
 
@@ -1027,7 +1336,14 @@ app.get("/", function(req, res) {
           if(error){
             console.log(error);
           }else{
-            res.render("main", {user: req.user, foundInvitation : foundInvitation, foundGroup : foundGroup});
+            Activity.find({$or : [{creator : (req.user._id)}, {member : (req.user._id)}]}, function(error,foundActivity){
+              if(error){
+                console.log(error);
+              }else{
+                res.render("main", {user: req.user, foundInvitation : foundInvitation, foundGroup : foundGroup, foundActivity : foundActivity});
+              }
+            })
+
           }
         });
       }
