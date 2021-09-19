@@ -271,6 +271,39 @@ if(groups != null){
   res.redirect("/");
 });
 
+app.get("/createTraining", function(req, res) {
+  if (req.isAuthenticated()) {
+    User.find({type : "Dog Owner"}, function(err,foundUser){
+      if(err){
+        console.log(err);
+      }else{
+          var dogOwners = [];
+          for(var i=0; i < foundUser.length ; i++){
+            if(req.user.username === foundUser[i].username){
+
+              continue;
+            }else{
+              dogOwners.push(foundUser[i]);
+            }
+          }
+
+          Invitation.find({owner : req.user._id}, function(err,foundInvitation){
+            if(err){
+              console.log(err);
+            }else{
+              res.render("createTraining",{user : req.user, dogOwners : dogOwners, foundInvitation : foundInvitation});
+            }
+          });
+
+
+        }
+      }
+    );
+  } else {
+    res.redirect("login");
+  }
+});
+
 app.get("/leave/group/:groupID",function(req,res){
   if(req.isAuthenticated()){
     Group.updateOne({_id : req.params.groupID}, { $pull : {member : req.user._id}},function(err,result){
