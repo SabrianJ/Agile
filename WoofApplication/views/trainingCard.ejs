@@ -1,0 +1,44 @@
+<div class="col-lg-3">
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardActivity" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">My Training</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse show" id="collapseCardActivity">
+      <div class="card-body" style="overflow: auto; height:220px;">
+
+      <%  for(var i = 0 ; i < foundTraining.length ; i++){ %>
+      <%  if(foundTraining[i].creator == user._id){ %>
+          <table width="100%">
+            <tr>
+              <td><%=foundTraining[i].name %> (Admin)</td>
+              <td align="right">
+                <a href="/trainings/edit/<%=foundTraining[i]._id %>"><i class="far fa-edit"></i></a>
+                <a href="/delete/training/<%=foundTraining[i]._id %>"><i class="far fa-trash-alt"></i></a>
+              </td>
+            </tr>
+          </table>
+              <hr />
+      <%  }else{ %>
+          <table width="100%">
+            <tr>
+              <td><%=foundTraining[i].name %></td>
+              <td align="right">
+                <a href="/trainings/<%=foundTraining[i]._id %>"><i class="fas fa-info-circle"></i></a>
+                <a href="/leave/training/<%=foundTraining[i]._id %>"><i class="fas fa-door-open"></i></a>
+              </td>
+            </tr>
+          </table>
+              <hr />
+      <%  } %>
+
+      <%  } %>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
