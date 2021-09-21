@@ -6,21 +6,21 @@
   <!-- Project Card Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Edit Activity</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Edit Event</h6>
     </div>
-    <form name="activityForm" action="/editEvent" method="POST" autocomplete="off" onsubmit="return validateActivityForm()" required>
+    <form name="eventForm" action="/events/edit/<%-foundEvent[0]._id%>" method="POST" autocomplete="off" required>
       <div class="card-body">
         <div class="form-group">
           <label for="addressInput">Location</label>
-          <input type="text" class="form-control" id="addressInput" style="width:80%" placeholder="Search Address" name="address">
+          <input type="text" class="form-control" id="addressInput" style="width:80%" placeholder="Search Address" value="<%-foundEvent[0].location%>" name="address">
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="rangeInput" class="form-label">Distance</label>
           <input type="range" class="form-range " min="1" max="5" id="rangeInput" style="width:80%" onchange="rangeValue()" value="3">
           <label class="form-label" id="distanceRange">1500 meters</label>
           <input type="text" class="form-control" id="distance" value="1500" name="distance" style="display:none; border: none;">
-        </div>
+        </div> -->
 
         <%  function minDateTime() { %>
         <%  var d = new Date(); %>
@@ -44,35 +44,60 @@
         <%    if (day.length < 2){%>
         <%        day = '0' + day;%>
         <%      }%>
-
-
-
-        <%    return [year, month, day].join('-') + "T" + d.getHours() + ":" + d.getMinutes() ;%>
+        <%    return [year, month, day].join('-') + "T" + hour + ":" + minute ;%>
         <%    }%>
 
         <%   var min = minDateTime(); %>
 
+        <%  function formatDate(date) { %>
+        <%  var d = new Date(date); %>
+        <%  var month = '' + (d.getMonth() + 1); %>
+        <%  var day = '' + d.getDate(); %>
+        <%  var year = d.getFullYear();%>
+        <%     var hour = '' + d.getHours(); %>
+        <%     var minute = '' + d.getMinutes(); %>
+
+        <%     if(hour.length < 2){ %>
+        <%       hour = '0' + hour; %>
+        <%     } %>
+
+        <%     if(minute.length < 2){ %>
+        <%       minute = '0' + minute; %>
+        <%     } %>
+
+        <%    if (month.length < 2){%>
+        <%        month = '0' + month;%>
+        <%      }%>
+        <%    if (day.length < 2){%>
+        <%        day = '0' + day;%>
+        <%      }%>
+        <%    return [year, month, day].join('-') + "T" + hour + ":" + minute ;%>
+        <%    }%>
+
+        <% var dateTime = formatDate(foundEvent[0].dateTime); %>
+
+
         <div class="form-group">
           <label for="eventDateTime" class="form-label">Date and Time</label>
-          <input id="eventDateTime" class="form-control" type="datetime-local" name="dateTime" min=<%= min %>>
+          <input id="eventDateTime" class="form-control" type="datetime-local" name="dateTime" min=<%= min %> value=<%= dateTime %>>
         </div>
 
         <div class="form-group">
-          <label for="eventName" class="form-label">Activity Name</label>
-          <input id="eventName" class="form-control" type="text" name="name">
+          <label for="eventName" class="form-label">Event Name</label>
+          <input id="eventName" class="form-control" type="text" name="name" value="<%-foundEvent[0].name%>">
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="rsvp" class="form-label">RSVP</label>
           <label class="switch">
             <input type="checkbox" id="rsvp">
             <span class="slider round"></span>
           </label>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <label for="eventDescription" class="form-label">Description</label>
-          <textarea id="eventDescription" class="form-control" name="description"></textarea>
+          <textarea id="eventDescription" class="form-control" name="description"><%= foundEvent[0].description %></textarea>
         </div>
 
         <table style="width:80%;" class="form-group">
@@ -81,33 +106,52 @@
               <label for="inviteSomeone" class="form-label">Invite Someone</label>
               <label class="switch">
                 <input type="checkbox" id="inviteSomeone">
-                <span class="slider round"></span>
+                <span class="slider round" onclick="inviteTrainer()"></span>
               </label>
+
+              <div class="form-group" id="trainers" style="display:none;">
+              <div id="trainersInput" class="dropdown-check-list" tabindex="100">
+                <span class="anchor" onclick="dropdownChecklistTrainer()">Select Other Trainer</span>
+                <ul class="items">
+
+                  <%  for(var i = 0 ; i < trainers.length ; i++){ %>
+                  <%      if(foundEvent[0].member.length === 0){ %>
+                          <li><input type="checkbox" name="newTrainers[]" value="<%- trainers[i]._id %>"/> <%= trainers[i].username %></li>
+                  <%      }else{ %>
+                          <%for(var j=0 ; j < foundEvent[0].member.length ; j++){ %>
+                            <%if(trainers[i]._id != foundEvent[0].member[j]){%>
+                                <li><input type="checkbox" name="newTrainers[]" value="<%- trainers[i]._id %>"/><%= trainers[i].username %></li>
+                              <%} %>
+                          <%}%>
+                  <%      } %>
+                  <%  } %>
+                </ul>
+              </div>
+            </div>
             </td>
             <td>
               <label for="excludeSomeone" class="form-label">Exclude Someone</label>
               <label class="switch">
                 <input type="checkbox" id="excludeSomeone">
-                <span class="slider round"></span>
+                <span class="slider round" onclick="excludeTrainer()"></span>
               </label>
+
+              <div class="form-group" id="currentTrainers" style="display:none;">
+              <div id="currentTrainersInput" class="dropdown-check-list" tabindex="100">
+                <span class="anchor" onclick="dropdownChecklistCurrentTrainer()">Select Trainer to Exclude</span>
+                <ul class="items">
+                <%  for(var i=0 ; i < foundEvent[0].member.length ; i++){ %>
+                <%      for(var j=0 ; j < trainers.length ; j++){ %>
+                <%        if(trainers[j]._id == foundEvent[0].member[i]){ %>
+                          <li><input type="checkbox" name="currentTrainersExclude[]" value="<%- foundEvent[0].member[i] %>"/> <%= trainers[j].username %></li>
+                <%        } %>
+                <%      } %>
+                <%  } %>
+
+                </ul>
+              </div>
+            </div>
             </td>
-          </tr>
-          <tr>
-            <td>
-              <label for="inviteGroup" class="form-label">Invite Group</label>
-              <label class="switch">
-                <input type="checkbox" id="inviteGroup">
-                <span class="slider round"></span>
-              </label>
-            </td>
-            <td>
-              <label for="excludeGroup" class="form-label">Exclude Group</label>
-              <label class="switch">
-                <input type="checkbox" id="excludeGroup">
-                <span class="slider round"></span>
-              </label>
-            </td>
-          </tr>
         </table>
 
         <button type="submit" class="btn btn-primary">Save</button>

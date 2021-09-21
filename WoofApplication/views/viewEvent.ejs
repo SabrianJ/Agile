@@ -1,0 +1,79 @@
+<%- include("topBar") -%>
+
+<!-- Content Column -->
+<div class="col-lg-12 mb-4">
+
+  <!-- Project Card Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary"><%-foundEvent[0].name%></h6>
+    </div>
+
+    <div class="card-body">
+
+
+    <div>
+      <label>Creator</label>
+      <input type="text" class="form-control" id="creator" style="width:15%" name="creator" value="<%-creator%>" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input type="text" class="form-control" id="location" style="width:80%" name="location" value="<%-foundEvent[0].location%>" readonly>
+    </div>
+
+    <%  function formatDate(date) { %>
+      <%  var d = new Date(date); %>
+      <%  var month = '' + (d.getMonth() + 1); %>
+      <%  var day = '' + d.getDate(); %>
+      <%  var year = d.getFullYear();%>
+      <%     var hour = '' + d.getHours(); %>
+      <%     var minute = '' + d.getMinutes(); %>
+
+      <%     if(hour.length < 2){ %>
+      <%       hour = '0' + hour; %>
+      <%     } %>
+
+      <%     if(minute.length < 2){ %>
+      <%       minute = '0' + minute; %>
+      <%     } %>
+
+      <%    if (month.length < 2){%>
+      <%        month = '0' + month;%>
+      <%      }%>
+      <%    if (day.length < 2){%>
+      <%        day = '0' + day;%>
+      <%      }%>
+      <%    return [year, month, day].join('-') + "T" + hour + ":" + minute ;%>
+      <%    }%>
+
+      <% var dateTime = formatDate(foundEvent[0].dateTime); %>
+
+    <div class="form-group">
+      <label for="dateTime">Date and Time</label>
+      <input id="dateTime" class="form-control" type="datetime-local" name="dateTime" value="<%- dateTime %>" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" id="description" style="width:80%" name="description" value="<%-foundEvent[0].description%>" readonly>
+    </div>
+
+    <div class="form-group">
+      <label for="member">Member</label>
+      <nav>
+        <ul style="height:200px;width:18%;overflow:auto;">
+          <%  for(var i=0 ; i < member.length ; i++){ %>
+              <li><%-member[i]%></li>
+          <%  } %>
+        </ul>
+      </nav>
+    </div>
+    <a class="btn btn-primary" href="/">OK</a>
+
+</div>
+  </div>
+</div>
+
+<script src="/index.js" charset="utf-8"></script>
+<%- include("bottomBar") -%>

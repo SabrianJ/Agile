@@ -4,6 +4,8 @@ var checkListOwner = document.getElementById('dogOwnersInput');
 var checkListGroup = document.getElementById('groupsInput');
 var checkListGroup1 = document.getElementById('groupsInput1');
 var checkListCurrentOwner = document.getElementById('currentOwnersInput');
+var checkListCurrentTrainer = document.getElementById('currentTrainersInput');
+var checkListTrainer = document.getElementById('trainersInput');
 var max = setMaxDate();
 
 function initialize() {
@@ -48,6 +50,13 @@ function dropdownChecklistOwner() {
     checkListOwner.classList.add('visible');
 }
 
+function dropdownChecklistTrainer() {
+  if (checkListTrainer.classList.contains('visible'))
+    checkListTrainer.classList.remove('visible');
+  else
+    checkListTrainer.classList.add('visible');
+}
+
 function dropdownChecklistGroup() {
   if (checkListGroup.classList.contains('visible'))
     checkListGroup.classList.remove('visible');
@@ -67,6 +76,13 @@ function dropdownChecklistCurrentOwner(){
     checkListCurrentOwner.classList.remove('visible');
   else
     checkListCurrentOwner.classList.add('visible');
+}
+
+function dropdownChecklistCurrentTrainer(){
+  if(checkListCurrentTrainer.classList.contains('visible'))
+    checkListCurrentTrainer.classList.remove('visible');
+  else
+    checkListCurrentTrainer.classList.add('visible');
 }
 
 function inviteGroup(){
@@ -91,6 +107,17 @@ function excludeGroup(){
    }
 }
 
+function inviteTrainer(){
+  var checkbox = document.getElementById('inviteSomeone');
+  var dogOwnersDropDown = document.getElementById('trainers');
+
+  if(checkbox.checked == true){
+        dogOwnersDropDown.style.display = "none";
+    }else{
+        dogOwnersDropDown.style.display = "block";
+   }
+}
+
 
 function inviteSomeone(){
   var checkbox = document.getElementById('inviteSomeone');
@@ -106,6 +133,17 @@ function inviteSomeone(){
 function excludeSomeone(){
   var checkbox = document.getElementById('excludeSomeone');
   var currentOwnersDropDown = document.getElementById('currentOwners');
+
+  if(checkbox.checked == true){
+    currentOwnersDropDown.style.display = "none";
+  }else{
+    currentOwnersDropDown.style.display = "block";
+  }
+}
+
+function excludeTrainer(){
+  var checkbox = document.getElementById('excludeSomeone');
+  var currentOwnersDropDown = document.getElementById('currentTrainers');
 
   if(checkbox.checked == true){
     currentOwnersDropDown.style.display = "none";
