@@ -142,6 +142,42 @@ app.get("/register", function(req, res) {
   });
 });
 
+app.get("/changePicture", function(req,res){
+  if(req.isAuthenticated()){
+    Invitation.find({owner : req.user.id}, function(err, foundInvitation){
+      if(err){
+        console.log(err);
+      }else{
+        res.render("changePicture", {user: req.user,foundInvitation : foundInvitation});
+      }
+    });
+  }else{
+    res.redirect("login");
+  }
+});
+
+app.post("/changePicture", function(req,res){
+  var image = req.body.imageURI;
+  if(req.isAuthenticated()){
+    if(image != null){
+
+      var uploadedResponse = cloudinary.uploader.upload(image,{
+        upload_preset: 'profilesImage',
+        public_id : req.user._id,
+        q_auto : "eco"
+      }, function(error,result){
+        console.log(error,result);
+      });
+
+
+    }
+
+    res.redirect("/");
+  }else{
+    res.redirect("login");
+  }
+});
+
 app.get("/googleaa6c330e01886bd6.html", function(req, res) {
   res.render("googleaa6c330e01886bd6");
 });

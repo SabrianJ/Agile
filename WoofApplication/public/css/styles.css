@@ -441,6 +441,14 @@ legend {
   background-position:center;
 }
 
+.profileImage{
+  border-radius: 50%;
+  width:500px;
+  height:500px;
+  background-size:contain;
+  background-position:center;
+}
+
 progress {
   vertical-align: baseline;
 }
@@ -10287,6 +10295,12 @@ a:focus {
 .topbar .nav-item .nav-link .img-profile {
   height: 2rem;
   width: 2rem;
+}
+
+img.rounded-corners {
+  border-radius: 30px;
+  width:150px;
+  height:150px;
 }
 
 .topbar {

@@ -174,6 +174,12 @@ function rangeValue(){
   }
 }
 
+
+function alternateImage(event){
+  const target = event.target;
+  target.src = "/img/undraw_profile.svg";
+}
+
 function setMaxDate() {
 var d = new Date();
 var month = '' + (d.getMonth() + 1);
@@ -358,6 +364,20 @@ function loadFile(event, numberOfDogs){
     URL.revokeObjectURL(output.src)
   }
 
+}
+
+function loadPicture(event){
+  var profileImage = document.getElementById("profileImage");
+  profileImage.src = URL.createObjectURL(event.target.files[0]);
+
+  getDataUri(URL.createObjectURL(event.target.files[0]), function(dataUri) {
+    var dataURIHolder = document.getElementById("imageURI");
+    dataURIHolder.value = dataUri;
+  });
+
+  profileImage.onload = function(){
+    URL.revokeObjectURL(profileImage.src)
+  }
 }
 
 function assignNumberOfDogs(){
