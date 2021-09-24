@@ -8,7 +8,7 @@
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Create Event</h6>
     </div>
-      <form name="eventForm" action="/createEvent" method="POST" autocomplete="off" required>
+      <form name="eventForm" action="/createEvent" method="POST" autocomplete="off" onsubmit="return validateCreateForm('event')" required>
         <div class="card-body">
           <div class="form-group">
             <label for="addressInput">Location</label>

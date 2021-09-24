@@ -221,6 +221,29 @@ function dropdownChecklistUpdateProfile(preferenceArray) {
     }
 }
 
+function validateCreateForm(createdForm){
+  var location = document.forms[createdForm + "Form"]["addressInput"].value;
+  var dateTime = document.forms[createdForm + "Form"][createdForm + "DateTime"].value;
+  var name = document.forms[createdForm + "Form"][createdForm + "Name"].value;
+  var description = document.forms[createdForm + "Form"][createdForm + "Description"].value;
+
+  if(location == ""){
+    alert("Location must be filled before submitting form");
+    return false;
+  }else if(!Date.parse(dateTime)){
+    alert("Date and Time must be filled before submitting form");
+    return false;
+  }else if(name == ""){
+    alert("Name must be filled before submitting form");
+    return false;
+  }else if(description == ""){
+    alert("Description must be filled before submitting form");
+    return false;
+  }else{
+    return true;
+  }
+}
+
 
 
 function addDog(){
