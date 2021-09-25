@@ -8,7 +8,7 @@
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Edit Activity</h6>
     </div>
-    <form name="activityForm" action="/activities/edit/<%-foundActivity[0]._id%>" method="POST" autocomplete="off"  required>
+    <form name="activityForm" action="/activities/edit/<%-foundActivity[0]._id%>" method="POST" autocomplete="off" onsubmit="return validateCreateForm('activity')" required>
       <div class="card-body">
         <div class="form-group">
           <label for="addressInput">Location</label>

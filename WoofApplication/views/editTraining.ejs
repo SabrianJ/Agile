@@ -8,7 +8,7 @@
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Edit Training</h6>
     </div>
-    <form name="trainingForm" action="/trainings/edit/<%-foundTraining[0]._id%>" method="POST" autocomplete="off" required>
+    <form name="trainingForm" action="/trainings/edit/<%-foundTraining[0]._id%>" method="POST" autocomplete="off" onsubmit="return validateCreateForm('training')" required>
       <div class="card-body">
         <div class="form-group">
           <label for="addressInput">Location</label>
