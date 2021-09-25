@@ -1474,6 +1474,10 @@ app.get("/deleteUser", function(req,res){
         }
       });
     }
+
+    cloudinary.uploader.destroy('profilesImage/' + req.user._id, function(error,result) {
+console.log(result, error) });
+
   }else{
     res.redirect("login")
   }
@@ -1538,6 +1542,82 @@ app.get("/dogOwners", function(req, res) {
       }
     );
   } else {
+    res.redirect("login");
+  }
+});
+
+app.get("/activities", function(req, res) {
+
+  if (req.isAuthenticated()) {
+    Activity.find({$and : [{member : {$ne : req.user._id}} , {creator : {$ne : req.user._id}}]}, function(err,foundActivity){
+      if(err){
+        console.log(err);
+      }else{
+        Invitation.find({owner : req.user._id}, function(err,foundInvitation){
+          if(err){
+            console.log(err);
+          }else{
+            res.render("activities", {user: req.user, foundInvitation : foundInvitation, foundActivity : foundActivity});
+          }
+          });
+        }
+      }
+    );
+  } else {
+    res.redirect("login");
+  }
+});
+
+app.get("/trainings", function(req, res) {
+
+  if (req.isAuthenticated()) {
+    Training.find({$and : [{member : {$ne : req.user._id}} , {creator : {$ne : req.user._id}}]}, function(err,foundTraining){
+      if(err){
+        console.log(err);
+      }else{
+        Invitation.find({owner : req.user._id}, function(err,foundInvitation){
+          if(err){
+            console.log(err);
+          }else{
+            res.render("trainings", {user: req.user, foundInvitation : foundInvitation, foundTraining : foundTraining});
+          }
+          });
+        }
+      }
+    );
+  } else {
+    res.redirect("login");
+  }
+});
+
+app.get("/activities/join/:activityID", function(req,res){
+  const activityID = req.params.activityID;
+  if(req.isAuthenticated()){
+    Activity.findByIdAndUpdate(activityID, {$push : {"member" : req.user._id}},
+    {safe: true, upsert: true, new : true}, function(error,result){
+      if(error){
+        console.log(error);
+      }else{
+        res.redirect("/activities");
+      }
+    });
+  }else{
+    res.redirect("login");
+  }
+});
+
+app.get("/trainings/join/:trainingID", function(req,res){
+  const trainingID = req.params.trainingID;
+  if(req.isAuthenticated()){
+    Training.findByIdAndUpdate(trainingID, {$push : {"member" : req.user._id}},
+    {safe: true, upsert: true, new : true}, function(error,result){
+      if(error){
+        console.log(error);
+      }else{
+        res.redirect("/trainings");
+      }
+    });
+  }else{
     res.redirect("login");
   }
 });
