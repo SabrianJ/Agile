@@ -645,11 +645,16 @@ app.get("/trainings/:trainingID", function(req,res){
               if(err){
                 console.log(err);
               }else{
+                var isMember = false;
                 var member = [];
                 for(var i=0 ; i < training.member.length ; i++){
                   for(var j=0 ; j < foundUser.length ; j++){
                     if(training.member[i] == foundUser[j]._id){
                       member.push(foundUser[j].username);
+                    }
+
+                    if(training.member[i] == req.user._id){
+                      isMember = true;
                     }
                   }
                 }
@@ -658,7 +663,7 @@ app.get("/trainings/:trainingID", function(req,res){
                   if(err){
                     console.log(err);
                   }else{
-                    res.render("viewTraining", {user : req.user, foundInvitation : foundInvitation, creator : creator[0].username, member : member, foundTraining : foundTraining });
+                    res.render("viewTraining", {user : req.user, foundInvitation : foundInvitation, creator : creator[0].username, member : member, foundTraining : foundTraining, isMember : isMember });
                   }
                 });
               }
@@ -1801,6 +1806,43 @@ if(req.body.city != null){
       }
     });
         }else{
+
+          console.log(req.body.numberOfNewDogs);
+
+          if(req.body.numberOfNewDogs != 0){
+            var currentDogs = dogs.length;
+
+            for(var i=0; i < req.body.numberOfNewDogs; i++){
+              currentDogs++;
+
+              var newName = 'req.body.newDogsName' + currentDogs;
+              var newBreed = 'req.body.newDogsBreed' + currentDogs;
+              var newSize = 'req.body.newDogsSize' + currentDogs;
+              var newWeight = 'req.body.newDogsWeight' + currentDogs;
+              var newDob = 'req.body.newDogsDateOfBirth' + currentDogs;
+
+              var dog = new Dog({
+              name: eval(newName),
+              breed: eval(newBreed),
+              size: eval(newSize),
+              weight: eval(newWeight),
+              dob: eval(newDob),
+              owner: req.user._id
+            });
+            dog.save(function(err,result){
+              if(err){
+                console.log(err);
+              }
+            });
+
+            var imageURIName = "req.body.imageURI" + currentDogs;
+            var uploadedResponse = cloudinary.uploader.upload(eval(imageURIName),{
+              upload_preset: 'dogsImage',
+              public_id : dog._id
+            });
+
+            }
+          }
 
           var dogsDOB = [];
 

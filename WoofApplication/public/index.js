@@ -1,4 +1,6 @@
 var numberOfDogs = 1;
+var newDog = 0;
+var updatedDog = false;
 var checkList = document.getElementById('preferenceInput');
 var checkListOwner = document.getElementById('dogOwnersInput');
 var checkListGroup = document.getElementById('groupsInput');
@@ -37,6 +39,103 @@ google.maps.event.addDomListener(window, 'load', initialize)
 
 function joinInvitation(event, invitationID,type){
   window.open("/join/" + type + "/" + invitationID,"_self");
+}
+
+function addNewDog(currentDogs){
+
+if(!updatedDog){
+  newDog = currentDogs;
+  updatedDog = true;
+}
+
+const dogRegistration = document.createElement('div');
+dogRegistration.classList.add('form-group');
+dogRegistration.id = 'dogRegistration' + ++window.newDog;
+dogRegistration.innerHTML =
+  '<label for="dogName">Dog '+ window.newDog + '</label>' +
+  '<input type="text" class="form-control" id="newDogsName" placeholder="Name" name="newDogsName' + window.newDog +'" style="width:80%">' +
+  '<label for="newDogsBreed">Breed</label>' +
+  '<select id="newDogsBreed" name="newDogsBreed'+ window.newDog +'" class="form-control" placeholder="Breed" style="width:25%">' +
+  '<option value="Affenpinscher" selected>Affenspinscher</option>' +
+  '<option value="Afghan Hound">Afghan Hound</option>' +
+  '<option value="Africanis">Africanis</option>' +
+    '<option value="Akita">Akita</option>' +
+    '<option value="American Bulldog">American Bulldog</option>' +
+    '<option value="Basque Shepherd Dog">Basque Shepherd Dog</option>' +
+    '<option value="Basset Hound">Basset Hound</option>'+
+    '<option value="Bichon Frise">Bichon Frise</option>'+
+    '<option value="Bohemian Shepherd">Bohemian Shepherd</option>'+
+    '<option value="Bulldog">Bulldog</option>'+
+    '<option value="Carolina Dog">Carolina Dog</option>'+
+    '<option value="Chihuahua">Chihuahua</option>'+
+    '<option value="Dalmatian">Dalmatian</option>'+
+    '<option value="Dingo">Dingo</option>'+
+    '<option value="Dobermann">Dobermann</option>'+
+    '<option value="Drever">Drever</option>'+
+    '<option value="Dunker">Dunker</option>'+
+    '<option value="English Mastiff">English Mastiff</option>'+
+    '<option value="English Shepherd">English Shepherd</option>'+
+    '<option value="Estonian Hound">Estonian Hound</option>'+
+    '<option value="Finnish Hound">Finnish Hound</option>'+
+    '<option value="French Bulldog">French Bulldog</option>'+
+    '<option value="German Hound">German Hound</option>'+
+    '<option value="German Shepherd">German Shepherd</option>'+
+    '<option value="Himalayan Sheepdog">Himalayan Sheepdog</option>'+
+    '<option value="Hierran Wolfdog">Hierran Wolfdog</option>'+
+    '<option value="Indian Spitz">Indian Spitz</option>'+
+    '<option value="Italian Greyhound">Italian Greyhound</option>'+
+    '<option value="Japanese Spitz">Japanese Spitz</option>'+
+    '<option value="Kai Ken">Kai Ken</option>'+
+    '<option value="Kaikadi">Kaikadi</option>'+
+    '<option value="Labrador Retriever">Labrador Retriever</option>'+
+    '<option value="Lithuanian Hound">Lithuanian Hound</option>'+
+    '<option value="Maltese">Maltese</option>'+
+    '<option value="Mountain Cur">Mountain Cur</option>'+
+    '<option value="New Zealand Heading">New Zealand Heading</option>'+
+    '<option value="Otterhound">Otterhound</option>'+
+    '<option value="Papillon">Papillon</option>'+
+    '<option value="Patagonian Sheepdog">Patagonian Sheepdog</option>'+
+    '<option value="Pekingese">Pekingese</option>'+
+    '<option value="Pointer">Pointer</option>'+
+    '<option value="Poitevin">Poitevin</option>'+
+    '<option value="Poodle">Poodle</option>'+
+    '<option value="Pudelpointer">Pudelpointer</option>'+
+    '<option value="Pug">Pug</option>'+
+    '<option value="Pungsan">Pungsan</option>'+
+    '<option value="Rottweiler">Rottweiler</option>'+
+    '<option value="Russian Spaniel">Russian Spaniel</option>'+
+    '<option value="Ryukyu Inu">Ryukyu Inu</option>'+
+    '<option value="Shiba Inu">Shiba Inu</option>'+
+    '<option value="Shih Tzu">Shih Tzu</option>'+
+    '<option value="Siberian Husky">Siberian Husky</option>'+
+    '<option value="Taigan">Taigan</option>'+
+    '<option value="Tamaskan Dog">Tamaskan Dog</option>'+
+    '<option value="Weimaraner">Weimaraner</option>'+
+    '<option value="Welsh Sheepdog">Welsh Sheepdog</option>'+
+    '<option value="Whippet">Whippet</option>'+
+    '<option value="Yakultian Laika">Yakultian Laika</option>'+
+    '<option value="Other">Other</option>'+
+  '</select>'+
+
+  '<div class="radioButton" style="margin-top:10px; margin-bottom:10px;">'+
+    '<label>Size : </label>'+
+    '<label><input style="margin-left:10px;" type="radio" name="newDogsSize'+ window.newDog +'" value="small">Small</label>'+
+    '<label><input style="margin-left:10px;" type="radio" name="newDogsSize'+ window.newDog +'" value="medium">Medium</label>'+
+    '<label><input style="margin-left:10px;" type="radio" name="newDogsSize'+ window.newDog +'" value="big">Big</label>'+
+  '</div>'+
+  '<input type="number" class="form-control" id="newDogsWeight" placeholder="Weight (in kg)" name="newDogsWeight'+ window.newDog +'" style="width:25%">'+
+  '<label for="newDogsDateOfBirth" class="form-label">Please choose the date of birth of your dog</label>'+
+  '<input type="date" class="form-control" id="newDogsDateOfBirth" name="newDogsDateOfBirth' + window.newDog +'" style="width:25%" max="'+ window.max +'" >'+
+  '<div class="form-group">' +
+  '<input type="text" style="display:none;" class="form-control" id="imageURI'+ window.newDog+'"  name="imageURI' + window.newDog + '" value="">' +
+  '<label for="newDogsImage" class="form-label">Please upload your dog image</label>' +
+  '<br><input type="file" class="form-input" id="newDogsImage" name="newDogsImage'+ window.numberOfDogs +'" onchange="loadFile(event,' + window.newDog +')" value="" />'+
+  '<br><img id="output'+ window.newDog +'" class="dogImage"  />'+
+  '</div>';
+
+  const dogInner = document.getElementById("dogInner");
+  dogInner.appendChild(dogRegistration);
+
 }
 
 function deleteInvitation(event, invitationID){
@@ -339,6 +438,18 @@ dogRegistration.innerHTML =
 
 }
 
+function removeNewDog(currentDogs){
+  if(newDog === currentDogs){
+    alert("Cannot remove previously added dog")
+  }else{
+    const dogInner = document.getElementById("dogInner");
+    var currentDogRegistration = "dogRegistration" + newDog;
+    const dogRegistration = document.getElementById(currentDogRegistration);
+    dogInner.removeChild(dogRegistration);
+    newDog -= 1;
+  }
+}
+
 function removeDog(){
   if(numberOfDogs === 1){
     alert("Dogs need to be at least 1")
@@ -406,6 +517,11 @@ function loadPicture(event){
 function assignNumberOfDogs(){
   const e = document.getElementById("numberOfDogs");
   e.value = window.numberOfDogs;
+}
+
+function assignNewNumberOfDogs(currentDogs){
+  const e = document.getElementById("numberOfNewDogs");
+  e.value = window.newDog - currentDogs;
 }
 
 function removeDogField(){
@@ -564,6 +680,41 @@ function validateProfileForm(userType, numberOfDogs){
        }
      }
 
+     var currentDogs = numberOfDogs;
+     for(var i=0 ; i < (newDog - numberOfDogs); i++){
+       currentDogs++;
+       var name = "newDogsName" + currentDogs;
+       var breed = "newDogsBreed" + currentDogs;
+       var size = "newDogsSize" + currentDogs;
+       var weight = "newDogsWeight" + currentDogs;
+       var dateOfBirth = "newDogsDateOfBirth" + currentDogs;
+
+       var dogsName = document.forms["profileForm"][name].value;
+      var dogsBreed = document.forms["profileForm"][breed].value;
+      var dogsSize = document.forms["profileForm"][size].value;
+      var dogsWeight = document.forms["profileForm"][weight].value;
+      var dogsDateOfBirth = document.forms["profileForm"][dateOfBirth].value;
+
+      if(dogsName == ""){
+         alert("Dog's name must be filled before submitting form");
+         return false;
+       }else if(dogsBreed == ""){
+         alert("Dog's breed must be filled before submitting form");
+         return false;
+       }else if(dogsSize == ""){
+         alert("Dog's size must be filled before submitting form");
+         return false;
+       }else if(dogsWeight == ""){
+         alert("Dog's weight must be filled before submitting form");
+         return false;
+       }else if(dogsWeight > 200 || dogsWeight < 0){
+         alert("Dog's weight minimum is 0kg and maximum is 200kg");
+         return false;
+       }else if(!Date.parse(dogsDateOfBirth)){
+         alert("Dog's date of birth must be filled before submitting form");
+         return false;
+       }
+     }
 
    }
      return true;

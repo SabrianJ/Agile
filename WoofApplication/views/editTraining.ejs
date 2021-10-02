@@ -12,7 +12,7 @@
       <div class="card-body">
         <div class="form-group">
           <label for="addressInput">Location</label>
-          <input type="text" class="form-control" id="addressInput" style="width:80%" placeholder="Search Address" value="<%-foundTraining[0].location%>" name="address">
+          <input type="text" class="form-control" style="width:50%" id="addressInput" style="width:80%" placeholder="Search Address" value="<%-foundTraining[0].location%>" name="address">
         </div>
 
         <!-- <div class="form-group">
@@ -79,12 +79,12 @@
 
         <div class="form-group">
           <label for="trainingDateTime" class="form-label">Date and Time</label>
-          <input id="trainingDateTime" class="form-control" type="datetime-local" name="dateTime" min=<%= min %> value=<%= dateTime %>>
+          <input id="trainingDateTime" class="form-control" style="width:15%;" type="datetime-local" name="dateTime" min=<%= min %> value=<%= dateTime %>>
         </div>
 
         <div class="form-group">
           <label for="trainingName" class="form-label">Training Name</label>
-          <input id="trainingName" class="form-control" type="text" name="name" value="<%-foundTraining[0].name%>">
+          <input id="trainingName" class="form-control" style="width:30%;" type="text" name="name" value="<%-foundTraining[0].name%>">
         </div>
 
         <!-- <div class="form-group">

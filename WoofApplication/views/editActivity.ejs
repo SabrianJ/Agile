@@ -12,7 +12,7 @@
       <div class="card-body">
         <div class="form-group">
           <label for="addressInput">Location</label>
-          <input type="text" class="form-control" id="addressInput" style="width:80%" placeholder="Search Address" value="<%-foundActivity[0].location%>" name="address">
+          <input type="text" class="form-control" id="addressInput" style="width:50%" placeholder="Search Address" value="<%-foundActivity[0].location%>" name="address">
         </div>
 
         <!-- <div class="form-group">
@@ -80,12 +80,12 @@
 
         <div class="form-group">
           <label for="activityDateTime" class="form-label">Date and Time</label>
-          <input id="activityDateTime" class="form-control" type="datetime-local" name="dateTime" min=<%= min %> value=<%= dateTime %>>
+          <input id="activityDateTime" class="form-control" style="width:15%;" type="datetime-local" name="dateTime" min=<%= min %> value=<%= dateTime %>>
         </div>
 
         <div class="form-group">
           <label for="activityName" class="form-label">Activity Name</label>
-          <input id="activityName" class="form-control" type="text" name="name" value="<%-foundActivity[0].name%>">
+          <input id="activityName" class="form-control" type="text" style="width:30%;" name="name" value="<%-foundActivity[0].name%>">
         </div>
 
         <!-- <div class="form-group">

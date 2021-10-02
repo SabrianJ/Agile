@@ -69,6 +69,10 @@
 
     <%   if(user.type === "Dog Owner"){ %>
 
+        <div class="form-group dogInner" id="dogInner">
+
+
+
     <% for(var i = 1 ; i <= dogs.length ; i++){ %>
 
 
@@ -198,6 +202,9 @@
       <hr>
 
   <%  } %>
+  </div>
+    <a style="padding-left: 700px;" onclick="addNewDog(<%-dogs.length%>)"><i class="fas fa-plus-circle fa-3x" title="Click to add more dog"></i></a>
+    <a  onclick="removeNewDog(<%-dogs.length%>)"><i class="fas fa-minus-circle fa-3x" title="Click to remove one dog"></i></a><br>
 
 
 
@@ -280,9 +287,9 @@
     <% } %>
     <% } %>
 
-    <input type="number" style="display:none;" class="form-control" id="numberOfDogs"  name="numberOfDogs" value="">
+    <input type="number" style="display:none;" class="form-control" id="numberOfNewDogs"  name="numberOfNewDogs" value="">
 
-    <button type="submit" class="btn btn-primary" onclick="assignNumberOfDogs()">Save</button>
+    <button type="submit" class="btn btn-primary" onclick="assignNewNumberOfDogs(<%-dogs.length%>)">Save</button>
     <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
 
     <a class="btn btn-danger" style="margin-left:50px;" href="#" data-toggle="modal" data-target="#deleteAccount">
