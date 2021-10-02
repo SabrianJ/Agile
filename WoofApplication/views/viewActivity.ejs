@@ -69,7 +69,14 @@
         </ul>
       </nav>
     </div>
-    <a class="btn btn-primary" href="/">OK</a>
+
+  <%  if(!isMember){ %>
+      <a class="btn btn-outline-primary" href="/activities/join/<%= foundActivity[0]._id %>">Join Activity</a>
+  <%  } %>
+
+
+
+    <a class="btn btn-primary" href="/">Go back to dashboard</a>
 
 </div>
   </div>

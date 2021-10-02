@@ -130,30 +130,33 @@
               </div>
             </div>
             </td>
-            <td>
-              <label for="excludeSomeone" class="form-label">Exclude Someone</label>
-              <label class="switch">
-                <input type="checkbox" id="excludeSomeone">
-                <span class="slider round" onclick="excludeSomeone()"></span>
-              </label>
 
-              <div class="form-group" id="currentOwners" style="display:none;">
-              <div id="currentOwnersInput" class="dropdown-check-list" tabindex="100">
-                <span class="anchor" onclick="dropdownChecklistCurrentOwner()">Select Dog Owner to Exclude</span>
-                <ul class="items">
-                <%  for(var i=0 ; i < foundActivity[0].member.length ; i++){ %>
-                <%      for(var j=0 ; j < dogOwners.length ; j++){ %>
-                <%        if(dogOwners[j]._id == foundActivity[0].member[i]){ %>
-                          <li><input type="checkbox" name="currentOwnersExclude[]" value="<%- foundActivity[0].member[i] %>"/> <%= dogOwners[j].username %></li>
-                <%        } %>
-                <%      } %>
-                <%  } %>
+            <% if(foundActivity[0].member.length != 0){ %>
+              <td>
+                <label for="excludeSomeone" class="form-label">Exclude Someone</label>
+                <label class="switch">
+                  <input type="checkbox" id="excludeSomeone">
+                  <span class="slider round" onclick="excludeSomeone()"></span>
+                </label>
 
-                </ul>
+                <div class="form-group" id="currentOwners" style="display:none;">
+                <div id="currentOwnersInput" class="dropdown-check-list" tabindex="100">
+                  <span class="anchor" onclick="dropdownChecklistCurrentOwner()">Select Dog Owner to Exclude</span>
+                  <ul class="items">
+                  <%  for(var i=0 ; i < foundActivity[0].member.length ; i++){ %>
+                  <%      for(var j=0 ; j < dogOwners.length ; j++){ %>
+                  <%        if(dogOwners[j]._id == foundActivity[0].member[i]){ %>
+                            <li><input type="checkbox" name="currentOwnersExclude[]" value="<%- foundActivity[0].member[i] %>"/> <%= dogOwners[j].username %></li>
+                  <%        } %>
+                  <%      } %>
+                  <%  } %>
+
+                  </ul>
+                </div>
               </div>
-            </div>
+              </td>
+            <% } %>
 
-            </td>
           </tr>
           <tr>
             <td>
@@ -177,26 +180,29 @@
 
 
             </td>
-            <td>
-              <label for="excludeGroup" class="form-label">Exclude Group</label>
-              <label class="switch">
-                <input type="checkbox" id="excludeGroup">
-                <span class="slider round" onclick="excludeGroup()"></span>
-              </label>
+            <% if(foundActivity[0].member.length != 0){ %>
+              <td>
+                <label for="excludeGroup" class="form-label">Exclude Group</label>
+                <label class="switch">
+                  <input type="checkbox" id="excludeGroup">
+                  <span class="slider round" onclick="excludeGroup()"></span>
+                </label>
 
-              <div class="form-group" id="groups1" style="display:none;">
-              <div id="groupsInput1" class="dropdown-check-list" tabindex="100">
-                <span class="anchor" onclick="dropdownChecklistGroup1()">Select Group to Add</span>
-                <ul class="items">
-              <%  for(var i=0; i < foundGroup.length; i++){ %>
-                  <li><input type="checkbox" name="excludedGroup[]" value="<%- foundGroup[i]._id %>"/> <%= foundGroup[i].name %></li>
-              <%  } %>
+                <div class="form-group" id="groups1" style="display:none;">
+                <div id="groupsInput1" class="dropdown-check-list" tabindex="100">
+                  <span class="anchor" onclick="dropdownChecklistGroup1()">Select Group to Add</span>
+                  <ul class="items">
+                <%  for(var i=0; i < foundGroup.length; i++){ %>
+                    <li><input type="checkbox" name="excludedGroup[]" value="<%- foundGroup[i]._id %>"/> <%= foundGroup[i].name %></li>
+                <%  } %>
 
-                </ul>
+                  </ul>
+                </div>
               </div>
-            </div>
 
-            </td>
+              </td>
+            <%  } %>
+
           </tr>
         </table>
 

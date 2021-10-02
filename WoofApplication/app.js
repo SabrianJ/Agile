@@ -126,7 +126,7 @@ passport.deserializeUser(User.deserializeUser());
 
 let port = process.env.PORT;
 if (port == null || port == "") {
-  port = 7777;
+  port = 3000;
 }
 
 app.get("/login", function(req, res) {
@@ -325,12 +325,17 @@ app.get("/activities/:activityID",function(req,res){
               if(err){
                 console.log(err);
               }else{
+                var isMember = false;
                 var member = [];
                 for(var i=0 ; i < activity.member.length ; i++){
                   for(var j=0 ; j < foundUser.length ; j++){
                     if(activity.member[i] == foundUser[j]._id){
                       console.log(foundUser[j].username);
                       member.push(foundUser[j].username);
+                    }
+
+                    if(activity.member[i] == req.user._id || activity.creator == req.user_id){
+                      isMember = true;
                     }
                   }
                 }
@@ -339,7 +344,7 @@ app.get("/activities/:activityID",function(req,res){
                   if(err){
                     console.log(err);
                   }else{
-                    res.render("viewActivity", {user : req.user, foundInvitation : foundInvitation, creator : creator[0].username, member : member, foundActivity : foundActivity })
+                    res.render("viewActivity", {user : req.user, foundInvitation : foundInvitation, creator : creator[0].username, member : member, foundActivity : foundActivity, isMember : isMember })
                   }
                 });
               }
