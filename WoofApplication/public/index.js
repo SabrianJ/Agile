@@ -53,7 +53,7 @@ dogRegistration.classList.add('form-group');
 dogRegistration.id = 'dogRegistration' + ++window.newDog;
 dogRegistration.innerHTML =
   '<label for="dogName">Dog '+ window.newDog + '</label>' +
-  '<input type="text" class="form-control" id="newDogsName" placeholder="Name" name="newDogsName' + window.newDog +'" style="width:80%">' +
+  '<input type="text" class="form-control" id="newDogsName" maxlength="30" placeholder="Name" name="newDogsName' + window.newDog +'" style="width:80%">' +
   '<label for="newDogsBreed">Breed</label>' +
   '<select id="newDogsBreed" name="newDogsBreed'+ window.newDog +'" class="form-control" placeholder="Breed" style="width:25%">' +
   '<option value="Affenpinscher" selected>Affenspinscher</option>' +
@@ -353,7 +353,7 @@ dogRegistration.id = 'dogRegistration' + ++window.numberOfDogs;
 dogRegistration.innerHTML =
 '<hr size="10" style="height:3px;color:#000000;">'+
   '<label for="dogName">Dog '+ window.numberOfDogs + '</label>' +
-  '<input type="text" class="form-control" id="dogsName" placeholder="Name" name="dogsName' + window.numberOfDogs +'" style="width:80%">' +
+  '<input type="text" class="form-control" id="dogsName" maxlength="30" placeholder="Name" name="dogsName' + window.numberOfDogs +'" style="width:80%">' +
   '<label for="dogsBreed">Breed</label>' +
   '<select id="dogBreed" name="dogsBreed'+ window.numberOfDogs +'" class="form-control" placeholder="Breed" style="width:25%">' +
   '<option value="Affenpinscher" selected>Affenspinscher</option>' +

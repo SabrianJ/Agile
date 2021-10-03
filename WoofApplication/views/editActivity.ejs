@@ -12,7 +12,7 @@
       <div class="card-body">
         <div class="form-group">
           <label for="addressInput">Location</label>
-          <input type="text" class="form-control" id="addressInput" style="width:50%" placeholder="Search Address" value="<%-foundActivity[0].location%>" name="address">
+          <input type="text" class="form-control" id="addressInput" maxlength="30" style="width:50%" placeholder="Search Address" value="<%-foundActivity[0].location%>" name="address">
         </div>
 
         <!-- <div class="form-group">
@@ -85,7 +85,7 @@
 
         <div class="form-group">
           <label for="activityName" class="form-label">Activity Name</label>
-          <input id="activityName" class="form-control" type="text" style="width:30%;" name="name" value="<%-foundActivity[0].name%>">
+          <input id="activityName" class="form-control" maxlength="30" type="text" style="width:30%;" name="name" value="<%-foundActivity[0].name%>">
         </div>
 
         <!-- <div class="form-group">
@@ -98,7 +98,7 @@
 
         <div class="form-group">
           <label for="activityDescription" class="form-label">Description</label>
-          <textarea id="activityDescription" class="form-control" name="description"><%= foundActivity[0].description %></textarea>
+          <textarea id="activityDescription" class="form-control" maxlength="255" name="description"><%= foundActivity[0].description %></textarea>
         </div>
 
         <table style="width:80%;" class="form-group">

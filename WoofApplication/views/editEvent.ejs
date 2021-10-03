@@ -12,7 +12,7 @@
       <div class="card-body">
         <div class="form-group">
           <label for="addressInput">Location</label>
-          <input type="text" class="form-control" style="width:50%" id="addressInput" style="width:80%" placeholder="Search Address" value="<%-foundEvent[0].location%>" name="address">
+          <input type="text" class="form-control" style="width:50%" maxlength="30" id="addressInput" style="width:80%" placeholder="Search Address" value="<%-foundEvent[0].location%>" name="address">
         </div>
 
         <!-- <div class="form-group">
@@ -84,7 +84,7 @@
 
         <div class="form-group">
           <label for="eventName" class="form-label">Event Name</label>
-          <input id="eventName" class="form-control" style="width:30%;" type="text" name="name" value="<%-foundEvent[0].name%>">
+          <input id="eventName" class="form-control" maxlength="30" style="width:30%;" type="text" name="name" value="<%-foundEvent[0].name%>">
         </div>
 
         <!-- <div class="form-group">
@@ -97,7 +97,7 @@
 
         <div class="form-group">
           <label for="eventDescription" class="form-label">Description</label>
-          <textarea id="eventDescription" class="form-control" name="description"><%= foundEvent[0].description %></textarea>
+          <textarea id="eventDescription" class="form-control" maxlength="255" name="description"><%= foundEvent[0].description %></textarea>
         </div>
 
         <table style="width:80%;" class="form-group">

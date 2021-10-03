@@ -49,7 +49,7 @@ const dogsSchema = new mongoose.Schema({
   name: String,
   breed: String,
   size: String,
-  weight: String,
+  weight: Number,
   dob: Date,
   owner: String
 });
@@ -62,8 +62,8 @@ const usersSchema = new mongoose.Schema({
   city: String,
   suburb: String,
   type: String,
-  preference: Array,
-  distance: String,
+  preference: [String],
+  distance: Number,
   password: String
 });
 
