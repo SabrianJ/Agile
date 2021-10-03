@@ -9,11 +9,36 @@
     <div class="collapse show" id="collapseCardEvent">
       <div class="card-body" style="overflow: auto; height:220px;">
 
+        <%  function formatDate(date) { %>
+        <%  var d = new Date(date); %>
+        <%  var month = '' + (d.getMonth() + 1); %>
+        <%  var day = '' + d.getDate(); %>
+        <%  var year = d.getFullYear();%>
+        <%     var hour = '' + d.getHours(); %>
+        <%     var minute = '' + d.getMinutes(); %>
+
+        <%     if(hour.length < 2){ %>
+        <%       hour = '0' + hour; %>
+        <%     } %>
+
+        <%     if(minute.length < 2){ %>
+        <%       minute = '0' + minute; %>
+        <%     } %>
+
+        <%    if (month.length < 2){%>
+        <%        month = '0' + month;%>
+        <%      }%>
+        <%    if (day.length < 2){%>
+        <%        day = '0' + day;%>
+        <%      }%>
+        <%    return [day, month, year].join('-') + " Time : " + hour + ":" + minute ;%>
+        <%    }%>
+
       <%  for(var i = 0 ; i < foundEvent.length ; i++){ %>
       <%  if(foundEvent[i].creator == user._id){ %>
           <table width="100%">
             <tr>
-              <td><%=foundEvent[i].name %> (Admin)</td>
+              <td><%=foundEvent[i].name %> (Admin)<br><%=formatDate(foundEvent[i].dateTime) %></td>
               <td align="right">
                 <a href="/events/edit/<%=foundEvent[i]._id %>"><i class="far fa-edit"></i></a>
                 <a href="/delete/event/<%=foundEvent[i]._id %>"><i class="far fa-trash-alt"></i></a>
@@ -24,7 +49,7 @@
       <%  }else{ %>
           <table width="100%">
             <tr>
-              <td><%=foundEvent[i].name %></td>
+              <td><%=foundEvent[i].name %><br><%=formatDate(foundEvent[i].dateTime) %></td>
               <td align="right">
                 <a href="/events/<%=foundEvent[i]._id %>"><i class="fas fa-info-circle"></i></a>
                 <a href="/leave/event/<%=foundEvent[i]._id %>"><i class="fas fa-door-open"></i></a>
