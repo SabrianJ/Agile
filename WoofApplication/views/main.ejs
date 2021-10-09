@@ -1,7 +1,4 @@
 <%- include("topBar") -%>
-
-
-
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
@@ -10,31 +7,69 @@
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
-                    <% if(user.type === "Dog Owner"){ %>
-                      <div class="row">
-                          <%- include("groupCard") -%>
-                          <%- include("activityCard") -%>
-                      </div>
-
-                      <div class="row">
-                        <%- include("trainingCard") -%>
-                      </div>
-                  <%  }else{ %>
-                      <div class="row">
-                        <%- include("trainingCard") -%>
-                      </div>
-
-                      <div class="row">
-                        <%- include("eventCard") -%>
-                      </div>
-
-                <%    } %>
 
 
+
+                      <% if(user.type === "Dog Owner"){ %>
+                        <div class="row">
+                            <%- include("groupCard") -%>
+                            <%- include("activityCard") -%>
+                                <div class="col-lg-6">
+                                  <div id="map" ></div>
+                                  <label id="distanceInfo"></label>
+                                </div>
+
+
+
+                        </div>
+
+
+                        <div class="row">
+                          <%- include("trainingCard") -%>
+                        </div>
+
+
+
+
+                    <%  }else{ %>
+                        <div class="row">
+                          <%- include("trainingCard") -%>
+
+                          <div class="col-lg-6">
+                            <div id="map" ></div>
+                            <label id="distanceInfo"></label>
+                          </div>
+
+                        </div>
+
+                        <div class="row">
+                          <%- include("eventCard") -%>
+                        </div>
+
+                  <%    } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <input type="text"  style="display:none;" maxlength="30" id="address" style="width:80%" placeholder="<%- user.address %>" name="address" value="<%- user.address %>">
+                <button type="button" name="button" onclick="calculateDistance()"></button>
 
                 </div>
                 <!-- /.container-fluid -->
 
-                
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADEpRHtEOhgdpt4OUefFTUhsxTH7wALSQ&libraries=places&callback=initMap&channel=GMPSB_addressselection_v1_cAB" async defer></script>
 
 <%- include("bottomBar") -%>

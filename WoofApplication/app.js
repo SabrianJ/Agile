@@ -1930,10 +1930,8 @@ app.post("/changePassword", function(req, res) {
   if (typeof req.user === 'undefined') {
     res.redirect('/login')
   } else {
-    User.findOne({
-      _id: req.user._id
-    }, function(err, user) {
-      if (!err) {
+      const user = req.user;
+
         user.changePassword(req.body.oldPassword, req.body.newPassword, function(err) {
           if (err) {
 
@@ -1957,11 +1955,8 @@ app.post("/changePassword", function(req, res) {
     });
 
           }
-        })
-      } else {
-        console.log(err);
-      }
-    });
+        });
+
   }
 });
 

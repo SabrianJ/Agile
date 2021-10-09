@@ -1,4 +1,6 @@
 var numberOfDogs = 1;
+let directionsService;
+let directionsDisplay;
 var newDog = 0;
 var updatedDog = false;
 var checkList = document.getElementById('preferenceInput');
@@ -8,7 +10,12 @@ var checkListGroup1 = document.getElementById('groupsInput1');
 var checkListCurrentOwner = document.getElementById('currentOwnersInput');
 var checkListCurrentTrainer = document.getElementById('currentTrainersInput');
 var checkListTrainer = document.getElementById('trainersInput');
+var mapDIV = document.getElementById('map');
 var max = setMaxDate();
+var marker2;
+var coordinate;
+var map;
+
 
 function initialize() {
   var input = document.getElementById('addressInput');
@@ -35,7 +42,131 @@ function initialize() {
   });
 }
 
+function calculateDistance(){
+  if(directionsDisplay != null) {
+    directionsDisplay.setMap(null);
+    directionsDisplay = null;
+}
+
+  directionsService = new google.maps.DirectionsService();
+  directionsDisplay = new google.maps.DirectionsRenderer(
+    {
+      suppressMarkers: true,
+      suppressInfoWindows: true
+    });
+
+directionsDisplay.setMap(map);
+var lat1 = coordinate.lat();
+var lng1 = coordinate.lng();
+var lat2 = marker2.position.lat();
+var lng2 = marker2.position.lng();
+var request = {
+  origin: {lat: lat1, lng: lng1},
+  destination: {lat: lat2, lng: lng2},
+  travelMode: google.maps.DirectionsTravelMode.DRIVING
+};
+directionsService.route(request, function(response, status)
+{
+if (status == google.maps.DirectionsStatus.OK)
+{
+directionsDisplay.setDirections(response);
+let distance;
+distance = "The distance between the two points on the fastest route is: "+response.routes[0].legs[0].distance.text;
+distance += ". The aproximative driving time is: "+response.routes[0].legs[0].duration.text;
+document.getElementById("distanceInfo").innerHTML = distance;
+
+}
+});
+}
+
 google.maps.event.addDomListener(window, 'load', initialize)
+
+function initMap() {
+      const componentForm = [
+        'location',
+        'locality',
+        'administrative_area_level_1',
+        'country',
+        'postal_code',
+      ];
+
+      var geocoder = new google.maps.Geocoder();
+
+
+      var address = document.getElementById('address').value;
+
+       map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: coordinate,
+        mapId : '8eeafa140cb3198f',
+      });
+
+      geocoder.geocode({
+       'address': address
+   }, function(results, status) {
+        coordinate = results[0].geometry.location;
+       if (status == 'OK') {
+         map.setCenter(results[0].geometry.location);
+
+         var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+            draggable: false
+        });
+
+        marker2 = new google.maps.Marker({
+          map :map,
+          draggable: true,
+          position : results[0].geometry.location,
+          icon: {
+            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+              }
+        });
+
+        const calculateDiv = document.createElement("div");
+        CalculateControl(calculateDiv);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(calculateDiv);
+
+       }else{
+         alert('Geocode was not successful for the following reason: ' + status);
+       }
+   });
+}
+
+function CalculateControl(calculateDIV) {
+  // Set CSS for the control border.
+  const controlUI = document.createElement("div");
+
+  controlUI.style.backgroundColor = "#fff";
+  controlUI.style.border = "2px solid #fff";
+  controlUI.style.borderRadius = "3px";
+  controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+  controlUI.style.cursor = "pointer";
+  controlUI.style.marginTop = "8px";
+  controlUI.style.marginBottom = "22px";
+  controlUI.style.textAlign = "center";
+  controlUI.title = "Click to calculate distance";
+  calculateDIV.appendChild(controlUI);
+
+  // Set CSS for the control interior.
+  const controlText = document.createElement("div");
+
+  controlText.style.color = "rgb(25,25,25)";
+  controlText.style.fontFamily = "Roboto,Arial,sans-serif";
+  controlText.style.fontSize = "16px";
+  controlText.style.lineHeight = "38px";
+  controlText.style.paddingLeft = "5px";
+  controlText.style.paddingRight = "5px";
+  controlText.innerHTML = "Calculate";
+  controlUI.appendChild(controlText);
+
+  // Setup the click event listeners: simply set the map to Chicago.
+  controlUI.addEventListener("click", () => {
+    calculateDistance();
+  });
+}
+
+
 
 function joinInvitation(event, invitationID,type){
   window.open("/join/" + type + "/" + invitationID,"_self");

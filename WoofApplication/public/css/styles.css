@@ -11473,6 +11473,11 @@ form.item {
   margin-left: 20px;
 }
 
+/* Set the size of the div element that contains the map */
+#map {
+  height: 400px;
+}
+
 
 
 /* input[type="text"]:focus {
