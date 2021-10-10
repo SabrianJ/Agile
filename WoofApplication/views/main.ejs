@@ -7,6 +7,9 @@
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
                     </div>
 
+                    <div style="padding-bottom:20px;" class="col-lg-12">
+                      <div id="calendar"></div>
+                    </div>
 
 
 
@@ -26,6 +29,7 @@
 
                         <div class="row">
                           <%- include("trainingCard") -%>
+
                         </div>
 
 
@@ -34,7 +38,7 @@
                     <%  }else{ %>
                         <div class="row">
                           <%- include("trainingCard") -%>
-
+                          <%- include("eventCard") -%>
                           <div class="col-lg-6">
                             <div id="map" ></div>
                             <label id="distanceInfo"></label>
@@ -42,16 +46,7 @@
 
                         </div>
 
-                        <div class="row">
-                          <%- include("eventCard") -%>
-                        </div>
-
                   <%    } %>
-
-
-
-
-
 
 
 

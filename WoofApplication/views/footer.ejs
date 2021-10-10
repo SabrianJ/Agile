@@ -1,6 +1,24 @@
 
-
+<!-- <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script> -->
+<script src="/evo-calendar.js" charset="utf-8"></script>
 <script src="/index.js" charset="utf-8"></script>
+
+<script>
+        // initialize your calendar, once the page's DOM is ready
+        $(document).ready(function() {
+            $('#calendar').evoCalendar({
+                'eventHeaderFormat': 'MM dd',
+                'theme': 'Royal Navy',
+                'todayHighlight' : true
+
+            })
+        });
+
+        
+
+
+
+</script>
 
 <script async
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADEpRHtEOhgdpt4OUefFTUhsxTH7wALSQ&libraries=geometry,places&callback=initMap">
