@@ -2,13 +2,13 @@
  * Evo Calendar - Simple and Modern-looking Event Calendar Plugin
  *
  * Licensed under the MIT License
- * 
+ *
  * Version: 1.1.2
  * Author: Edlyn Villegas
  * Docs: https://edlynvillegas.github.com/evo-calendar
  * Repo: https://github.com/edlynvillegas/evo-calendar
  * Issues: https://github.com/edlynvillegas/evo-calendar/issues
- * 
+ *
 */
 
 /* Evo Calendar - Theme: Midnight Blue */
@@ -138,7 +138,7 @@
 }
 .midnight-blue .event-container:hover > .event-icon > div {
     border-color: #fff;
-} 
+}
 .midnight-blue .event-container > .event-icon > div.event-bullet-birthday,
 .midnight-blue .event-indicator > .type-bullet > div.type-birthday {
     background-color: #6c72bf;
