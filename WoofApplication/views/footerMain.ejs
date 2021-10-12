@@ -8,7 +8,16 @@
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADEpRHtEOhgdpt4OUefFTUhsxTH7wALSQ&libraries=geometry,places&callback=initMap">
 </script>
 
-
+<script src="/evo-calendar.js" charset="utf-8"></script>
+<script>
+        $(document).ready(function() {
+            $('#calendar').evoCalendar({
+                'eventHeaderFormat': 'MM dd',
+                'theme': 'Royal Navy',
+                'todayHighlight' : true
+            })
+        });
+</script>
 </body>
 
 <!-- Footer -->
