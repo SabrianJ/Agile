@@ -39,28 +39,28 @@
 
               for(var i=0 ; i < activity.length ; i++){
                 var date = new Date(activity[i].dateTime);
-                var currentMonth = months[date.getMonth()];
+                var currentMonth = months[date.getUTCMonth()];
 
                 $('#calendar').evoCalendar('addCalendarEvent', {
                     id: activity[i]._id,
                     name: activity[i].name,
                     description: activity[i].description,
                     location: activity[i].location,
-                    date: currentMonth + " " + date.getDate() + ", " + date.getFullYear(),
+                    date: currentMonth + " " + date.getUTCDate() + ", " + date.getUTCFullYear(),
                     type: 'activity'
                 });
               }
 
               for(var i=0 ; i < training.length ; i++){
                 var date = new Date(training[i].dateTime);
-                var currentMonth = months[date.getMonth()];
+                var currentMonth = months[date.getUTCMonth()];
 
                 $('#calendar').evoCalendar('addCalendarEvent', {
                     id: training[i]._id,
                     name: training[i].name,
                     description: training[i].description,
                     location: training[i].location,
-                    date: currentMonth + " " + date.getDate() + ", " + date.getFullYear(),
+                    date: currentMonth + " " + date.getUTCDate() + ", " + date.getUTCFullYear(),
                     type: 'training'
                 });
               }
@@ -254,28 +254,28 @@
 
               for(var i=0 ; i < event.length ; i++){
                 var date = new Date(event[i].dateTime);
-                var currentMonth = months[date.getMonth()];
+                var currentMonth = months[date.getUTCMonth()];
 
                 $('#calendar').evoCalendar('addCalendarEvent', {
                     id: event[i]._id,
                     name: event[i].name,
                     description: event[i].description,
                     location: event[i].location,
-                    date: currentMonth + " " + date.getDate() + ", " + date.getFullYear(),
+                    date: currentMonth + " " + date.getUTCDate() + ", " + date.getUTCFullYear(),
                     type: 'event'
                 });
               }
 
               for(var i=0 ; i < training.length ; i++){
                 var date = new Date(training[i].dateTime);
-                var currentMonth = months[date.getMonth()];
+                var currentMonth = months[date.getUTCMonth()];
 
                 $('#calendar').evoCalendar('addCalendarEvent', {
                     id: training[i]._id,
                     name: training[i].name,
                     description: training[i].description,
                     location: training[i].location,
-                    date: currentMonth + " " + date.getDate() + ", " + date.getFullYear(),
+                    date: currentMonth + " " + date.getUTCDate() + ", " + date.getUTCFullYear(),
                     type: 'training'
                 });
               }

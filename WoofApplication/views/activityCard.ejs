@@ -38,7 +38,7 @@
       <%  if(foundActivity[i].creator == user._id){ %>
           <table width="100%">
             <tr>
-              <td><%=foundActivity[i].name %> (Admin)<br> <%=foundActivity[i].dateTime %></td>
+              <td><%=foundActivity[i].name %> (Admin)<br> <%=formatDate(foundActivity[i].dateTime) %></td>
               <td align="right">
                 <a href="/activities/edit/<%=foundActivity[i]._id %>"><i class="far fa-edit"></i></a>
                 <a href="/delete/activity/<%=foundActivity[i]._id %>"><i class="far fa-trash-alt"></i></a>
@@ -49,7 +49,7 @@
       <%  }else{ %>
           <table width="100%">
             <tr>
-              <td><%=foundActivity[i].name %> <br> <%=foundActivity[i].dateTime %></td>
+              <td><%=foundActivity[i].name %> <br> <%=formatDate(foundActivity[i].dateTime) %></td>
               <td align="right">
                 <a href="/activities/<%=foundActivity[i]._id %>"><i class="fas fa-info-circle"></i></a>
                 <a href="/leave/activity/<%=foundActivity[i]._id %>"><i class="fas fa-door-open"></i></a>
