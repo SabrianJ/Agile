@@ -2,7 +2,7 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/evo-calendar@1.1.2/evo-calendar/js/evo-calendar.min.js"></script> -->
 
 
-<script src="/index.js" charset="utf-8"></script>
+
 
 <script async
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADEpRHtEOhgdpt4OUefFTUhsxTH7wALSQ&libraries=geometry,places&callback=initMap">
@@ -45,6 +45,7 @@
                     id: activity[i]._id,
                     name: activity[i].name,
                     description: activity[i].description,
+                    location: activity[i].location,
                     date: currentMonth + " " + date.getDate() + ", " + date.getFullYear(),
                     type: 'activity'
                 });
@@ -58,12 +59,171 @@
                     id: training[i]._id,
                     name: training[i].name,
                     description: training[i].description,
+                    location: training[i].location,
                     date: currentMonth + " " + date.getDate() + ", " + date.getFullYear(),
                     type: 'training'
                 });
               }
 
           });
+
+          function calculateDistance(){
+            if(directionsDisplay != null) {
+              directionsDisplay.setMap(null);
+              directionsDisplay = null;
+          }
+
+            directionsService = new google.maps.DirectionsService();
+            directionsDisplay = new google.maps.DirectionsRenderer(
+              {
+                suppressMarkers: true,
+                suppressInfoWindows: true
+              });
+
+          directionsDisplay.setMap(map);
+          var lat1 = coordinate.lat();
+          var lng1 = coordinate.lng();
+          var lat2 = marker2.position.lat();
+          var lng2 = marker2.position.lng();
+          var request = {
+            origin: {lat: lat1, lng: lng1},
+            destination: {lat: lat2, lng: lng2},
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+          };
+          directionsService.route(request, function(response, status)
+          {
+          if (status == google.maps.DirectionsStatus.OK)
+          {
+          directionsDisplay.setDirections(response);
+          let distance;
+          distance = "The distance between the two points on the fastest route is: "+response.routes[0].legs[0].distance.text;
+          distance += ". The aproximative driving time is: "+response.routes[0].legs[0].duration.text;
+          document.getElementById("distanceInfo").innerHTML = distance;
+
+          }
+          });
+          }
+
+
+          function CalculateControl(calculateDIV) {
+            // Set CSS for the control border.
+            const controlUI = document.createElement("div");
+
+            controlUI.style.backgroundColor = "#fff";
+            controlUI.style.border = "2px solid #fff";
+            controlUI.style.borderRadius = "3px";
+            controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+            controlUI.style.cursor = "pointer";
+            controlUI.style.marginTop = "8px";
+            controlUI.style.marginBottom = "22px";
+            controlUI.style.textAlign = "center";
+            controlUI.title = "Click to calculate distance";
+            calculateDIV.appendChild(controlUI);
+
+            // Set CSS for the control interior.
+            const controlText = document.createElement("div");
+
+            controlText.style.color = "rgb(25,25,25)";
+            controlText.style.fontFamily = "Roboto,Arial,sans-serif";
+            controlText.style.fontSize = "16px";
+            controlText.style.lineHeight = "38px";
+            controlText.style.paddingLeft = "5px";
+            controlText.style.paddingRight = "5px";
+            controlText.innerHTML = "Calculate";
+            controlUI.appendChild(controlText);
+
+            // Setup the click event listeners: simply set the map to Chicago.
+            controlUI.addEventListener("click", () => {
+              calculateDistance();
+            });
+          }
+
+
+          function ShowEventControl(){
+            const activityDiv = document.createElement("div");
+            ActivityControl(activityDiv);
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(activityDiv);
+
+            const trainingDiv = document.createElement("div");
+            TrainingControl(trainingDiv);
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(trainingDiv);
+          }
+
+          function ActivityControl(activityDiv){
+            const activityUI = document.createElement("div");
+
+            activityUI.style.backgroundColor = "#fff";
+            activityUI.style.border = "2px solid #fff";
+            activityUI.style.borderRadius = "3px";
+            activityUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+            activityUI.style.cursor = "pointer";
+            activityUI.style.marginTop = "8px";
+            activityUI.style.marginBottom = "22px";
+            activityUI.style.textAlign = "center";
+            activityUI.title = "Click to show activity";
+            activityDiv.appendChild(activityUI);
+
+            const activityText = document.createElement("div");
+
+            activityText.style.color = "rgb(25,25,25)";
+            activityText.style.fontFamily = "Roboto,Arial,sans-serif";
+            activityText.style.fontSize = "16px";
+            activityText.style.lineHeight = "38px";
+            activityText.style.paddingLeft = "5px";
+            activityText.style.paddingRight = "5px";
+            activityText.innerHTML = "Activity";
+            activityUI.appendChild(activityText);
+
+            // Setup the click event listeners: simply set the map to Chicago.
+            activityUI.addEventListener("click", () => {
+              showActivity();
+            });
+          }
+
+          function showActivity(){
+
+          }
+
+          function TrainingControl(trainingDiv){
+            const trainingUI = document.createElement("div");
+
+            trainingUI.style.backgroundColor = "#fff";
+            trainingUI.style.border = "2px solid #fff";
+            trainingUI.style.borderRadius = "3px";
+            trainingUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+            trainingUI.style.cursor = "pointer";
+            trainingUI.style.marginTop = "8px";
+            trainingUI.style.marginBottom = "22px";
+            trainingUI.style.textAlign = "center";
+            trainingUI.title = "Click to show training";
+            trainingDiv.appendChild(trainingUI);
+
+            const trainingText = document.createElement("div");
+
+            trainingText.style.color = "rgb(25,25,25)";
+            trainingText.style.fontFamily = "Roboto,Arial,sans-serif";
+            trainingText.style.fontSize = "16px";
+            trainingText.style.lineHeight = "38px";
+            trainingText.style.paddingLeft = "5px";
+            trainingText.style.paddingRight = "5px";
+            trainingText.innerHTML = "Training";
+            trainingUI.appendChild(trainingText);
+
+            // Setup the click event listeners: simply set the map to Chicago.
+            trainingUI.addEventListener("click", () => {
+              showTraining();
+            });
+          }
+
+          function showTraining(){
+            console.log("lol");
+          }
+
+
+          // var active_events = $('#calendar').evoCalendar('getActiveEvents');
+          // console.log(active_events);
+
+
   </script>
 <% }else{ %>
   <script>
@@ -100,6 +260,7 @@
                     id: event[i]._id,
                     name: event[i].name,
                     description: event[i].description,
+                    location: event[i].location,
                     date: currentMonth + " " + date.getDate() + ", " + date.getFullYear(),
                     type: 'event'
                 });
@@ -113,6 +274,7 @@
                     id: training[i]._id,
                     name: training[i].name,
                     description: training[i].description,
+                    location: training[i].location,
                     date: currentMonth + " " + date.getDate() + ", " + date.getFullYear(),
                     type: 'training'
                 });
