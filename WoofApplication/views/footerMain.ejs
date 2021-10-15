@@ -82,11 +82,13 @@
                 suppressInfoWindows: true
               });
 
+              console.log(destination);
+
           directionsDisplay.setMap(map);
           var lat1 = coordinate.lat();
           var lng1 = coordinate.lng();
-          var lat2 = marker2.position.lat();
-          var lng2 = marker2.position.lng();
+          var lat2 = destination.lat();
+          var lng2 = destination.lng();
           var request = {
             origin: {lat: lat1, lng: lng1},
             destination: {lat: lat2, lng: lng2},
@@ -417,11 +419,13 @@
                 suppressInfoWindows: true
               });
 
+              console.log(destination);
+
           directionsDisplay.setMap(map);
           var lat1 = coordinate.lat();
           var lng1 = coordinate.lng();
-          var lat2 = marker2.position.lat();
-          var lng2 = marker2.position.lng();
+          var lat2 = destination.lat();
+          var lng2 = destination.lng();
           var request = {
             origin: {lat: lat1, lng: lng1},
             destination: {lat: lat2, lng: lng2},

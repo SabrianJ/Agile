@@ -1,10 +1,10 @@
 let directionsService;
 let directionsDisplay;
 var mapDIV = document.getElementById('map');
-var marker2;
 var coordinate;
 var map;
 var markersArray = [];
+var destination;
 
 
 function initialize() {
@@ -56,9 +56,11 @@ function initMap() {
         mapId : '8eeafa140cb3198f',
       });
 
+
+
       geocoder.geocode({
        'address': address
-   },(function(markersArray){
+   },(function(){
      return function(results, status) {
         coordinate = results[0].geometry.location;
        if (status == 'OK') {
@@ -72,16 +74,9 @@ function initMap() {
 
 
 
-        marker2 = new google.maps.Marker({
-          map :map,
-          draggable: true,
-          position : results[0].geometry.location,
-          icon: {
-            url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
-              }
-        });
+      
 
-        
+
 
         const calculateDiv = document.createElement("div");
         CalculateControl(calculateDiv);
@@ -89,11 +84,15 @@ function initMap() {
 
         ShowEventControl();
 
+        new ClickEventHandler(map, {lat : coordinate.lat(), lng : coordinate.lng()}, destination);
+
        }else{
          alert('Geocode was not successful for the following reason: ' + status);
        }
    }
- }(markersArray)));
+ }()));
+
+
 }
 
 
@@ -107,4 +106,46 @@ function clearOverlays() {
     markersArray[i].setMap(null);
   }
   markersArray.length = 0;
+}
+
+function isIconMouseEvent(e) {
+  return "placeId" in e;
+}
+
+
+class ClickEventHandler {
+  origin;
+  map;
+  directionsService;
+  directionsRenderer;
+  placesService;
+  infowindow;
+  infowindowContent;
+  destination;
+  constructor(map, origin,destination) {
+    this.origin = origin;
+    this.map = map;
+    this.destination = destination;
+    this.directionsService = new google.maps.DirectionsService();
+    this.directionsRenderer = new google.maps.DirectionsRenderer();
+    this.directionsRenderer.setMap(map);
+    this.placesService = new google.maps.places.PlacesService(map);
+    this.infowindow = new google.maps.InfoWindow();
+    this.infowindowContent = document.getElementById("infowindow-content");
+    this.infowindow.setContent(this.infowindowContent);
+    // Listen for clicks on the map.
+    this.map.addListener("click", this.handleClick.bind(this));
+  }
+  handleClick(event) {
+    console.log("You clicked on: " + event.latLng);
+
+    // If the event has a placeId, use it.
+    if (isIconMouseEvent(event)) {
+      console.log("You clicked on place:" + event.placeId);
+
+      if (event.placeId) {
+          destination = event.latLng;
+      }
+    }
+  }
 }
