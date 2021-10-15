@@ -4,6 +4,7 @@ var mapDIV = document.getElementById('map');
 var marker2;
 var coordinate;
 var map;
+var markersArray = [];
 
 
 function initialize() {
@@ -57,7 +58,8 @@ function initMap() {
 
       geocoder.geocode({
        'address': address
-   }, function(results, status) {
+   },(function(markersArray){
+     return function(results, status) {
         coordinate = results[0].geometry.location;
        if (status == 'OK') {
          map.setCenter(results[0].geometry.location);
@@ -68,6 +70,8 @@ function initMap() {
             draggable: false
         });
 
+
+
         marker2 = new google.maps.Marker({
           map :map,
           draggable: true,
@@ -76,6 +80,8 @@ function initMap() {
             url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
               }
         });
+
+        
 
         const calculateDiv = document.createElement("div");
         CalculateControl(calculateDiv);
@@ -86,11 +92,19 @@ function initMap() {
        }else{
          alert('Geocode was not successful for the following reason: ' + status);
        }
-   });
+   }
+ }(markersArray)));
 }
 
 
 function alternateImage(event){
   const target = event.target;
   target.src = "/img/undraw_profile.svg";
+}
+
+function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+  markersArray.length = 0;
 }

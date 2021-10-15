@@ -46,6 +46,7 @@
                     name: activity[i].name,
                     description: activity[i].description,
                     location: activity[i].location,
+                    time: date.getUTCHours() + " : " + date.getUTCMinutes(),
                     date: currentMonth + " " + date.getUTCDate() + ", " + date.getUTCFullYear(),
                     type: 'activity'
                 });
@@ -60,6 +61,7 @@
                     name: training[i].name,
                     description: training[i].description,
                     location: training[i].location,
+                    time: date.getUTCHours() + " : " + date.getUTCMinutes(),
                     date: currentMonth + " " + date.getUTCDate() + ", " + date.getUTCFullYear(),
                     type: 'training'
                 });
@@ -181,7 +183,71 @@
           }
 
           function showActivity(){
+            clearOverlays();
+            var active_events = $('#calendar').evoCalendar('getActiveEvents');
 
+            for(var i=0; i < active_events.length;i++){
+              if(active_events[i].type == "activity"){
+                var geocoder1 = new google.maps.Geocoder();
+                var currentActivity = active_events[i];
+
+
+                  geocoder1.geocode({
+                    'address': active_events[i].location
+                  },(function(currentActivity,map, markersArray) {
+                    return function(results, status) {
+                    if (status == 'OK') {
+                    var activityMarker = new google.maps.Marker({
+                        map :map,
+                        draggable: false,
+                        position : results[0].geometry.location,
+                        title: currentActivity.name,
+                        icon: {
+                          url: "/img/jogging.png"
+                        }
+                      });
+
+                      markersArray.push(activityMarker);
+
+                      var activityDate = new Date(currentActivity.date);
+
+                      const contentString =
+                      '<div id="content">' +
+                        '<div id="siteNotice">' +
+                          "</div>" +
+                          '<h2>'+ currentActivity.name +'</h2>' +
+                          '<div id="bodyContent">' +
+                            '<p>'+ currentActivity.description + '</p>' +
+                              '<p> Time : '+ currentActivity.time +'</p>' +
+                                "</div>" +
+                                "</div>";
+
+
+
+                      const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                      });
+
+                      activityMarker.addListener("click", () => {
+                        infowindow.open({
+                          anchor: activityMarker,
+                          map,
+                          shouldFocus: false,
+                        });
+                      });
+
+
+
+                    }else{
+                      alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                  }
+                }(currentActivity,map, markersArray)));
+
+
+
+              }
+            }
           }
 
           function TrainingControl(trainingDiv){
@@ -216,14 +282,69 @@
           }
 
           function showTraining(){
-            console.log("lol");
+            clearOverlays();
+            var active_events = $('#calendar').evoCalendar('getActiveEvents');
+
+            for(var i=0; i < active_events.length;i++){
+              if(active_events[i].type == "training"){
+                var geocoder1 = new google.maps.Geocoder();
+                var currentTraining = active_events[i];
+
+
+                  geocoder1.geocode({
+                    'address': active_events[i].location
+                  },(function(currentTraining,map, markersArray) {
+                    return function(results, status) {
+                    if (status == 'OK') {
+                    var trainingMarker = new google.maps.Marker({
+                        map :map,
+                        draggable: false,
+                        position : results[0].geometry.location,
+                        title: currentTraining.name,
+                        icon: {
+                          url: "/img/university.png"
+                        }
+                      });
+
+                      markersArray.push(trainingMarker);
+
+                      var trainingDate = new Date(currentTraining.date);
+
+                      const contentString =
+                      '<div id="content">' +
+                        '<div id="siteNotice">' +
+                          "</div>" +
+                          '<h2>'+ currentTraining.name +'</h2>' +
+                          '<div id="bodyContent">' +
+                            '<p>'+ currentTraining.description + '</p>' +
+                              '<p> Time : '+ currentTraining.time +'</p>' +
+                                "</div>" +
+                                "</div>";
+
+
+
+                      const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                      });
+
+                      trainingMarker.addListener("click", () => {
+                        infowindow.open({
+                          anchor: trainingMarker,
+                          map,
+                          shouldFocus: false,
+                        });
+                      });
+
+
+
+                    }else{
+                      alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                  }
+                }(currentTraining,map, markersArray)));
+              }
+            }
           }
-
-
-          // var active_events = $('#calendar').evoCalendar('getActiveEvents');
-          // console.log(active_events);
-
-
   </script>
 <% }else{ %>
   <script>
@@ -260,6 +381,7 @@
                     id: event[i]._id,
                     name: event[i].name,
                     description: event[i].description,
+                    time: date.getUTCHours() + " : " + date.getUTCMinutes(),
                     location: event[i].location,
                     date: currentMonth + " " + date.getUTCDate() + ", " + date.getUTCFullYear(),
                     type: 'event'
@@ -274,13 +396,290 @@
                     id: training[i]._id,
                     name: training[i].name,
                     description: training[i].description,
+                    time: date.getUTCHours() + " : " + date.getUTCMinutes(),
                     location: training[i].location,
                     date: currentMonth + " " + date.getUTCDate() + ", " + date.getUTCFullYear(),
                     type: 'training'
                 });
               }
-
           });
+
+          function calculateDistance(){
+            if(directionsDisplay != null) {
+              directionsDisplay.setMap(null);
+              directionsDisplay = null;
+          }
+
+            directionsService = new google.maps.DirectionsService();
+            directionsDisplay = new google.maps.DirectionsRenderer(
+              {
+                suppressMarkers: true,
+                suppressInfoWindows: true
+              });
+
+          directionsDisplay.setMap(map);
+          var lat1 = coordinate.lat();
+          var lng1 = coordinate.lng();
+          var lat2 = marker2.position.lat();
+          var lng2 = marker2.position.lng();
+          var request = {
+            origin: {lat: lat1, lng: lng1},
+            destination: {lat: lat2, lng: lng2},
+            travelMode: google.maps.DirectionsTravelMode.DRIVING
+          };
+          directionsService.route(request, function(response, status)
+          {
+          if (status == google.maps.DirectionsStatus.OK)
+          {
+          directionsDisplay.setDirections(response);
+          let distance;
+          distance = "The distance between the two points on the fastest route is: "+response.routes[0].legs[0].distance.text;
+          distance += ". The aproximative driving time is: "+response.routes[0].legs[0].duration.text;
+          document.getElementById("distanceInfo").innerHTML = distance;
+
+          }
+          });
+          }
+
+
+          function CalculateControl(calculateDIV) {
+            // Set CSS for the control border.
+            const controlUI = document.createElement("div");
+
+            controlUI.style.backgroundColor = "#fff";
+            controlUI.style.border = "2px solid #fff";
+            controlUI.style.borderRadius = "3px";
+            controlUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+            controlUI.style.cursor = "pointer";
+            controlUI.style.marginTop = "8px";
+            controlUI.style.marginBottom = "22px";
+            controlUI.style.textAlign = "center";
+            controlUI.title = "Click to calculate distance";
+            calculateDIV.appendChild(controlUI);
+
+            // Set CSS for the control interior.
+            const controlText = document.createElement("div");
+
+            controlText.style.color = "rgb(25,25,25)";
+            controlText.style.fontFamily = "Roboto,Arial,sans-serif";
+            controlText.style.fontSize = "16px";
+            controlText.style.lineHeight = "38px";
+            controlText.style.paddingLeft = "5px";
+            controlText.style.paddingRight = "5px";
+            controlText.innerHTML = "Calculate";
+            controlUI.appendChild(controlText);
+
+            // Setup the click event listeners: simply set the map to Chicago.
+            controlUI.addEventListener("click", () => {
+              calculateDistance();
+            });
+          }
+
+
+          function ShowEventControl(){
+            const eventDiv = document.createElement("div");
+            EventControl(eventDiv);
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(eventDiv);
+
+            const trainingDiv = document.createElement("div");
+            TrainingControl(trainingDiv);
+            map.controls[google.maps.ControlPosition.TOP_CENTER].push(trainingDiv);
+          }
+
+          function EventControl(eventDiv){
+            const eventUI = document.createElement("div");
+
+            eventUI.style.backgroundColor = "#fff";
+            eventUI.style.border = "2px solid #fff";
+            eventUI.style.borderRadius = "3px";
+            eventUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+            eventUI.style.cursor = "pointer";
+            eventUI.style.marginTop = "8px";
+            eventUI.style.marginBottom = "22px";
+            eventUI.style.textAlign = "center";
+            eventUI.title = "Click to show event";
+            eventDiv.appendChild(eventUI);
+
+            const eventText = document.createElement("div");
+
+            eventText.style.color = "rgb(25,25,25)";
+            eventText.style.fontFamily = "Roboto,Arial,sans-serif";
+            eventText.style.fontSize = "16px";
+            eventText.style.lineHeight = "38px";
+            eventText.style.paddingLeft = "5px";
+            eventText.style.paddingRight = "5px";
+            eventText.innerHTML = "Event";
+            eventUI.appendChild(eventText);
+
+            // Setup the click event listeners: simply set the map to Chicago.
+            eventUI.addEventListener("click", () => {
+              showEvent();
+            });
+          }
+
+          function showEvent(){
+            clearOverlays();
+            var active_events = $('#calendar').evoCalendar('getActiveEvents');
+
+            for(var i=0; i < active_events.length;i++){
+              if(active_events[i].type == "event"){
+                var geocoder1 = new google.maps.Geocoder();
+                var currentEvent = active_events[i];
+
+
+                  geocoder1.geocode({
+                    'address': active_events[i].location
+                  },(function(currentEvent,map, markersArray) {
+                    return function(results, status) {
+                    if (status == 'OK') {
+                    var eventMarker = new google.maps.Marker({
+                        map :map,
+                        draggable: false,
+                        position : results[0].geometry.location,
+                        title: currentEvent.name,
+                        icon: {
+                          url: "/img/event.png"
+                        }
+                      });
+
+                      markersArray.push(eventMarker);
+
+                      var eventDate = new Date(currentEvent.date);
+
+                      const contentString =
+                      '<div id="content">' +
+                        '<div id="siteNotice">' +
+                          "</div>" +
+                          '<h2>'+ currentEvent.name +'</h2>' +
+                          '<div id="bodyContent">' +
+                            '<p>'+ currentEvent.description + '</p>' +
+                              '<p> Time : '+ currentEvent.time +'</p>' +
+                                "</div>" +
+                                "</div>";
+
+
+
+                      const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                      });
+
+                      eventMarker.addListener("click", () => {
+                        infowindow.open({
+                          anchor: eventMarker,
+                          map,
+                          shouldFocus: false,
+                        });
+                      });
+
+
+
+                    }else{
+                      alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                  }
+                }(currentEvent,map, markersArray)));
+
+
+
+              }
+            }
+          }
+
+          function TrainingControl(trainingDiv){
+            const trainingUI = document.createElement("div");
+
+            trainingUI.style.backgroundColor = "#fff";
+            trainingUI.style.border = "2px solid #fff";
+            trainingUI.style.borderRadius = "3px";
+            trainingUI.style.boxShadow = "0 2px 6px rgba(0,0,0,.3)";
+            trainingUI.style.cursor = "pointer";
+            trainingUI.style.marginTop = "8px";
+            trainingUI.style.marginBottom = "22px";
+            trainingUI.style.textAlign = "center";
+            trainingUI.title = "Click to show training";
+            trainingDiv.appendChild(trainingUI);
+
+            const trainingText = document.createElement("div");
+
+            trainingText.style.color = "rgb(25,25,25)";
+            trainingText.style.fontFamily = "Roboto,Arial,sans-serif";
+            trainingText.style.fontSize = "16px";
+            trainingText.style.lineHeight = "38px";
+            trainingText.style.paddingLeft = "5px";
+            trainingText.style.paddingRight = "5px";
+            trainingText.innerHTML = "Training";
+            trainingUI.appendChild(trainingText);
+
+            // Setup the click event listeners: simply set the map to Chicago.
+            trainingUI.addEventListener("click", () => {
+              showTraining();
+            });
+          }
+
+          function showTraining(){
+            clearOverlays();
+            var active_events = $('#calendar').evoCalendar('getActiveEvents');
+
+            for(var i=0; i < active_events.length;i++){
+              if(active_events[i].type == "training"){
+                var geocoder1 = new google.maps.Geocoder();
+                var currentTraining = active_events[i];
+
+
+                  geocoder1.geocode({
+                    'address': active_events[i].location
+                  },(function(currentTraining,map, markersArray) {
+                    return function(results, status) {
+                    if (status == 'OK') {
+                    var trainingMarker = new google.maps.Marker({
+                        map :map,
+                        draggable: false,
+                        position : results[0].geometry.location,
+                        title: currentTraining.name,
+                        icon: {
+                          url: "/img/university.png"
+                        }
+                      });
+
+                      markersArray.push(trainingMarker);
+
+                      var trainingDate = new Date(currentTraining.date);
+
+                      const contentString =
+                      '<div id="content">' +
+                        '<div id="siteNotice">' +
+                          "</div>" +
+                          '<h2>'+ currentTraining.name +'</h2>' +
+                          '<div id="bodyContent">' +
+                            '<p>'+ currentTraining.description + '</p>' +
+                              '<p> Time : '+ currentTraining.time +'</p>' +
+                                "</div>" +
+                                "</div>";
+
+
+
+                      const infowindow = new google.maps.InfoWindow({
+                        content: contentString,
+                      });
+
+                      trainingMarker.addListener("click", () => {
+                        infowindow.open({
+                          anchor: trainingMarker,
+                          map,
+                          shouldFocus: false,
+                        });
+                      });
+
+
+
+                    }else{
+                      alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                  }
+                }(currentTraining,map, markersArray)));
+              }
+            }
+          }
   </script>
 
 
