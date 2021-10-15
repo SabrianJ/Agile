@@ -73,7 +73,7 @@
             if(directionsDisplay != null) {
               directionsDisplay.setMap(null);
               directionsDisplay = null;
-          }
+            }
 
             directionsService = new google.maps.DirectionsService();
             directionsDisplay = new google.maps.DirectionsRenderer(
@@ -186,6 +186,12 @@
 
           function showActivity(){
             clearOverlays();
+
+            if(directionsDisplay != null) {
+              directionsDisplay.setMap(null);
+              directionsDisplay = null;
+            }
+
             var active_events = $('#calendar').evoCalendar('getActiveEvents');
 
             for(var i=0; i < active_events.length;i++){
@@ -226,16 +232,24 @@
 
 
 
-                      const infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                      });
+
 
                       activityMarker.addListener("click", () => {
+
+                        if(infowindow != null){
+                          infowindow.setContent(contentString);
+                        }else{
+                          infowindow = new google.maps.InfoWindow({
+                              content: contentString,
+                            });
+                        }
+
                         infowindow.open({
                           anchor: activityMarker,
                           map,
                           shouldFocus: false,
                         });
+                        destination = activityMarker.position;
                       });
 
 
@@ -285,6 +299,12 @@
 
           function showTraining(){
             clearOverlays();
+
+            if(directionsDisplay != null) {
+              directionsDisplay.setMap(null);
+              directionsDisplay = null;
+            }
+
             var active_events = $('#calendar').evoCalendar('getActiveEvents');
 
             for(var i=0; i < active_events.length;i++){
@@ -325,16 +345,23 @@
 
 
 
-                      const infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                      });
+
 
                       trainingMarker.addListener("click", () => {
+                        if(infowindow != null){
+                          infowindow.setContent(contentString);
+                        }else{
+                          infowindow = new google.maps.InfoWindow({
+                              content: contentString,
+                            });
+                        }
+
                         infowindow.open({
                           anchor: trainingMarker,
                           map,
                           shouldFocus: false,
                         });
+                        destination = trainingMarker.position;
                       });
 
 
@@ -523,6 +550,12 @@
 
           function showEvent(){
             clearOverlays();
+
+            if(directionsDisplay != null) {
+              directionsDisplay.setMap(null);
+              directionsDisplay = null;
+            }
+
             var active_events = $('#calendar').evoCalendar('getActiveEvents');
 
             for(var i=0; i < active_events.length;i++){
@@ -563,16 +596,24 @@
 
 
 
-                      const infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                      });
+
 
                       eventMarker.addListener("click", () => {
+                        if(infowindow != null){
+                          infowindow.setContent(contentString);
+                        }else{
+                          infowindow = new google.maps.InfoWindow({
+                              content: contentString,
+                            });
+                        }
+
                         infowindow.open({
                           anchor: eventMarker,
                           map,
                           shouldFocus: false,
                         });
+
+                        destination = eventMarker.position;
                       });
 
 
@@ -622,6 +663,12 @@
 
           function showTraining(){
             clearOverlays();
+
+            if(directionsDisplay != null) {
+              directionsDisplay.setMap(null);
+              directionsDisplay = null;
+            }
+            
             var active_events = $('#calendar').evoCalendar('getActiveEvents');
 
             for(var i=0; i < active_events.length;i++){
@@ -662,16 +709,24 @@
 
 
 
-                      const infowindow = new google.maps.InfoWindow({
-                        content: contentString,
-                      });
+
 
                       trainingMarker.addListener("click", () => {
+                        if(infowindow != null){
+                          infowindow.setContent(contentString);
+                        }else{
+                          infowindow = new google.maps.InfoWindow({
+                              content: contentString,
+                            });
+                        }
+
                         infowindow.open({
                           anchor: trainingMarker,
                           map,
                           shouldFocus: false,
                         });
+
+                        destination = trainingMarker.position;
                       });
 
 

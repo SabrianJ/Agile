@@ -5,36 +5,7 @@ var coordinate;
 var map;
 var markersArray = [];
 var destination;
-
-
-function initialize() {
-  var input = document.getElementById('addressInput');
-
-  var autocomplete = new google.maps.places.Autocomplete(input);
-
-  autocomplete.setComponentRestrictions({
-   country: ["nz"],
- });
-
-  google.maps.event.addListener(autocomplete, 'place_changed', function () {
-      var place = autocomplete.getPlace();
-
-      let city = place.address_components[3].long_name;
-
-      if(city === "Auckland" || city === "Christchurch" || city === "Wellington"){
-        document.getElementById('cityInput').value = place.address_components[3].long_name;
-        document.getElementById("suburbInput").options[0]=new Option(place.address_components[2].long_name,place.address_components[2].long_name);
-        document.getElementById('suburbInput').value = place.address_components[2].long_name;
-      }else{
-        alert("Only Auckland, Wellington and Christchurch that is supported by this app");
-      }
-
-  });
-}
-
-
-
-google.maps.event.addDomListener(window, 'load', initialize)
+var infowindow = null;
 
 function initMap() {
       const componentForm = [
@@ -74,7 +45,7 @@ function initMap() {
 
 
 
-      
+
 
 
 
