@@ -1,0 +1,138 @@
+
+  <!-- Collapsable Card Example -->
+  <div class="card shadow mb-4">
+    <!-- Card Header - Accordion -->
+    <a href="#collapseCardReminder" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+      <h6 class="m-0 font-weight-bold text-primary">Reminder (12 hours)</h6>
+    </a>
+    <!-- Card Content - Collapse -->
+    <div class="collapse show" id="collapseCardReminder">
+      <div class="card-body" style="overflow: auto; height:350px;">
+
+        <%  function formatDate(date) { %>
+        <%  var d = new Date(date); %>
+        <%  var month = '' + (d.getMonth() + 1); %>
+        <%  var day = '' + d.getDate(); %>
+        <%  var year = d.getFullYear();%>
+        <%     var hour = '' + d.getHours(); %>
+        <%     var minute = '' + d.getMinutes(); %>
+
+        <%     if(hour.length < 2){ %>
+        <%       hour = '0' + hour; %>
+        <%     } %>
+
+        <%     if(minute.length < 2){ %>
+        <%       minute = '0' + minute; %>
+        <%     } %>
+
+        <%    if (month.length < 2){%>
+        <%        month = '0' + month;%>
+        <%      }%>
+        <%    if (day.length < 2){%>
+        <%        day = '0' + day;%>
+        <%      }%>
+        <%    return [day, month, year].join('-') + " Time : " + hour + ":" + minute ;%>
+        <%    }%>
+
+      <%  var reminderCount = 0; %>
+
+    <%  if(user.type == "Dog Owner"){ %>
+      <%  for(var i = 0 ; i < foundActivity.length ; i++){ %>
+      <%    var currentDate = new Date(); %>
+      <%    var activityDate = new Date(foundActivity[i].dateTime); %>
+
+    <%      if(currentDate < activityDate){ %>
+    <%        var diff = (activityDate - currentDate) / 3600000; %>
+    <%        if(diff < 12){ %>
+    <%          reminderCount++; %>
+          <div id="reminder<%-reminderCount%>">
+              <table width="100%">
+                <tr>
+                  <td><%=foundActivity[i].name%><br> <%=formatDate(foundActivity[i].dateTime) %></td>
+                  <td align="right">
+                  <i class="far fa-times-circle fa-3x" onclick="deleteReminder('reminder<%-reminderCount%>')"></i>
+                  </td>
+                </tr>
+              </table>
+              <hr />
+          </div>
+    <%        } %>
+    <%      } %>
+      <%  } %>
+
+    <%  for(var i=0; i < foundTraining.length; i++){ %>
+  <%      var currentDate = new Date(); %>
+    <%    var trainingDate = new Date(foundTraining[i].dateTime); %>
+
+    <%    if(currentDate < trainingDate){ %>
+    <%      var diff = (trainingDate - currentDate) / 3600000; %>
+    <%      if(diff < 12){ %>
+    <%        reminderCount++; %>
+            <div id="reminder<%-reminderCount%>">
+                <table width="100%">
+                  <tr>
+                    <td><%=foundTraining[i].name%><br> <%=formatDate(foundTraining[i].dateTime) %></td>
+                    <td align="right">
+                      <i class="far fa-times-circle fa-3x" onclick="deleteReminder('reminder<%-reminderCount%>')"></i>
+                    </td>
+                  </tr>
+                </table>
+                <hr />
+            </div>
+    <%      } %>
+    <%    } %>
+    <%  }%>
+    <%  }else{ %>
+      <%  for(var i=0; i < foundTraining.length; i++){ %>
+    <%      var currentDate = new Date(); %>
+      <%    var trainingDate = new Date(foundTraining[i].dateTime); %>
+
+      <%    if(currentDate < trainingDate){ %>
+      <%      var diff = (trainingDate - currentDate) / 3600000; %>
+      <%      if(diff < 12){ %>
+      <%        reminderCount++; %>
+              <div id="reminder<%-reminderCount%>">
+                  <table width="100%">
+                    <tr>
+                      <td><%=foundTraining[i].name%><br> <%=formatDate(foundTraining[i].dateTime) %></td>
+                      <td align="right">
+                        <i class="far fa-times-circle fa-3x" onclick="deleteReminder('reminder<%-reminderCount%>')"></i>
+                      </td>
+                    </tr>
+                  </table>
+                  <hr />
+              </div>
+      <%      } %>
+      <%    } %>
+      <%  }%>
+
+      <%  for(var i=0; i < foundEvent.length; i++){ %>
+    <%      var currentDate = new Date(); %>
+      <%    var eventDate = new Date(foundEvent[i].dateTime); %>
+
+      <%    if(currentDate < eventDate){ %>
+      <%      var diff = (eventDate - currentDate) / 3600000; %>
+      <%      if(diff < 12){ %>
+      <%        reminderCount++; %>
+              <div id="reminder<%-reminderCount%>">
+                  <table width="100%">
+                    <tr>
+                      <td><%=foundEvent[i].name%><br> <%=formatDate(foundEvent[i].dateTime) %></td>
+                      <td align="right">
+                        <i class="far fa-times-circle fa-3x" onclick="deleteReminder('reminder<%-reminderCount%>')"></i>
+                      </td>
+                    </tr>
+                  </table>
+                  <hr />
+              </div>
+      <%      } %>
+      <%    } %>
+      <%  }%>
+    <%  } %>
+
+
+
+
+      </div>
+    </div>
+  </div>

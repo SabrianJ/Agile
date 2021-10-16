@@ -15,35 +15,34 @@
 
                       <% if(user.type === "Dog Owner"){ %>
                         <div class="row">
+                          <div class="col-lg-3">
                             <%- include("groupCard") -%>
+                            <%- include("trainingCard") -%>
+                          </div>
+                          <div class="col-lg-3">
                             <%- include("activityCard") -%>
-                                <div class="col-lg-6">
-                                  <div id="map" ></div>
-                                  <label id="distanceInfo"></label>
-                                </div>
-
-
-
-                        </div>
-
-
-                        <div class="row">
-                          <%- include("trainingCard") -%>
-
-                        </div>
-
-
-
-
-                    <%  }else{ %>
-                        <div class="row">
-                          <%- include("trainingCard") -%>
-                          <%- include("eventCard") -%>
-                          <div class="col-lg-6">
+                            <%- include("reminderCard") -%>
+                          </div>
+                          <div class="col-6">
                             <div id="map" ></div>
                             <label id="distanceInfo"></label>
                           </div>
 
+                        </div>
+
+                    <%  }else{ %>
+                        <div class="row">
+                          <div class="col-lg-3">
+                            <%- include("trainingCard") -%>
+                            <%- include("reminderCard") -%>
+                          </div>
+                          <div class="col-lg-3">
+                            <%- include("eventCard") -%>
+                          </div>
+                          <div class="col-6">
+                            <div id="map" ></div>
+                            <label id="distanceInfo"></label>
+                          </div>                
                         </div>
 
                   <%    } %>

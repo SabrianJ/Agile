@@ -83,6 +83,11 @@ function isIconMouseEvent(e) {
   return "placeId" in e;
 }
 
+function deleteReminder(name){
+  var reminder = document.getElementById(name);
+  reminder.remove();
+}
+
 
 class ClickEventHandler {
   origin;

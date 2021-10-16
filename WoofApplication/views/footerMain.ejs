@@ -102,7 +102,7 @@
           let distance;
           distance = "The distance between the two points on the fastest route is: "+response.routes[0].legs[0].distance.text;
           distance += ". The aproximative driving time is: "+response.routes[0].legs[0].duration.text;
-          document.getElementById("distanceInfo").innerHTML = distance;
+          document.getElementById("distanceInfo").innerHTML = "<strong>" + distance + "</strong>";
 
           }
           });
@@ -466,7 +466,7 @@
           let distance;
           distance = "The distance between the two points on the fastest route is: "+response.routes[0].legs[0].distance.text;
           distance += ". The aproximative driving time is: "+response.routes[0].legs[0].duration.text;
-          document.getElementById("distanceInfo").innerHTML = distance;
+          document.getElementById("distanceInfo").innerHTML = "<strong>" + distance + "</strong>";
 
           }
           });
@@ -668,7 +668,7 @@
               directionsDisplay.setMap(null);
               directionsDisplay = null;
             }
-            
+
             var active_events = $('#calendar').evoCalendar('getActiveEvents');
 
             for(var i=0; i < active_events.length;i++){
