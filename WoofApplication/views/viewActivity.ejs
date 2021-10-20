@@ -47,6 +47,12 @@
       <%    return [year, month, day].join('-') + "T" + hour + ":" + minute ;%>
       <%    }%>
 
+      <%  function addHours(date,h){ %>
+    <%    var newDate = new Date(date); %>
+    <%    return newDate.setTime(date.getTime() + (h*60*60*1000)); %>
+    <%  } %>
+
+
       <% var dateTime = formatDate(foundActivity[0].dateTime); %>
 
     <div class="form-group">
@@ -73,7 +79,7 @@
   <%  if(!isMember){ %>
     <%  var currentDate = new Date(); %>
     <%  var activityDate = new Date(foundActivity[0].dateTime); %>
-    <%  if(activityDate > currentDate){ %>
+    <%  if(activityDate > addHours(currentDate,13)){ %>
       <a class="btn btn-outline-primary" href="/activities/join/<%= foundActivity[0]._id %>">Join Activity</a>
       <%  } %>
   <%  } %>

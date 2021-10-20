@@ -28,6 +28,12 @@
   <%    return [day, month, year].join('-') + " Time : " + hour + ":" + minute ;%>
   <%    }%>
 
+  <%  function addHours(date,h){ %>
+    <%    var newDate = new Date(date); %>
+    <%    return newDate.setTime(date.getTime() + (h*60*60*1000)); %>
+    <%  } %>
+
+
   <!-- Project Card Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -38,7 +44,9 @@
         <%  var currentDate = new Date(); %>
         <%  var trainingDate = new Date(foundTraining[i].dateTime); %>
         <span class="float-right">
+          <%  if(trainingDate > addHours(currentDate,13)){ %>
           <a class="btn btn-outline-primary" href="/trainings/join/<%= foundTraining[i]._id %>">Join Training</a><br>
+          <% } %>
           <a href="/trainings/<%= foundTraining[i]._id %>">Find Out more...</a>
         </span>
             <h4 class="small font-weight-bold">
