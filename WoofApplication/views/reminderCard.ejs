@@ -41,23 +41,21 @@
       <%    var currentDate = new Date(); %>
       <%    var activityDate = new Date(foundActivity[i].dateTime); %>
 
-    <%      if(currentDate < activityDate){ %>
-    <%        var diff = (activityDate - currentDate) / 3600000; %>
-    <%        if(diff < 12){ %>
-    <%          reminderCount++; %>
-          <div id="reminder<%-reminderCount%>">
-              <table width="100%">
-                <tr>
-                  <td><%=foundActivity[i].name%><br> <%=formatDate(foundActivity[i].dateTime) %></td>
-                  <td align="right">
-                  <i class="far fa-times-circle fa-3x" onclick="deleteReminder('reminder<%-reminderCount%>')"></i>
-                  </td>
-                </tr>
-              </table>
-              <hr />
-          </div>
-    <%        } %>
-    <%      } %>
+ <%        var diff = (activityDate - currentDate) / 3600000; %>
+
+ <div id="reminder<%-reminderCount%>">
+               <table width="100%">
+                 <tr>
+ 		<td>isSmaller = <%=currentDate < activityDate%></td>
+ 		<td>diff = <%=diff%></td>
+                   <td><%=foundActivity[i].dateTime%></td>
+ 			<td><%=currentDate%></td>
+
+                 </tr>
+               </table>
+               <hr />
+           </div>
+
       <%  } %>
 
     <%  for(var i=0; i < foundTraining.length; i++){ %>
