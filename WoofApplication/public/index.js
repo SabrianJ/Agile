@@ -474,6 +474,25 @@ function validateCreateForm(createdForm){
   }
 }
 
+function validateCreateGroup(){
+  var name = document.forms["groupForm"]["nameInput"].value;
+  var description = document.forms["groupForm"]["groupDescription"].value;
+  var message = document.forms["groupForm"]["message"].value;
+
+  if(name == ""){
+    alert("Name must be filled before submitting form");
+    return false;
+  }else if(description == ""){
+    alert("Description must be filled before submitting form");
+    return false;
+  }else if(message == ""){
+    alert("Message must be filled before submitting form");
+    return false;
+  }else{
+    return true;
+  }
+}
+
 
 
 function addDog(){

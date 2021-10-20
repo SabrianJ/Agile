@@ -8,7 +8,7 @@
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Edit Group</h6>
     </div>
-      <form name="groupForm" action="/groups/edit/<%-foundGroup[0]._id%>" method="POST" autocomplete="off" required>
+      <form name="groupForm" action="/groups/edit/<%-foundGroup[0]._id%>" method="POST" autocomplete="off" onsubmit="return validateCreateGroup()" required>
         <div class="card-body">
           <div class="form-group">
             <label for="nameInput">Name</label>
@@ -80,8 +80,8 @@
       </table>
 
       <div class="form-group">
-      <label for="activityDescription" class="form-label">Description</label>
-      <textarea id="activityDescription" maxlength="255" class="form-control" name="description"><%= foundGroup[0].description %></textarea>
+      <label for="groupDescription" class="form-label">Description</label>
+      <textarea id="groupDescription" maxlength="255" class="form-control" name="description"><%= foundGroup[0].description %></textarea>
       </div>
 
       <div class="form-group">
