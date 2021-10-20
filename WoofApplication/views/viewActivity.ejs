@@ -71,7 +71,11 @@
     </div>
 
   <%  if(!isMember){ %>
+    <%  var currentDate = new Date(); %>
+    <%  var activityDate = new Date(foundActivity[0].dateTime); %>
+    <%  if(activityDate > currentDate){ %>
       <a class="btn btn-outline-primary" href="/activities/join/<%= foundActivity[0]._id %>">Join Activity</a>
+      <%  } %>
   <%  } %>
 
 

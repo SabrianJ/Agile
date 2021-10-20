@@ -71,7 +71,11 @@
     </div>
 
     <%  if(!isMember){ %>
+      <%  var currentDate = new Date(); %>
+      <%  var trainingDate = new Date(foundTraining[i].dateTime); %>
+      <%  if(trainingDate > currentDate){ %>
         <a class="btn btn-outline-primary" href="/trainings/join/<%= foundTraining[0]._id %>">Join Training</a>
+        <%  } %>
     <%  } %>
 
     <a class="btn btn-primary" href="/">Go back to dashboard</a>
