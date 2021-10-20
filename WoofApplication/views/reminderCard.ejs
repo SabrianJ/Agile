@@ -34,6 +34,10 @@
         <%    return [day, month, year].join('-') + " Time : " + hour + ":" + minute ;%>
         <%    }%>
 
+      <%  function addHours(date,h){ %>
+      <%    return date.setTime(date.getTime() + (h*60*60*1000)); %>
+      <%  } %>
+
       <%  var reminderCount = 0; %>
 
     <%  if(user.type == "Dog Owner"){ %>
@@ -41,7 +45,7 @@
       <%    var currentDate = new Date(); %>
       <%    var activityDate = new Date(foundActivity[i].dateTime); %>
 
-      <%      if(currentDate < activityDate){ %>
+      <%      if(addHours(currentDate,13) < activityDate && currentDate < activityDate){ %>
         <%        var diff = (activityDate - currentDate) / 3600000; %>
         <%        if((diff - 13) < 12){ %>
         <%          reminderCount++; %>
@@ -65,7 +69,7 @@
   <%      var currentDate = new Date(); %>
     <%    var trainingDate = new Date(foundTraining[i].dateTime); %>
 
-    <%    if(currentDate < trainingDate){ %>
+    <%    if(addHours(currentDate,13) < trainingDate && currentDate < trainingDate){ %>
     <%      var diff = (trainingDate - currentDate) / 3600000; %>
     <%      if((diff - 13) < 12){ %>
     <%        reminderCount++; %>
@@ -88,7 +92,7 @@
     <%      var currentDate = new Date(); %>
       <%    var trainingDate = new Date(foundTraining[i].dateTime); %>
 
-      <%    if(currentDate < trainingDate){ %>
+      <%    if(addHours(currentDate,13) < trainingDate && currentDate < trainingDate){ %>
       <%      var diff = (trainingDate - currentDate) / 3600000; %>
       <%      if((diff - 13) < 12){ %>
       <%        reminderCount++; %>
@@ -111,7 +115,7 @@
     <%      var currentDate = new Date(); %>
       <%    var eventDate = new Date(foundEvent[i].dateTime); %>
 
-      <%    if(currentDate < eventDate){ %>
+      <%    if(addHours(currentDate,13) < eventDate && currentDate < eventDate){ %>
       <%      var diff = (eventDate - currentDate) / 3600000; %>
       <%      if((diff - 13) < 12){ %>
       <%        reminderCount++; %>
