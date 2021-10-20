@@ -3,6 +3,31 @@
 <!-- Content Column -->
 <div class="col-lg-12 mb-4">
 
+  <%  function formatDate(date) { %>
+  <%  var d = new Date(date); %>
+  <%  var month = '' + (d.getMonth() + 1); %>
+  <%  var day = '' + d.getDate(); %>
+  <%  var year = d.getFullYear();%>
+  <%     var hour = '' + d.getHours(); %>
+  <%     var minute = '' + d.getMinutes(); %>
+
+  <%     if(hour.length < 2){ %>
+  <%       hour = '0' + hour; %>
+  <%     } %>
+
+  <%     if(minute.length < 2){ %>
+  <%       minute = '0' + minute; %>
+  <%     } %>
+
+  <%    if (month.length < 2){%>
+  <%        month = '0' + month;%>
+  <%      }%>
+  <%    if (day.length < 2){%>
+  <%        day = '0' + day;%>
+  <%      }%>
+  <%    return [day, month, year].join('-') + " Time : " + hour + ":" + minute ;%>
+  <%    }%>
+
   <!-- Project Card Example -->
   <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -10,13 +35,17 @@
     </div>
     <div class="card-body">
       <% for(var i=0; i < foundActivity.length ; i++){ %>
+      <%  var currentDate = new Date(); %>
+      <%  var activityDate = new Date(foundActivity[i].dateTime); %>
         <span class="float-right">
-          <a class="btn btn-outline-primary" href="/activities/join/<%= foundActivity[i]._id %>">Join Activity</a><br>
+        <%  if(activityDate > currentDate){ %>
+            <a class="btn btn-outline-primary" href="/activities/join/<%= foundActivity[i]._id %>">Join Activity</a><br>
+        <%  } %>
           <a href="/activities/<%= foundActivity[i]._id %>">Find Out more...</a>
         </span>
             <h4 class="small font-weight-bold">
               Name : <%= foundActivity[i].name %> <br />
-              Date and Time : <%= foundActivity[i].dateTime %> <br /><br />
+              Date and Time : <%= formatDate(foundActivity[i].dateTime) %> <br /><br />
 
               </h4>
             <h4 class="small font-weight-bold">
