@@ -78,7 +78,7 @@
 
     <%  if(!isMember){ %>
       <%  var currentDate = new Date(); %>
-      <%  var trainingDate = new Date(foundTraining[i].dateTime); %>
+      <%  var trainingDate = new Date(foundTraining[0].dateTime); %>
       <%  if(trainingDate > addHours(currentDate,13)){ %>
         <a class="btn btn-outline-primary" href="/trainings/join/<%= foundTraining[0]._id %>">Join Training</a>
         <%  } %>
