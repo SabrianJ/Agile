@@ -29,9 +29,11 @@ function initialize() {
   google.maps.event.addListener(autocomplete, 'place_changed', function () {
       var place = autocomplete.getPlace();
 
+      let cityIncluded = place.formatted_address;
+
       let city = place.address_components[3].long_name;
 
-      if(city === "Auckland" || city === "Christchurch" || city === "Wellington"){
+      if(city.includes("Auckland") || city.includes("Christchurch") || city.includes("Wellington")||cityIncluded.includes("Auckland") || cityIncluded.includes("Christchurch") || cityIncluded.includes("Wellington")){
         document.getElementById('cityInput').value = place.address_components[3].long_name;
         document.getElementById("suburbInput").options[0]=new Option(place.address_components[2].long_name,place.address_components[2].long_name);
         document.getElementById('suburbInput').value = place.address_components[2].long_name;
