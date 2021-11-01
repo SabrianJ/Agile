@@ -20,9 +20,12 @@
           My city is <%= results[i].city %> and the suburb is <%- results[i].suburb %> .<br /><br />
 
             My dog preference is
-      <% for(var j=0 ; j <results[i].preference.length ; j++){ %>
-      <%- results[i].preference[j] %> ,
-      <%      } %>
+          <%  if(results[i].preference != null){ %>
+              <% for(var j=0 ; j <results[i].preference.length ; j++){ %>
+              <%- results[i].preference[j] %> ,
+              <%      } %>
+          <%  } %>
+
           <span class="float-right">
             <a href="/trainers/<%= results[i]._id %>">Find Out more...</a>
           </span></h4>
