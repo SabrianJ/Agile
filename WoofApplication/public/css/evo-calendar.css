@@ -152,6 +152,7 @@ input:focus, textarea:focus, button:focus {
     -o-transition: all .3s ease;
     transition: all .3s ease;
     z-index: 1;
+    height:657px;
 }
 .calendar-inner::after {
     content: none;

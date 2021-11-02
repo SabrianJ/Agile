@@ -25,7 +25,7 @@
     background: #fff7e1;
 }
 .royal-navy .calendar-sidebar > .month-list > .calendar-months {
-    padding: 0 15px 0 0;
+    padding: 0 30px 0 0;
 }
 .royal-navy .calendar-sidebar > .month-list > .calendar-months > li {
     padding: 9px 30px;
@@ -155,7 +155,7 @@
 }
 @media screen and (max-width: 768px) {
     .royal-navy .calendar-sidebar > .month-list > .calendar-months > li {
-        padding: 6px 26px;
+        padding: 6px 30px;
     }
     .royal-navy button.icon-button > span.bars,
     .royal-navy button.icon-button > span.bars::before,
