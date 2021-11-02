@@ -785,21 +785,22 @@ app.post("/createGroup", function(req,res){
 
   var owners = req.body.owners;
 
+if(owners != null){
+  for(var i=0 ; i < owners.length ; i++){
+    var invitation = new Invitation({
+      name: req.body.name,
+      type: "group",
+      targetID: group._id,
+      owner: owners[i],
+      message: req.body.message
+    });
 
-for(var i=0 ; i < owners.length ; i++){
-  var invitation = new Invitation({
-    name: req.body.name,
-    type: "group",
-    targetID: group._id,
-    owner: owners[i],
-    message: req.body.message
-  });
-
-  invitation.save(function(err,result){
-    if(err){
-      console.log(err);
-    }
-  });
+    invitation.save(function(err,result){
+      if(err){
+        console.log(err);
+      }
+    });
+  }
 }
 
 res.redirect("/");
