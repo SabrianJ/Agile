@@ -32,7 +32,7 @@
 
                   <%  for(var i = 0 ; i < dogOwners.length ; i++){ %>
                   <%      if(foundGroup[0].member.length === 0){ %>
-                          <li><input type="checkbox" name="newOwners[]" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
+                          <li><input type="checkbox" id="<%- dogOwners[i].username %>" name="newOwners[]" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
                   <%      }else{ %>
                           <%for(var j=0 ; j < foundGroup[0].member.length ; j++){ %>
                             <%if(dogOwners[i]._id != foundGroup[0].member[j]){%>
@@ -63,7 +63,7 @@
                   <%  for(var i=0 ; i < foundGroup[0].member.length ; i++){ %>
                   <%      for(var j=0 ; j < dogOwners.length ; j++){ %>
                   <%        if(dogOwners[j]._id == foundGroup[0].member[i]){ %>
-                            <li><input type="checkbox" name="currentOwnersExclude[]" value="<%- foundGroup[0].member[i] %>"/> <%= dogOwners[j].username %>   </li>
+                            <li><input type="checkbox" id="remove<%- dogOwners[j].username %>" name="currentOwnersExclude[]" value="<%- foundGroup[0].member[i] %>"/> <%= dogOwners[j].username %>   </li>
                   <%        } %>
                   <%      } %>
                   <%  } %>

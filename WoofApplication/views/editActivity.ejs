@@ -117,11 +117,11 @@
 
                   <%  for(var i = 0 ; i < dogOwners.length ; i++){ %>
                   <%      if(foundActivity[0].member.length === 0){ %>
-                          <li><input type="checkbox" name="newOwners[]" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
+                          <li><input type="checkbox" name="newOwners[]" id="<%- dogOwners[i].username %>" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
                   <%      }else{ %>
                           <%for(var j=0 ; j < foundActivity[0].member.length ; j++){ %>
                             <%if(dogOwners[i]._id != foundActivity[0].member[j]){%>
-                                <li><input type="checkbox" name="newOwners[]" value="<%- dogOwners[i]._id %>"/><%= dogOwners[i].username %></li>
+                                <li><input type="checkbox" name="newOwners[]" id="<%- dogOwners[i].username %>" value="<%- dogOwners[i]._id %>"/><%= dogOwners[i].username %></li>
                               <%} %>
                           <%}%>
                   <%      } %>
@@ -146,7 +146,7 @@
                   <%  for(var i=0 ; i < foundActivity[0].member.length ; i++){ %>
                   <%      for(var j=0 ; j < dogOwners.length ; j++){ %>
                   <%        if(dogOwners[j]._id == foundActivity[0].member[i]){ %>
-                            <li><input type="checkbox" name="currentOwnersExclude[]" value="<%- foundActivity[0].member[i] %>"/> <%= dogOwners[j].username %></li>
+                            <li><input type="checkbox" id="remove<%- dogOwners[j].username %>" name="currentOwnersExclude[]" value="<%- foundActivity[0].member[i] %>"/> <%= dogOwners[j].username %></li>
                   <%        } %>
                   <%      } %>
                   <%  } %>
@@ -171,7 +171,7 @@
                 <span class="anchor" onclick="dropdownChecklistGroup()">Select Group to Add</span>
                 <ul class="items">
               <%  for(var i=0; i < foundGroup.length; i++){ %>
-                  <li><input type="checkbox" name="invitedGroup[]" value="<%- foundGroup[i]._id %>"/> <%= foundGroup[i].name %></li>
+                  <li><input type="checkbox" id="<%- foundGroup[i].name %>" name="invitedGroup[]" value="<%- foundGroup[i]._id %>"/> <%= foundGroup[i].name %></li>
               <%  } %>
 
                 </ul>
@@ -190,10 +190,10 @@
 
                 <div class="form-group" id="groups1" style="display:none;">
                 <div id="groupsInput1" class="dropdown-check-list" tabindex="100">
-                  <span class="anchor" onclick="dropdownChecklistGroup1()">Select Group to Add</span>
+                  <span class="anchor" onclick="dropdownChecklistGroup1()">Select Group to Remove</span>
                   <ul class="items">
                 <%  for(var i=0; i < foundGroup.length; i++){ %>
-                    <li><input type="checkbox" name="excludedGroup[]" value="<%- foundGroup[i]._id %>"/> <%= foundGroup[i].name %></li>
+                    <li><input type="checkbox" id="remove<%- foundGroup[i].name %>" name="excludedGroup[]" value="<%- foundGroup[i]._id %>"/> <%= foundGroup[i].name %></li>
                 <%  } %>
 
                   </ul>

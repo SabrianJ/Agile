@@ -80,7 +80,7 @@
                 <ul class="items">
 
                   <%  for(var i = 0 ; i < dogOwners.length ; i++){ %>
-                      <li><input type="checkbox" name="owners[]" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
+                      <li><input type="checkbox" id="<%- dogOwners[i].username %>" name="owners[]" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
                   <%  } %>
 
 
@@ -105,7 +105,7 @@
                 <ul class="items">
 
                   <%  for(var i = 0 ; i < foundGroup.length ; i++){ %>
-                      <li><input type="checkbox" name="groups[]" value="<%- foundGroup[i]._id %>"/> <%= foundGroup[i].name %></li>
+                      <li><input type="checkbox" id="<%- foundGroup[i].name %>" name="groups[]" value="<%- foundGroup[i]._id %>"/> <%= foundGroup[i].name %></li>
                   <%  } %>
 
 

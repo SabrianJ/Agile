@@ -11,7 +11,7 @@
 
       <%  for(var i = 0 ; i < foundGroup.length ; i++){ %>
       <%  if(foundGroup[i].admin == user._id){ %>
-          <table width="100%">
+          <table width="100%" id="<%-foundGroup[i].name %>">
             <tr>
               <td><%=foundGroup[i].name %> (Admin)</td>
               <td align="right">
@@ -22,7 +22,7 @@
           </table>
               <hr />
       <%  }else{ %>
-          <table width="100%">
+          <table width="100%" id="<%-foundGroup[i].name %>">
             <tr>
               <td><%=foundGroup[i].name %></td>
               <td align="right">

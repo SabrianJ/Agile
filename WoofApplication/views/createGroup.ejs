@@ -31,7 +31,7 @@
                 <ul class="items">
 
                   <%  for(var i = 0 ; i < dogOwners.length ; i++){ %>
-                      <li><input type="checkbox" name="owners[]" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
+                      <li><input type="checkbox" id="<%- dogOwners[i].username %>" name="owners[]" value="<%- dogOwners[i]._id %>"/> <%= dogOwners[i].username %></li>
                   <%  } %>
 
 
