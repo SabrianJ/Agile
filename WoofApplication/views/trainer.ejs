@@ -12,7 +12,7 @@
 
       <img id="profileImage" class="rounded-corners" src="https://res.cloudinary.com/woof2021/image/upload/profilesImage/<%- foundUser[0]._id %>.png" alt="No image given" onerror="alternateImage(event)"/>
 
-      <h4 class="small font-weight-bold">Hello, my name is <%= foundUser[0].name %></h4>
+      <h4 id="profile" class="small font-weight-bold">Hello, my name is <%= foundUser[0].name %></h4>
       <h4 class="small font-weight-bold">You can contact me via <%= foundUser[0].email %></h4>
       <h4 class="small font-weight-bold">My city is <%= foundUser[0].city %> and my suburb is <%= foundUser[0].suburb %></h4><br/>
       <h4 class="small font-weight-bold">My dog preferences is
