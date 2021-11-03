@@ -45,7 +45,7 @@
         <%  var trainingDate = new Date(foundTraining[i].dateTime); %>
         <span class="float-right">
           <%  if(trainingDate > addHours(currentDate,13)){ %>
-          <a class="btn btn-outline-primary" href="/trainings/join/<%= foundTraining[i]._id %>">Join Training</a><br>
+          <a id="<%- foundTraining[i].name %>" class="btn btn-outline-primary" href="/trainings/join/<%= foundTraining[i]._id %>">Join Training</a><br>
           <% } %>
           <a href="/trainings/<%= foundTraining[i]._id %>">Find Out more...</a>
         </span>

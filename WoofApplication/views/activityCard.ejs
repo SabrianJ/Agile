@@ -36,7 +36,7 @@
 
       <%  for(var i = 0 ; i < foundActivity.length ; i++){ %>
       <%  if(foundActivity[i].creator == user._id){ %>
-          <table width="100%">
+          <table width="100%" id="<%-foundActivity[i].name %>">
             <tr>
               <td><%=foundActivity[i].name %> (Admin)<br> <%=formatDate(foundActivity[i].dateTime) %></td>
               <td align="right">
@@ -47,7 +47,7 @@
           </table>
               <hr />
       <%  }else{ %>
-          <table width="100%">
+          <table width="100%" id="<%-foundActivity[i].name %>">
             <tr>
               <td><%=foundActivity[i].name %> <br> <%=formatDate(foundActivity[i].dateTime) %></td>
               <td align="right">
